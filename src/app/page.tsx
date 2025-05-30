@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { sendNotification, subscribeUser, unsubscribeUser } from './actions';
+import { Button } from '@/components';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Tooltip } from '@/components/ui/tooltip';
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -41,6 +45,7 @@ function PushNotificationManager() {
     const registration = await navigator.serviceWorker.ready;
     const sub = await registration.pushManager.subscribe({
       userVisibleOnly: true,
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
       applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!),
     });
     setSubscription(sub);
@@ -71,19 +76,25 @@ function PushNotificationManager() {
       {subscription ? (
         <>
           <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
+          <button onClick={unsubscribeFromPush} type="button">
+            Unsubscribe
+          </button>
           <input
             type="text"
             placeholder="Enter notification message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button onClick={sendTestNotification}>Send Test</button>
+          <button onClick={sendTestNotification} type="button">
+            Send Test
+          </button>
         </>
       ) : (
         <>
           <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
+          <button onClick={subscribeToPush} type="button">
+            Subscribe
+          </button>
         </>
       )}
     </div>
@@ -93,9 +104,12 @@ function PushNotificationManager() {
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
+  const { setTheme, themes, theme, systemTheme } = useTheme();
 
   useEffect(() => {
-    setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream);
+    setIsIOS(
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as { MSStream?: unknown })?.MSStream,
+    );
 
     setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
   }, []);
@@ -113,10 +127,12 @@ function InstallPrompt() {
     return null; // Don't show install button if already installed
   }
 
+  const SystemThemeIcon = systemTheme === 'dark' ? Moon : Sun;
+
   return (
     <div>
       <h3>Install App</h3>
-      <button>Add to Home Screen</button>
+      <button type="button">Add to Home Screen</button>
       {isIOS && (
         <p>
           To install this app on your iOS device, tap the share button
@@ -131,6 +147,25 @@ function InstallPrompt() {
           </span>
         </p>
       )}
+      <Tooltip content="Change theme">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            if (theme) {
+              const isSystem = theme === 'system';
+              const currentTheme = isSystem ? systemTheme : theme;
+              const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+              setTheme(nextTheme);
+            }
+          }}
+        >
+          {theme === 'light' && <Sun />}
+          {theme === 'dark' && <Moon />}
+          {theme === 'system' && <SystemThemeIcon />}
+        </Button>
+      </Tooltip>
     </div>
   );
 }
