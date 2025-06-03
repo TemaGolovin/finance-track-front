@@ -1,5 +1,10 @@
 import type React from 'react';
-import { TooltipContent, TooltipProvider, TooltipTrigger, ScnTooltip } from './shadsn/tooltip';
+import {
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+  ScnTooltip,
+} from '../../lib/shadsn/tooltip';
 
 interface TooltipProps {
   children: React.ReactNode;

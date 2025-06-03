@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { sendNotification, subscribeUser, unsubscribeUser } from './actions';
-import { Button } from '@/components';
-import { Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { Tooltip } from '@/components/ui/tooltip';
+import { ThemeSwitcher } from '@/feature';
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -104,7 +101,6 @@ function PushNotificationManager() {
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
-  const { setTheme, themes, theme, systemTheme } = useTheme();
 
   useEffect(() => {
     setIsIOS(
@@ -127,8 +123,6 @@ function InstallPrompt() {
     return null; // Don't show install button if already installed
   }
 
-  const SystemThemeIcon = systemTheme === 'dark' ? Moon : Sun;
-
   return (
     <div>
       <h3>Install App</h3>
@@ -147,25 +141,7 @@ function InstallPrompt() {
           </span>
         </p>
       )}
-      <Tooltip content="Change theme">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => {
-            if (theme) {
-              const isSystem = theme === 'system';
-              const currentTheme = isSystem ? systemTheme : theme;
-              const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-              setTheme(nextTheme);
-            }
-          }}
-        >
-          {theme === 'light' && <Sun />}
-          {theme === 'dark' && <Moon />}
-          {theme === 'system' && <SystemThemeIcon />}
-        </Button>
-      </Tooltip>
+      <ThemeSwitcher />
     </div>
   );
 }
