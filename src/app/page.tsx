@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { sendNotification, subscribeUser, unsubscribeUser } from './actions';
-import { ThemeSwitcher } from '@/feature';
+import { I18nSwitcher, ThemeSwitcher } from '@/feature';
+import { Button, DropdownRadio } from '@/shared/ui';
+import { setUserLocale } from '@/shared/lib/i18n/locale';
+import { useLocale } from 'next-intl';
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -66,6 +69,8 @@ function PushNotificationManager() {
   if (!isSupported) {
     return <p>Push notifications are not supported in this browser.</p>;
   }
+
+  // const locale = await getUserLocale();
 
   return (
     <div>
@@ -142,6 +147,7 @@ function InstallPrompt() {
         </p>
       )}
       <ThemeSwitcher />
+      <I18nSwitcher />
     </div>
   );
 }

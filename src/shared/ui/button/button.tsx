@@ -1,1 +1,1 @@
-export * from '../../lib/shadsn/button';
+export * from '../../lib/shadcn/button';

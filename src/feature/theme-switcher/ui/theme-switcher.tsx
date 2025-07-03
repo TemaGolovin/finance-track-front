@@ -4,10 +4,12 @@ import { Button, Tooltip } from '@/shared/ui';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const ThemeSwitcher = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { setTheme, theme, systemTheme } = useTheme();
+  const t = useTranslations();
 
   const SystemThemeIcon = systemTheme === 'dark' ? Moon : Sun;
 
@@ -16,9 +18,9 @@ export const ThemeSwitcher = () => {
   }, []);
 
   return (
-    <Tooltip content="Change theme">
+    <Tooltip content={t('common.changeTheme')}>
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         onClick={() => {
           if (theme) {

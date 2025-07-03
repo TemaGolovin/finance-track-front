@@ -1,2 +1,3 @@
-export * from './shadsn/button';
-export * from './shadsn/tooltip';
+export * from './shadcn/button';
+export * from './shadcn/tooltip';
+export * from './shadcn/dropdown-menu';
