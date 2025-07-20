@@ -1,3 +1,6 @@
+'use client';
+
+import { Locale } from '@/shared/lib/i18n/config';
 import { setUserLocale } from '@/shared/lib/i18n/locale';
 import { Button, DropdownRadio, Tooltip } from '@/shared/ui';
 import { Languages } from 'lucide-react';
@@ -19,7 +22,7 @@ export const I18nSwitcher = () => {
           </Tooltip>
         </div>
       }
-      onSelect={(langId) => setUserLocale(langId as 'en' | 'ru')}
+      onSelect={(langId) => setUserLocale(langId as Locale)}
       list={[
         {
           id: 'ru' as const,

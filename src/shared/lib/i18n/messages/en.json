@@ -1,6 +1,17 @@
 {
   "common": {
     "changeTheme": "Change theme",
-    "changeLanguage": "Change language"
+    "changeLanguage": "Change language",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "landing": {
+    "startControl": "Start Controlling Your Finances",
+    "mainTitle": "Take Charge of Your Money — Alone, with Family or as a Team",
+    "mainDescription": "Create a group, invite loved ones, and get instant, consolidated insights on everyone’s income and expenses. Simple by design!",
+    "easy": "Easy",
+    "safe": "Safe",
+    "comfortable": "Comfortable"
   }
 }

@@ -1,162 +1,55 @@
-'use client';
+import { Button } from '@/shared/lib';
+import { routes } from '@/shared/model/routes';
+import { CircleCheckBig, ShieldCheck, TrendingUp } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
 
-import { useState, useEffect } from 'react';
-import { sendNotification, subscribeUser, unsubscribeUser } from './actions';
-import { I18nSwitcher, ThemeSwitcher } from '@/feature';
-import { Button, DropdownRadio } from '@/shared/ui';
-import { setUserLocale } from '@/shared/lib/i18n/locale';
-import { useLocale } from 'next-intl';
+const keyWords = [
+  {
+    id: 'safe',
+    title: 'landing.safe',
+    icon: <ShieldCheck className="w-6 h-6" />,
+  },
+  {
+    id: 'easy',
+    title: 'landing.easy',
+    icon: <CircleCheckBig className="w-6 h-6" />,
+  },
+  {
+    id: 'comfortable',
+    title: 'landing.comfortable',
+    icon: <TrendingUp className="w-6 h-6" />,
+  },
+];
 
-function urlBase64ToUint8Array(base64String: string) {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
-function PushNotificationManager() {
-  const [isSupported, setIsSupported] = useState(false);
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null);
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      setIsSupported(true);
-      registerServiceWorker();
-    }
-  }, []);
-
-  async function registerServiceWorker() {
-    const registration = await navigator.serviceWorker.register('/sw.js', {
-      scope: '/',
-      updateViaCache: 'none',
-    });
-    const sub = await registration.pushManager.getSubscription();
-    setSubscription(sub);
-  }
-
-  async function subscribeToPush() {
-    const registration = await navigator.serviceWorker.ready;
-    const sub = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!),
-    });
-    setSubscription(sub);
-    const serializedSub = JSON.parse(JSON.stringify(sub));
-    await subscribeUser(serializedSub);
-  }
-
-  async function unsubscribeFromPush() {
-    await subscription?.unsubscribe();
-    setSubscription(null);
-    await unsubscribeUser();
-  }
-
-  async function sendTestNotification() {
-    if (subscription) {
-      await sendNotification(message);
-      setMessage('');
-    }
-  }
-
-  if (!isSupported) {
-    return <p>Push notifications are not supported in this browser.</p>;
-  }
-
-  // const locale = await getUserLocale();
+export default async function Page() {
+  const t = await getTranslations();
 
   return (
-    <div>
-      <h3>Push Notifications</h3>
-      {subscription ? (
-        <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush} type="button">
-            Unsubscribe
-          </button>
-          <input
-            type="text"
-            placeholder="Enter notification message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button onClick={sendTestNotification} type="button">
-            Send Test
-          </button>
-        </>
-      ) : (
-        <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush} type="button">
-            Subscribe
-          </button>
-        </>
-      )}
-    </div>
-  );
-}
+    <div className="py-6 px-4 relative">
+      <div className="absolute left-0 top-20 -z-10">
+        <div className="absolute left-0 top-0 w-full h-full bg-base-200 opacity-30" />
+        <img src="/img/main-img-landing.png" alt="family and finances" />
+      </div>
 
-function InstallPrompt() {
-  const [isIOS, setIsIOS] = useState(false);
-  const [isStandalone, setIsStandalone] = useState(false);
+      <h1 className="text-4xl mb-6 font-bold text-primary opacity-90">{t('landing.mainTitle')}.</h1>
+      <h2 className="text-xl opacity-90 font-bold mb-6">{t('landing.mainDescription')}</h2>
 
-  useEffect(() => {
-    setIsIOS(
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as { MSStream?: unknown })?.MSStream,
-    );
+      <Button size={'xl'} className="w-full mb-20" asChild>
+        <Link href={routes.login}>{t('landing.startControl')}</Link>
+      </Button>
 
-    setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
-  }, []);
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then(() => console.log('Service Worker registered'))
-        .catch((error) => console.error('Service Worker registration failed:', error));
-    }
-  }, []);
-
-  if (isStandalone) {
-    return null; // Don't show install button if already installed
-  }
-
-  return (
-    <div>
-      <h3>Install App</h3>
-      <button type="button">Add to Home Screen</button>
-      {isIOS && (
-        <p>
-          To install this app on your iOS device, tap the share button
-          <span role="img" aria-label="share icon">
-            {' '}
-            ⎋{' '}
-          </span>
-          and then "Add to Home Screen"
-          <span role="img" aria-label="plus icon">
-            {' '}
-            ➕
-          </span>
-        </p>
-      )}
-      <ThemeSwitcher />
-      <I18nSwitcher />
-    </div>
-  );
-}
-
-export default function Page() {
-  return (
-    <div>
-      <PushNotificationManager />
-      <InstallPrompt />
+      <div className="flex gap-2 justify-between mb-6">
+        {keyWords.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center gap-1 p-2 bg-secondary rounded-lg text-secondary-foreground"
+          >
+            {item.icon}
+            <h3 className="font-bold">{t(item.title)}</h3>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
