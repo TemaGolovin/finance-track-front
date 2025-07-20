@@ -2,6 +2,7 @@ import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { routes } from '@/shared/model/routes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LogIn } from 'lucide-react';
 
 export const Header = async () => {
   return (
@@ -20,6 +21,14 @@ export const Header = async () => {
         <div>
           <ThemeSwitcher />
           <I18nSwitcher />
+          <Link
+            href={routes.login}
+            className="inline-flex items-center justify-center rounded-full p-2 hover:bg-base-200 transition-colors"
+            title="Login"
+            aria-label="Login"
+          >
+            <LogIn className="w-6 h-6" />
+          </Link>
         </div>
       </div>
     </header>
