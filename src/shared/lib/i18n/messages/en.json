@@ -4,7 +4,12 @@
     "changeLanguage": "Change language",
     "login": "Login",
     "register": "Register",
-    "logout": "Logout"
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+
+    "requiredError": "Required field",
+    "emailError": "Incorrect email"
   },
   "landing": {
     "startControl": "Start Controlling Your Finances",
@@ -13,5 +18,15 @@
     "easy": "Easy",
     "safe": "Safe",
     "comfortable": "Comfortable"
+  },
+  "auth": {
+    "auth": "Authentication",
+    "entrance": "Log in",
+    "accNotExist": "Don't have an account?"
+  },
+  "registration": {
+    "registration": "Registration",
+    "accAlreadyExist": "Already have an account?",
+    "register": "Register"
   }
 }

@@ -1,3 +1,5 @@
-export default () => {
-  return <div>login</div>;
+import { LoginWidget } from '@/widget/auth';
+
+export default async () => {
+  return <LoginWidget />;
 };

@@ -48,6 +48,7 @@ export default async function Page() {
 
             <Button
               size={'xl'}
+              variant={'primary'}
               className="w-full mb-20 md:mb-24 lg:mb-32 text-lg md:text-xl whitespace-pre-wrap min-h-max text-center"
               asChild
             >

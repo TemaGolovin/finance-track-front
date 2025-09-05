@@ -16,7 +16,7 @@ export const I18nSwitcher = () => {
       trigger={
         <div className="max-w-max inline">
           <Tooltip content={t('common.changeLanguage')}>
-            <Button size="icon" variant="ghost">
+            <Button size="icon" variant="default">
               <Languages />
             </Button>
           </Tooltip>

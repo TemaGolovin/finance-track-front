@@ -20,7 +20,7 @@ export const ThemeSwitcher = () => {
   return (
     <Tooltip content={t('common.changeTheme')}>
       <Button
-        variant="ghost"
+        variant="default"
         size="icon"
         onClick={() => {
           if (theme) {

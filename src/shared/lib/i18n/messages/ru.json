@@ -4,7 +4,12 @@
     "changeLanguage": "Изменить язык",
     "login": "Войти",
     "register": "Зарегистрироваться",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "email": "Email",
+    "password": "Пароль",
+
+    "requiredError": "Обязательное поле",
+    "emailError": "Некорректная почта"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",
@@ -13,5 +18,15 @@
     "easy": "Просто",
     "safe": "Надёжно",
     "comfortable": "Удобно"
+  },
+  "auth": {
+    "auth": "Авторизация",
+    "entrance": "Войти",
+    "accNotExist": "Нет аккаунта?"
+  },
+  "registration": {
+    "registration": "Регистрация",
+    "accAlreadyExist": "Уже есть аккаунт?",
+    "register": "Зарегистрироваться"
   }
 }
