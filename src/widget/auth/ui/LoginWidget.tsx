@@ -1,5 +1,6 @@
 import { LoginForm } from '@/feature/auth';
 import { Button } from '@/shared/ui';
+import { LinkButton } from '@/shared/ui/link/link';
 import { getTranslations } from 'next-intl/server';
 
 export const LoginWidget = async () => {
@@ -9,9 +10,7 @@ export const LoginWidget = async () => {
     <div className="bg-card p-4 rounded-lg absolute top-1/2 -translate-y-1/2 text-center border  shadow-md">
       <h1 className="text-2xl font-bold mb-4">{t('auth.auth')}</h1>
       <LoginForm />
-      <Button variant={'ghost'} className="underline" size={'sm'}>
-        {t('auth.accNotExist')}
-      </Button>
+      <LinkButton href={'/register'}>{t('auth.accNotExist')}</LinkButton>
     </div>
   );
 };

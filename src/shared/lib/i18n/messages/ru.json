@@ -22,7 +22,10 @@
   "auth": {
     "auth": "Авторизация",
     "entrance": "Войти",
-    "accNotExist": "Нет аккаунта?"
+    "accNotExist": "Нет аккаунта?",
+    "authLoading": "Авторизация...",
+    "authSuccess": "Авторизация прошла успешно",
+    "authError": "Ошибка авторизации"
   },
   "registration": {
     "registration": "Регистрация",

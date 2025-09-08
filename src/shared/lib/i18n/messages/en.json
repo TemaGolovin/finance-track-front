@@ -22,7 +22,10 @@
   "auth": {
     "auth": "Authentication",
     "entrance": "Log in",
-    "accNotExist": "Don't have an account?"
+    "accNotExist": "Don't have an account?",
+    "authLoading": "Authorization...",
+    "authSuccess": "Authorization was successful",
+    "authError": "Authorization error"
   },
   "registration": {
     "registration": "Registration",

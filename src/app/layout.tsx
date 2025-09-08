@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from './_providers/providers';
 import { getLocale } from 'next-intl/server';
 import { Header } from '@/widget/header';
+import { Toaster } from '@/shared/lib/shadcn/sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,6 +35,7 @@ export default async function RootLayout({
           <Header />
           <main className="container mx-auto px-2 sm:px-0">{children}</main>
         </Providers>
+        <Toaster richColors />
       </body>
     </html>
   );
