@@ -1,5 +1,5 @@
 import { I18nSwitcher, ThemeSwitcher } from '@/feature';
-import { routes } from '@/shared/model/routes';
+import { ROUTES } from '@/shared/model/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LogIn } from 'lucide-react';
@@ -9,7 +9,7 @@ export const Header = async () => {
   return (
     <header className="bg-base-300 border-b border-border py-0.5">
       <div className="container mx-auto px-2 sm:px-0 flex justify-between items-center">
-        <Link href={routes.home}>
+        <Link href={ROUTES.HOME}>
           <Image
             alt="logo"
             src="/logo/finance-track-logo.png"
@@ -24,7 +24,7 @@ export const Header = async () => {
           <I18nSwitcher />
           <Button size="icon" variant="default" asChild>
             <Link
-              href={routes.login}
+              href={ROUTES.LOGIN}
               className="inline-flex items-center justify-center rounded-full p-2 hover:bg-base-200 transition-colors"
               title="Login"
               aria-label="Login"

@@ -1,5 +1,5 @@
 import { Button } from '@/shared/lib';
-import { routes } from '@/shared/model/routes';
+import { ROUTES } from '@/shared/model/routes';
 import { CircleCheckBig, ShieldCheck, TrendingUp } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
@@ -52,7 +52,7 @@ export default async function Page() {
               className="w-full mb-20 md:mb-24 lg:mb-32 text-lg md:text-xl whitespace-pre-wrap min-h-max text-center"
               asChild
             >
-              <Link href={routes.login}>{t('landing.startControl')}</Link>
+              <Link href={ROUTES.LOGIN}>{t('landing.startControl')}</Link>
             </Button>
           </div>
         </div>

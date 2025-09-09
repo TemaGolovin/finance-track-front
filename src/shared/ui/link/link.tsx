@@ -8,7 +8,7 @@ interface LinkProps extends React.ComponentProps<typeof Link> {
 
 export const LinkButton = ({ children, buttonProps, ...props }: LinkProps) => {
   return (
-    <Link target="_blank" rel="noopener noreferrer" {...props}>
+    <Link {...props}>
       <Button variant="ghost" size="sm" className="underline" {...buttonProps}>
         {children}
       </Button>
