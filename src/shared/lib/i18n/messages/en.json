@@ -7,9 +7,11 @@
     "logout": "Logout",
     "email": "Email",
     "password": "Password",
+    "nickname": "Nickname",
 
     "requiredError": "Required field",
-    "emailError": "Incorrect email"
+    "emailError": "Incorrect email",
+    "minLength6Error": "Minimum length 6 characters"
   },
   "landing": {
     "startControl": "Start Controlling Your Finances",

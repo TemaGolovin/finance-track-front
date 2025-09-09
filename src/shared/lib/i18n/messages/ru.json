@@ -7,9 +7,11 @@
     "logout": "Выйти",
     "email": "Email",
     "password": "Пароль",
+    "nickname": "Никнейм",
 
     "requiredError": "Обязательное поле",
-    "emailError": "Некорректная почта"
+    "emailError": "Некорректная почта",
+    "minLength6Error": "Минимальная длина 6 символов"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",
@@ -30,6 +32,9 @@
   "registration": {
     "registration": "Регистрация",
     "accAlreadyExist": "Уже есть аккаунт?",
-    "register": "Зарегистрироваться"
+    "register": "Зарегистрироваться",
+    "authLoading": "Регистрация...",
+    "authSuccess": "Регистрация прошла успешно",
+    "authError": "Ошибка регистрации"
   }
 }

@@ -1,1 +1,2 @@
-export { LoginWidget } from './ui/LoginWidget';
+export { LoginWidget } from './ui/login-widget';
+export { RegisterWidget } from './ui/registration-widget';
