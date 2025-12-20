@@ -33,5 +33,8 @@
     "registration": "Registration",
     "accAlreadyExist": "Already have an account?",
     "register": "Register"
+  },
+  "main": {
+    "expensesByCategory": "Expenses by category"
   }
 }

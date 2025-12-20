@@ -1,5 +1,7 @@
+import { instanceFetchFromServer } from '@/shared/api/instance-from-server';
 import { ChartConfig } from '@/shared/lib/shadcn/chart';
 import { BaseCard } from '@/shared/ui';
+import { getTranslations } from 'next-intl/server';
 
 const chartConfig = {
   desktop: {
@@ -26,16 +28,12 @@ const chartData = [
 ];
 
 export default async function MainPage() {
-  // const data = await instanceFetch('/category/stat', {
-  //   headers: {
-  //     Authorization: `Bearer `,
-  //   }
-  // });
-  // console.log(data);
+  const data = await instanceFetchFromServer('/category/stat');
+  const t = await getTranslations('main');
 
   return (
-    <BaseCard title="title" actions={<div>act</div>} description="description" footer="footer">
-      asd
+    <BaseCard title={t('expensesByCategory')}>
+      asdasd
       {/* <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <PieChart accessibilityLayer data={chartData}>
           <Pie dataKey="percent" nameKey="type" data={chartData} innerRadius={45} strokeWidth={5} />

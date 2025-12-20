@@ -4,6 +4,7 @@ export const instanceFetch = async <ResData>(url: string, init?: RequestInit) =>
       'Content-Type': 'application/json',
       ...init?.headers,
     },
+    credentials: 'include',
     ...init,
   });
 

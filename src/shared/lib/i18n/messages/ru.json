@@ -36,5 +36,8 @@
     "authLoading": "Регистрация...",
     "authSuccess": "Регистрация прошла успешно",
     "authError": "Ошибка регистрации"
+  },
+  "main": {
+    "expensesByCategory": "Расходы по категориям"
   }
 }
