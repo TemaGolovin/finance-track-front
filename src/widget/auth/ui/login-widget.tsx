@@ -1,6 +1,5 @@
 import { LoginForm } from '@/feature/auth';
 import { ROUTES } from '@/shared/model/routes';
-import { Button } from '@/shared/ui';
 import { LinkButton } from '@/shared/ui/link/link';
 import { getTranslations } from 'next-intl/server';
 

@@ -8,6 +8,7 @@ import { LoginFormType, validateLoginForm } from '../lib/validate-login-fom';
 import { useLogin } from '../api/useLogin';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/shared/model/routes';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ export const LoginForm = () => {
           ...data,
           deviceId,
         }).then(() => {
-          router.push('/');
+          router.push(ROUTES.MAIN);
         }),
       {
         loading: t('auth.authLoading'),

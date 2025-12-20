@@ -8,6 +8,7 @@ import { Button, Input, InputPassword } from '@/shared/ui';
 import { useRegistration } from '../api/useRegistration';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { ROUTES } from '@/shared/model/routes';
 
 export const RegistrationForm = () => {
   const t = useTranslations();
@@ -24,13 +25,16 @@ export const RegistrationForm = () => {
   });
 
   const onSubmit = async (data: RegistrationFormType) => {
+    const deviceId = crypto.randomUUID();
+    localStorage.setItem('deviceId', deviceId);
+
     toast.promise(
       async () =>
         await registration({
           ...data,
-          deviceId: crypto.randomUUID(),
+          deviceId,
         }).then(() => {
-          router.push('/');
+          router.push(ROUTES.MAIN);
         }),
       {
         loading: t('registration.authLoading'),
