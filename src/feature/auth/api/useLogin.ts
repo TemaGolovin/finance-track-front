@@ -8,6 +8,5 @@ export const useLogin = () =>
       instanceFetch<LoginResponse>('/auth/login', {
         method: 'POST',
         body: JSON.stringify(body),
-        credentials: 'include',
       }),
   });

@@ -19,14 +19,14 @@ interface BaseCardProps {
 
 export const BaseCard: FC<BaseCardProps> = ({ title, description, actions, children, footer }) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-        <CardAction>{actions}</CardAction>
+    <Card className="flex flex-col gap-0">
+      <CardHeader className="mb-2">
+        {title && <CardTitle className="font-extrabold">{title}</CardTitle>}
+        {description && <CardDescription>{description}</CardDescription>}
+        {actions && <CardAction>{actions}</CardAction>}
       </CardHeader>
-      <CardContent>{children}</CardContent>
-      <CardFooter>{footer}</CardFooter>
+      <CardContent className="text-foreground/90 text-sm">{children}</CardContent>
+      {footer && <CardFooter>{footer}</CardFooter>}
     </Card>
   );
 };
