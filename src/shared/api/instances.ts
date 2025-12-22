@@ -1,5 +1,5 @@
 export const instanceFetch = async <ResData>(url: string, init?: RequestInit) => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_BFF}/${url}`, {
     headers: {
       'Content-Type': 'application/json',
       ...init?.headers,
