@@ -5,7 +5,7 @@ import { useDateRange } from '../model/use-date-range';
 
 interface DateRangeNavigatorProps {
   selectedDatesAndPeriod: DatesAndPeriod;
-  setSelectedDatesAndPeriod: (value: DatesAndPeriod) => void;
+  setSelectedDatesAndPeriod: React.Dispatch<React.SetStateAction<DatesAndPeriod>>;
 }
 
 export const DateRangeNavigator: React.FC<DateRangeNavigatorProps> = ({

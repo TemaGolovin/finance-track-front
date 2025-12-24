@@ -1,0 +1,41 @@
+import {
+  Briefcase,
+  Bus,
+  Car,
+  Dumbbell,
+  Gamepad2,
+  Gift,
+  GraduationCap,
+  HeartPulse,
+  Home,
+  MoreHorizontal,
+  PawPrint,
+  Plane,
+  Shirt,
+  ShoppingCart,
+  Smartphone,
+  Utensils,
+  Wallet,
+} from 'lucide-react';
+
+export const iconCategoryFromBackendMap = {
+  ShoppingCart: <ShoppingCart />,
+  Utensils: <Utensils />,
+  Bus: <Bus />,
+  Home: <Home />,
+  HeartPulse: <HeartPulse />,
+  GraduationCap: <GraduationCap />,
+  Gamepad2: <Gamepad2 />,
+  Shirt: <Shirt />,
+  Smartphone: <Smartphone />,
+  Gift: <Gift />,
+  Plane: <Plane />,
+  Car: <Car />,
+  Dumbbell: <Dumbbell />,
+  PawPrint: <PawPrint />,
+  MoreHorizontal: <MoreHorizontal />,
+  Wallet: <Wallet />,
+  Briefcase: <Briefcase />,
+};
+
+export type IconCategory = keyof typeof iconCategoryFromBackendMap;

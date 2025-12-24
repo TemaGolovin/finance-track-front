@@ -15,15 +15,7 @@ import { useState } from 'react';
 import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
 import { DateRangeNavigator, DatesAndPeriod } from '@/feature/date-range-navigator';
 import { getIsoDatesFromPeriod } from '../lib/get-iso-dates-from-period';
-
-const randomHexColor = () => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
+import { iconCategoryFromBackendMap } from '@/shared/lib';
 
 export const CategoriesStat = () => {
   const [operationType, setOperationType] = useState<'EXPENSE' | 'INCOME'>('EXPENSE');
@@ -53,39 +45,35 @@ export const CategoriesStat = () => {
   }, {} as ChartConfig);
 
   return (
-    <>
-      <div className="my-2">
-        <Tabs
-          tabsInfo={[
-            {
-              id: 'EXPENSE',
-              title: commonT('expenses'),
-              icon: <BanknoteArrowDown />,
-            },
-            { id: 'INCOME', title: commonT('income'), icon: <BanknoteArrowUp /> },
-          ]}
-          selectedIdObserver={setOperationType}
-        />
-      </div>
-      <div className="mb-2">
-        <Tabs
-          tabsInfo={[
-            { id: 'day', title: commonT('day') },
-            { id: 'week', title: commonT('week') },
-            { id: 'month', title: commonT('month') },
-            { id: 'year', title: commonT('year') },
-            { id: 'custom', title: 'Период' },
-          ]}
-          size="sm"
-          defaultValue="week"
-          selectedIdObserver={(newPeriod) =>
-            setSelectedDatesAndPeriod({
-              period: newPeriod,
-              dates: getIsoDatesFromPeriod(newPeriod),
-            })
-          }
-        />
-      </div>
+    <div className="flex flex-col gap-2 mt-2 pb-4">
+      <Tabs
+        tabsInfo={[
+          {
+            id: 'EXPENSE',
+            title: commonT('expenses'),
+            icon: <BanknoteArrowDown />,
+          },
+          { id: 'INCOME', title: commonT('income'), icon: <BanknoteArrowUp /> },
+        ]}
+        selectedIdObserver={setOperationType}
+      />
+      <Tabs
+        tabsInfo={[
+          { id: 'day', title: commonT('day') },
+          { id: 'week', title: commonT('week') },
+          { id: 'month', title: commonT('month') },
+          { id: 'year', title: commonT('year') },
+          { id: 'custom', title: 'Период' },
+        ]}
+        size="sm"
+        defaultValue="week"
+        selectedIdObserver={(newPeriod) =>
+          setSelectedDatesAndPeriod({
+            period: newPeriod,
+            dates: getIsoDatesFromPeriod(newPeriod),
+          })
+        }
+      />
 
       <BaseCard>
         <DateRangeNavigator
@@ -98,12 +86,12 @@ export const CategoriesStat = () => {
               <PieChart accessibilityLayer data={data?.categories}>
                 <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Pie
-                  dataKey="proportion"
+                  dataKey="sum"
                   nameKey="name"
                   cornerRadius="20%"
                   data={data?.categories.map((category) => ({
                     ...category,
-                    fill: randomHexColor(),
+                    fill: category.color,
                   }))}
                   innerRadius={'80%'}
                   outerRadius={'100%'}
@@ -123,6 +111,28 @@ export const CategoriesStat = () => {
           </ChartContainer>
         </div>
       </BaseCard>
-    </>
+      {data?.categories && data.categories.length > 0 && (
+        <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 text-sm">
+          {data.categories.map((category) => (
+            <div
+              className="grid grid-cols-subgrid col-span-full items-center px-2 rounded-lg bg-foreground/5 border border-foreground/10 py-1"
+              key={category.id}
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: category.color }}
+                >
+                  {iconCategoryFromBackendMap?.[category.icon]}
+                </div>
+                <div>{category.name}</div>
+              </div>
+              <div className="text-right">{formatNumberWithRound(category.proportion)} %</div>
+              <div className="text-right">{formatNumberWithRound(category.sum)}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };

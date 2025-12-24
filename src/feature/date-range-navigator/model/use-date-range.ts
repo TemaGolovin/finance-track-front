@@ -17,7 +17,7 @@ import { useLocale } from 'next-intl';
 
 interface UseDatesRangeProps {
   selectedDatesAndPeriod: DatesAndPeriod;
-  setSelectedDatesAndPeriod: (value: DatesAndPeriod) => void;
+  setSelectedDatesAndPeriod: React.Dispatch<React.SetStateAction<DatesAndPeriod>>;
 }
 
 const getLabelFromPeriodName = (
@@ -27,15 +27,17 @@ const getLabelFromPeriodName = (
 ) => {
   switch (period) {
     case 'day':
-      return `${format(dates.startDate, 'dd.MM.yyyy')}`;
+      return `${format(dates.startDate, 'dd LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`;
     case 'week':
       return `${format(dates.startDate, 'dd.MM.yyyy')} - ${format(dates.endDate, 'dd.MM.yyyy')}`;
     case 'month':
       return (
-        `${format(dates.startDate, 'LLLL', { locale: locale === 'ru' ? ru : undefined })}`
+        `${format(dates.startDate, 'LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`
           .slice(0, 1)
           .toUpperCase() +
-        `${format(dates.startDate, 'LLLL', { locale: locale === 'ru' ? ru : undefined })}`.slice(1)
+        `${format(dates.startDate, 'LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`.slice(
+          1,
+        )
       );
     case 'year':
       return `${format(dates.startDate, 'yyyy')}`;
@@ -120,20 +122,20 @@ export const useDateRange = ({
       selectedDatesAndPeriod.period === 'week'
     ) {
       const difference = differenceInDays(
-        selectedDatesAndPeriod?.dates?.startDate,
         selectedDatesAndPeriod?.dates?.endDate,
+        selectedDatesAndPeriod?.dates?.startDate,
       );
 
-      const newStartDate = addDays(selectedDatesAndPeriod?.dates?.startDate, difference - 1);
-      const newEndDate = addDays(selectedDatesAndPeriod?.dates?.endDate, difference - 1);
+      const newStartDate = addDays(selectedDatesAndPeriod?.dates?.startDate, difference + 1);
+      const newEndDate = addDays(selectedDatesAndPeriod?.dates?.endDate, difference + 1);
 
-      setSelectedDatesAndPeriod({
-        period: selectedDatesAndPeriod?.period,
+      setSelectedDatesAndPeriod((prev) => ({
+        ...prev,
         dates: {
           startDate: newStartDate.toISOString(),
           endDate: newEndDate.toISOString(),
         },
-      });
+      }));
 
       return;
     }

@@ -36,10 +36,13 @@ export const Tabs = <TabIdType extends string>({
       >
         {tabsInfo?.map(({ id, title, icon }) => (
           <TabsTrigger
-            className={cn({
-              'text-xs': size === 'sm',
-              'text-md': size === 'md',
-            })}
+            className={cn(
+              'data-[state=active]:border-primary/50 data-[state=active]:bg-primary/10 dark:data-[state=active]:border-primary/50 dark:data-[state=active]:bg-primary/10',
+              {
+                'text-xs': size === 'sm',
+                'text-md': size === 'md',
+              },
+            )}
             key={id}
             value={id}
             onClick={() => onClickTab(id)}
