@@ -8,6 +8,13 @@
     "email": "Email",
     "password": "Password",
     "nickname": "Nickname",
+    "expenses": "Expenses",
+    "income": "Income",
+
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
 
     "requiredError": "Required field",
     "emailError": "Incorrect email",
@@ -35,6 +42,6 @@
     "register": "Register"
   },
   "main": {
-    "expensesByCategory": "Expenses by category"
+    "noDataForThisPeriod": "No data for this period"
   }
 }

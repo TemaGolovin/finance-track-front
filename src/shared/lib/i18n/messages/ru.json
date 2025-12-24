@@ -8,6 +8,13 @@
     "email": "Email",
     "password": "Пароль",
     "nickname": "Никнейм",
+    "expenses": "Расходы",
+    "income": "Доходы",
+
+    "day": "День",
+    "week": "Неделя",
+    "month": "Месяц",
+    "year": "Год",
 
     "requiredError": "Обязательное поле",
     "emailError": "Некорректная почта",
@@ -38,6 +45,6 @@
     "authError": "Ошибка регистрации"
   },
   "main": {
-    "expensesByCategory": "Расходы по категориям"
+    "noDataForThisPeriod": "Нет данных за этот период"
   }
 }

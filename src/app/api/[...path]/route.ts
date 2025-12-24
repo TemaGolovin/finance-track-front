@@ -7,8 +7,9 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
   const cookieStore = await cookies();
 
   const awaitedParams = await params;
+  const incomingUrl = new URL(req.url);
 
-  const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}`;
+  const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}${incomingUrl?.search || ''}`;
 
   let res = await fetch(url, {
     method: req.method,

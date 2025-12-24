@@ -5,3 +5,4 @@ export { DropdownRadio } from './dropdown/dropdown-radio';
 export { Input } from './input/input';
 export { InputPassword } from './input/input-password';
 export { BaseCard } from './base-card/base-card';
+export { Tabs } from './tabs/tabs';
