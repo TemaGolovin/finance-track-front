@@ -16,6 +16,12 @@
     "month": "Month",
     "year": "Year",
 
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "select": "Select",
+
+    "cancel": "Cancel",
+
     "requiredError": "Required field",
     "emailError": "Incorrect email",
     "minLength6Error": "Minimum length 6 characters"
@@ -42,6 +48,7 @@
     "register": "Register"
   },
   "main": {
-    "noDataForThisPeriod": "No data for this period"
+    "noDataForThisPeriod": "No data for this period",
+    "selectDateTitle": "Select date"
   }
 }

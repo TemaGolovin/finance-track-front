@@ -10,12 +10,14 @@ import {
   ChartTooltipContent,
 } from '@/shared/lib/shadcn/chart';
 import { Label, Pie, PieChart } from 'recharts';
-import { formatNumberWithRound } from '@/shared/lib';
+import { Button, formatNumberWithRound } from '@/shared/lib';
 import { useState } from 'react';
-import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
+import { BanknoteArrowDown, BanknoteArrowUp, PlusIcon } from 'lucide-react';
 import { DateRangeNavigator, DatesAndPeriod } from '@/feature/date-range-navigator';
 import { getIsoDatesFromPeriod } from '../lib/get-iso-dates-from-period';
 import { iconCategoryFromBackendMap } from '@/shared/lib';
+import Link from 'next/link';
+import { ROUTES } from '@/shared/model/routes';
 
 export const CategoriesStat = () => {
   const [operationType, setOperationType] = useState<'EXPENSE' | 'INCOME'>('EXPENSE');
@@ -80,7 +82,7 @@ export const CategoriesStat = () => {
           selectedDatesAndPeriod={selectedDatesAndPeriod}
           setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
         />
-        <div className="flex justify-center h-62.5">
+        <div className="flex justify-center h-62.5 relative">
           <ChartContainer config={chartConfig || {}} style={{ aspectRatio: 1, maxHeight: '250px' }}>
             {data?.categories && data.categories.length > 0 ? (
               <PieChart accessibilityLayer data={data?.categories}>
@@ -109,6 +111,11 @@ export const CategoriesStat = () => {
               </div>
             )}
           </ChartContainer>
+          <Link href={ROUTES.OPERATION_CREATE}>
+            <Button size={'icon'} className="absolute bottom-0 right-0" variant={'primary'}>
+              <PlusIcon />
+            </Button>
+          </Link>
         </div>
       </BaseCard>
       {data?.categories && data.categories.length > 0 && (

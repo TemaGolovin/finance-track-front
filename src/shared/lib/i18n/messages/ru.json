@@ -16,6 +16,12 @@
     "month": "Месяц",
     "year": "Год",
 
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "select": "Выбрать",
+
+    "cancel": "Отменить",
+
     "requiredError": "Обязательное поле",
     "emailError": "Некорректная почта",
     "minLength6Error": "Минимальная длина 6 символов"
@@ -45,6 +51,7 @@
     "authError": "Ошибка регистрации"
   },
   "main": {
-    "noDataForThisPeriod": "Нет данных за этот период"
+    "noDataForThisPeriod": "Нет данных за этот период",
+    "selectDateTitle": "Выбор даты"
   }
 }

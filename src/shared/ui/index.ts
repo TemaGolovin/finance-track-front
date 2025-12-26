@@ -6,3 +6,5 @@ export { Input } from './input/input';
 export { InputPassword } from './input/input-password';
 export { BaseCard } from './base-card/base-card';
 export { Tabs } from './tabs/tabs';
+export { ToggleGroup } from './toggle-group/toggle-group';
+export { Drawer } from './drawer/drawer';

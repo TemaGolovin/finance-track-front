@@ -14,7 +14,7 @@ export const useCategoriesStat = (params?: {
   searchParams.set('operationType', params?.operationType || '');
 
   return useQuery({
-    queryFn: () => instanceFetch<CategoryStatRes>(`category/stat?${searchParams.toString()}`),
+    queryFn: () => instanceFetch<CategoryStatRes>(`/category/stat?${searchParams.toString()}`),
     queryKey: ['category', 'stat', params],
     refetchOnMount: false,
     refetchOnReconnect: false,
