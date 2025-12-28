@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { instanceFetch } from '../../instances';
 import { CreateOperationReq, CreateOperationRes } from './types';
-import { operations } from '../query-keys';
+import { categories, operations } from '../query-keys';
 
 export const useOperationCreate = () => {
   const queryClient = useQueryClient();
@@ -13,6 +13,8 @@ export const useOperationCreate = () => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: operations.all });
+      queryClient.invalidateQueries({ queryKey: categories.all });
+      queryClient.invalidateQueries({ queryKey: categories.categoriesStat });
     },
   });
 };

@@ -85,7 +85,13 @@ export const CategoriesStat = () => {
         <div className="flex justify-center h-62.5 relative">
           <ChartContainer config={chartConfig || {}} style={{ aspectRatio: 1, maxHeight: '250px' }}>
             {data?.categories && data.categories.length > 0 ? (
-              <PieChart accessibilityLayer data={data?.categories}>
+              <PieChart
+                accessibilityLayer
+                data={data?.categories.map((category) => ({
+                  ...category,
+                  sum: Number(category.sum),
+                }))}
+              >
                 <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Pie
                   dataKey="sum"
@@ -93,6 +99,7 @@ export const CategoriesStat = () => {
                   cornerRadius="20%"
                   data={data?.categories.map((category) => ({
                     ...category,
+                    sum: Number(category.sum),
                     fill: category.color,
                   }))}
                   innerRadius={'80%'}
@@ -101,7 +108,7 @@ export const CategoriesStat = () => {
                   strokeWidth={2}
                 >
                   <Label position={'center'} className="text-md font-bold text-lg">
-                    {formatNumberWithRound(data?.totalSum || 0)}
+                    {formatNumberWithRound(Number(data?.totalSum || 0) || 0)}
                   </Label>
                 </Pie>
               </PieChart>
@@ -134,8 +141,10 @@ export const CategoriesStat = () => {
                 </div>
                 <div>{category.name}</div>
               </div>
-              <div className="text-right">{formatNumberWithRound(category.proportion)} %</div>
-              <div className="text-right">{formatNumberWithRound(category.sum)}</div>
+              <div className="text-right">
+                {formatNumberWithRound(Number(category.proportion))} %
+              </div>
+              <div className="text-right">{formatNumberWithRound(Number(category.sum))}</div>
             </div>
           ))}
         </div>

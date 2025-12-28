@@ -1,6 +1,7 @@
 import { instanceFetch } from '@/shared/api/instances';
 import { useQuery } from '@tanstack/react-query';
 import { CategoryStatRes } from '../model/types';
+import { categories } from '@/shared/api/queries/query-keys';
 
 export const useCategoriesStat = (params?: {
   startDate?: string;
@@ -15,7 +16,7 @@ export const useCategoriesStat = (params?: {
 
   return useQuery({
     queryFn: () => instanceFetch<CategoryStatRes>(`/category/stat?${searchParams.toString()}`),
-    queryKey: ['category', 'stat', params],
+    queryKey: categories.categoriesStatParams(params),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

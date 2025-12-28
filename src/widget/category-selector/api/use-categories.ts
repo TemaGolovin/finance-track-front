@@ -1,6 +1,7 @@
 import { instanceFetch } from '@/shared/api/instances';
 import { useQuery } from '@tanstack/react-query';
 import { Category } from '../model/types';
+import { categories } from '@/shared/api/queries/query-keys';
 
 export const useCategories = (params?: {
   type?: 'INCOME' | 'EXPENSE';
@@ -10,7 +11,7 @@ export const useCategories = (params?: {
   searchParams.set('type', params?.type || '');
 
   return useQuery({
-    queryKey: ['categories', params],
+    queryKey: categories.categoriesParams(params),
     queryFn: () => instanceFetch<Category[]>(`/category?${searchParams.toString()}`),
     refetchOnMount: false,
     refetchOnReconnect: false,
