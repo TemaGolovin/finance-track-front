@@ -8,3 +8,4 @@ export { BaseCard } from './base-card/base-card';
 export { Tabs } from './tabs/tabs';
 export { ToggleGroup } from './toggle-group/toggle-group';
 export { Drawer } from './drawer/drawer';
+export { Calendar } from './calendar/calendar';

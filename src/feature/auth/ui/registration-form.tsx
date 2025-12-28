@@ -66,7 +66,7 @@ export const RegistrationForm = () => {
         {...register('password')}
       />
 
-      <Button variant={'primary'} size={'lg'}>
+      <Button variant={'primary'} size={'lg'} type="submit">
         {t('registration.register')}
       </Button>
     </form>

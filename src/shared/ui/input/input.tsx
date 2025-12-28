@@ -44,6 +44,7 @@ export const Input: React.FC<InputProps> = ({
         type: 'text',
         inputMode: 'decimal',
         onChange: (e) => {
+          if (e.target.value.match(/^0\d/)) e.target.value = e.target.value.replace(/^0\d/, '0');
           if (e.target.value.startsWith('.')) e.target.value = e.target.value.replace('.', '');
           if (e.target.value.startsWith(',')) e.target.value = e.target.value.replace(',', '');
 

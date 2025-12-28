@@ -19,12 +19,15 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "select": "Select",
+    "selected": "Selected",
+    "selectDate": "Select date",
 
-    "cancel": "Cancel",
+    "amount": "Amount",
+    "comment": "Comment",
 
-    "requiredError": "Required field",
-    "emailError": "Incorrect email",
-    "minLength6Error": "Minimum length 6 characters"
+    "save": "Save",
+
+    "cancel": "Cancel"
   },
   "landing": {
     "startControl": "Start Controlling Your Finances",
@@ -48,7 +51,20 @@
     "register": "Register"
   },
   "main": {
-    "noDataForThisPeriod": "No data for this period",
-    "selectDateTitle": "Select date"
+    "noDataForThisPeriod": "No data for this period"
+  },
+
+  "operationsCreate": {
+    "loading": "Saving transaction...",
+    "success": "Transaction saved",
+    "error": "Error saving transaction"
+  },
+
+  "errors": {
+    "requiredField": "Required field",
+    "requiredForSelect": "Required for selection",
+    "email": "Incorrect email",
+    "minLength6": "Minimum length 6 characters",
+    "greaterThanZero": "The value must be greater than 0"
   }
 }

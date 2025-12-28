@@ -41,6 +41,8 @@ export const LoginForm = () => {
     );
   };
 
+  console.log(errors);
+
   const onSubmit = async (data: LoginFormType) => {
     const deviceId = localStorage.getItem('deviceId');
 
@@ -70,7 +72,7 @@ export const LoginForm = () => {
         {...register('password')}
       />
 
-      <Button variant={'primary'} size={'lg'}>
+      <Button variant={'primary'} size={'lg'} type="submit">
         {t('auth.entrance')}
       </Button>
     </form>

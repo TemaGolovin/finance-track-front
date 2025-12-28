@@ -19,12 +19,15 @@
     "today": "Сегодня",
     "yesterday": "Вчера",
     "select": "Выбрать",
+    "selected": "Выбрано",
+    "selectDate": "Выбор даты",
 
-    "cancel": "Отменить",
+    "amount": "Сумма",
+    "comment": "Комментарий",
 
-    "requiredError": "Обязательное поле",
-    "emailError": "Некорректная почта",
-    "minLength6Error": "Минимальная длина 6 символов"
+    "save": "Сохранить",
+
+    "cancel": "Отменить"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",
@@ -51,7 +54,20 @@
     "authError": "Ошибка регистрации"
   },
   "main": {
-    "noDataForThisPeriod": "Нет данных за этот период",
-    "selectDateTitle": "Выбор даты"
+    "noDataForThisPeriod": "Нет данных за этот период"
+  },
+
+  "operationsCreate": {
+    "loading": "Сохранение транзакции...",
+    "success": "Транзакция сохранена",
+    "error": "Ошибка сохранения транзакции"
+  },
+
+  "errors": {
+    "requiredField": "Обязательное поле",
+    "requiredForSelect": "Обязательно для выбора",
+    "email": "Некорректная почта",
+    "minLength6": "Минимальная длина 6 символов",
+    "greaterThanZero": "Значение должно быть больше 0"
   }
 }

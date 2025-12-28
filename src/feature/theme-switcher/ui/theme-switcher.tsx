@@ -32,6 +32,7 @@ export const ThemeSwitcher = () => {
           }
         }}
         aria-label="Change theme"
+        type="button"
       >
         {isMounted && (
           <>
