@@ -1,5 +1,5 @@
+import { useCategories } from '@/shared/api/queries/categories';
 import { Button, iconCategoryFromBackendMap } from '@/shared/lib';
-import { useCategories } from '../api/use-categories';
 import { cn } from '@/shared/lib/shadcn/utils/utils';
 
 interface CategorySelectorProps {

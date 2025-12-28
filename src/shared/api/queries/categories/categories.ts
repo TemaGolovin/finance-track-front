@@ -1,7 +1,7 @@
 import { instanceFetch } from '@/shared/api/instances';
 import { useQuery } from '@tanstack/react-query';
-import { Category } from '../model/types';
 import { categories } from '@/shared/api/queries/query-keys';
+import { Category } from './types';
 
 export const useCategories = (params?: {
   type?: 'INCOME' | 'EXPENSE';
