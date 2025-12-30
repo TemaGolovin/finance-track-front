@@ -1,3 +1,5 @@
+import { IconCategory } from '@/shared/lib';
+
 export interface CreateOperationReq {
   type: 'INCOME' | 'EXPENSE';
   value: number;
@@ -6,7 +8,7 @@ export interface CreateOperationReq {
   comment?: string;
 }
 
-export interface CreateOperationRes {
+export interface Operation {
   id: string;
   comment: string;
   value: number;
@@ -16,4 +18,17 @@ export interface CreateOperationRes {
   createAt: string;
   updateAt: string;
   userId: string;
+  category: {
+    name: string;
+    color: string;
+    icon: IconCategory;
+  };
+}
+
+export interface GetOperationsRes {
+  totalSum: number;
+  operationsByDate: {
+    date: string;
+    operations: Operation[];
+  }[];
 }

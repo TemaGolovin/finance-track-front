@@ -1,5 +1,11 @@
 export const operations = {
   all: ['operations'],
+  operationsParams: (params?: {
+    startDate?: string;
+    endDate?: string;
+    operationType?: 'INCOME' | 'EXPENSE';
+    categoryId?: string;
+  }) => [...operations.all, params],
   byId: (id: string) => [...operations.all, id],
 } as const;
 

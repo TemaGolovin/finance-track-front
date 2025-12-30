@@ -1,4 +1,4 @@
-import { Calendar, Drawer, ToggleGroup } from '@/shared/ui';
+import { DatePickerDrawerSingle, ToggleGroup } from '@/shared/ui';
 import { format, subDays } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -57,30 +57,18 @@ export const QuickDatePicker: React.FC<QuickDatePickerProps> = ({ onSelectDate, 
             id: 'select-date',
             ariaLabel: commonT('select'),
             content: (
-              <div>
-                <Drawer
-                  title={commonT('selectDate')}
-                  trigger={
+              <DatePickerDrawerSingle
+                trigger={
+                  <div>
                     <div>
-                      <div>
-                        {selectedId === 'select-date' ? commonT('selected') : commonT('select')}
-                      </div>
-                      <div>{selectedId === 'select-date' ? format(selectedDate, 'dd.MM') : ''}</div>
+                      {selectedId === 'select-date' ? commonT('selected') : commonT('select')}
                     </div>
-                  }
-                  renderContent={(onClose) => (
-                    <div className="min-h-107">
-                      <Calendar
-                        selectedDate={selectedDate}
-                        setDate={(newDate) => {
-                          onSelectDate(newDate);
-                          onClose();
-                        }}
-                      />
-                    </div>
-                  )}
-                />
-              </div>
+                    <div>{selectedId === 'select-date' ? format(selectedDate, 'dd.MM') : ''}</div>
+                  </div>
+                }
+                selectedDate={selectedDate}
+                onSelectDate={onSelectDate}
+              />
             ),
           },
         ]}

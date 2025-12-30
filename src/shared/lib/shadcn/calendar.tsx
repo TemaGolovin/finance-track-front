@@ -91,9 +91,9 @@ function Calendar({
             : '[&:first-child[data-selected=true]_button]:rounded-l-md',
           defaultClassNames.day,
         ),
-        range_start: cn('rounded-l-md bg-accent', defaultClassNames.range_start),
-        range_middle: cn('rounded-none', defaultClassNames.range_middle),
-        range_end: cn('rounded-r-md bg-accent', defaultClassNames.range_end),
+        range_start: cn('rounded-l-md bg-secondary', defaultClassNames.range_start),
+        range_middle: cn('rounded-none bg-secondary', defaultClassNames.range_middle),
+        range_end: cn('rounded-r-md bg-secondary', defaultClassNames.range_end),
         today: cn('rounded-md data-[selected=true]:rounded-none', defaultClassNames.today),
         outside: cn(
           'text-muted-foreground aria-selected:text-muted-foreground',

@@ -27,7 +27,7 @@ export const Drawer: React.FC<DrawerProps> = ({ trigger, title, description, ren
   return (
     <DrawerShadcn open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="mt-0 max-h-dvh">
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
           <DrawerDescription>{description}</DrawerDescription>

@@ -26,8 +26,9 @@
     "comment": "Комментарий",
 
     "save": "Сохранить",
+    "cancel": "Отменить",
 
-    "cancel": "Отменить"
+    "noDataForThisPeriod": "Нет данных за этот период"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",
@@ -52,9 +53,6 @@
     "authLoading": "Регистрация...",
     "authSuccess": "Регистрация прошла успешно",
     "authError": "Ошибка регистрации"
-  },
-  "main": {
-    "noDataForThisPeriod": "Нет данных за этот период"
   },
 
   "operationsCreate": {

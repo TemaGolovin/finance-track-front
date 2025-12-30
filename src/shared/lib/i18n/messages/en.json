@@ -26,8 +26,9 @@
     "comment": "Comment",
 
     "save": "Save",
+    "cancel": "Cancel",
 
-    "cancel": "Cancel"
+    "noDataForThisPeriod": "No data for this period"
   },
   "landing": {
     "startControl": "Start Controlling Your Finances",
@@ -49,9 +50,6 @@
     "registration": "Registration",
     "accAlreadyExist": "Already have an account?",
     "register": "Register"
-  },
-  "main": {
-    "noDataForThisPeriod": "No data for this period"
   },
 
   "operationsCreate": {

@@ -41,8 +41,6 @@ export const LoginForm = () => {
     );
   };
 
-  console.log(errors);
-
   const onSubmit = async (data: LoginFormType) => {
     const deviceId = localStorage.getItem('deviceId');
 

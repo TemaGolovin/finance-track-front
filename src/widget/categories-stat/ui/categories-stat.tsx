@@ -1,7 +1,6 @@
 'use client';
 
-import { BaseCard, Tabs } from '@/shared/ui';
-import { useTranslations } from 'next-intl';
+import { BaseCard } from '@/shared/ui';
 import { useCategoriesStat } from '../api/use-categories-stat';
 import {
   ChartConfig,
@@ -11,23 +10,27 @@ import {
 } from '@/shared/lib/shadcn/chart';
 import { Label, Pie, PieChart } from 'recharts';
 import { Button, formatNumberWithRound } from '@/shared/lib';
-import { useState } from 'react';
-import { BanknoteArrowDown, BanknoteArrowUp, PlusIcon } from 'lucide-react';
-import { DateRangeNavigator, DatesAndPeriod } from '@/feature/date-range-navigator';
-import { getIsoDatesFromPeriod } from '../lib/get-iso-dates-from-period';
+import { ArrowLeftRightIcon, PlusIcon } from 'lucide-react';
+import { DateRangeNavigator } from '@/feature/date-range-navigator';
 import { iconCategoryFromBackendMap } from '@/shared/lib';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/model/routes';
+import {
+  OperationTypeFilter,
+  PeriodFilter,
+  useTransactionsFilters,
+} from '@/feature/operation-filters';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 
 export const CategoriesStat = () => {
-  const [operationType, setOperationType] = useState<'EXPENSE' | 'INCOME'>('EXPENSE');
-  const [selectedDatesAndPeriod, setSelectedDatesAndPeriod] = useState<DatesAndPeriod>(() => ({
-    period: 'week',
-    dates: getIsoDatesFromPeriod('week'),
-  }));
-
   const commonT = useTranslations('common');
-  const mainPageT = useTranslations('main');
+  const searchParams = useSearchParams();
+
+  const urlParams = new URLSearchParams(searchParams);
+
+  const { operationType, setOperationType, selectedDatesAndPeriod, setSelectedDatesAndPeriod } =
+    useTransactionsFilters();
 
   const { data } = useCategoriesStat({
     operationType,
@@ -48,33 +51,10 @@ export const CategoriesStat = () => {
 
   return (
     <div className="flex flex-col gap-2 mt-2 pb-4">
-      <Tabs
-        tabsInfo={[
-          {
-            id: 'EXPENSE',
-            title: commonT('expenses'),
-            icon: <BanknoteArrowDown />,
-          },
-          { id: 'INCOME', title: commonT('income'), icon: <BanknoteArrowUp /> },
-        ]}
-        selectedIdObserver={setOperationType}
-      />
-      <Tabs
-        tabsInfo={[
-          { id: 'day', title: commonT('day') },
-          { id: 'week', title: commonT('week') },
-          { id: 'month', title: commonT('month') },
-          { id: 'year', title: commonT('year') },
-          { id: 'custom', title: 'Период' },
-        ]}
-        size="sm"
-        defaultValue="week"
-        selectedIdObserver={(newPeriod) =>
-          setSelectedDatesAndPeriod({
-            period: newPeriod,
-            dates: getIsoDatesFromPeriod(newPeriod),
-          })
-        }
+      <OperationTypeFilter operationType={operationType} setOperationType={setOperationType} />
+      <PeriodFilter
+        selectedDatesAndPeriod={selectedDatesAndPeriod}
+        setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
       />
 
       <BaseCard>
@@ -114,11 +94,16 @@ export const CategoriesStat = () => {
               </PieChart>
             ) : (
               <div className="flex items-center justify-center h-full text-md text-center">
-                {mainPageT('noDataForThisPeriod')}
+                {commonT('noDataForThisPeriod')}
               </div>
             )}
           </ChartContainer>
-          <Link href={ROUTES.OPERATION_CREATE}>
+          <Link href={`${ROUTES.OPERATION}?${urlParams.toString()}`}>
+            <Button size={'icon'} className="absolute bottom-11 right-0" variant={'outline'}>
+              <ArrowLeftRightIcon />
+            </Button>
+          </Link>
+          <Link href={`${ROUTES.OPERATION_CREATE}?type=${operationType}`}>
             <Button size={'icon'} className="absolute bottom-0 right-0" variant={'primary'}>
               <PlusIcon />
             </Button>

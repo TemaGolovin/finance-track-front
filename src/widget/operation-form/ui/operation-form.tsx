@@ -8,16 +8,20 @@ import { Button, Input, Tabs } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { createOperationSchema, OperationType } from '../model/schema';
 import { mapCrateOperationFormToApi } from '../model/mapping';
+import { useMemo } from 'react';
 
-export const CategoryForm = () => {
+export const OperationForm = () => {
   const commonT = useTranslations('common');
   const errorsT = useTranslations('errors');
   const operationsT = useTranslations('operationsCreate');
+
+  const searchParams = useSearchParams();
+  const currentParams = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
 
   const router = useRouter();
 
@@ -39,7 +43,7 @@ export const CategoryForm = () => {
     ),
     defaultValues: {
       date: new Date(),
-      type: 'EXPENSE',
+      type: (currentParams.get('type') as 'INCOME' | 'EXPENSE') || 'EXPENSE',
     },
   });
 
@@ -73,7 +77,8 @@ export const CategoryForm = () => {
                 },
                 { id: 'INCOME', title: commonT('income'), icon: <BanknoteArrowUp /> },
               ]}
-              selectedIdObserver={(newType) => {
+              selectedId={categoryType}
+              onSelect={(newType) => {
                 setValue('categoryId', '');
                 onChange(newType);
               }}
@@ -83,6 +88,7 @@ export const CategoryForm = () => {
       </div>
       <div className="mb-1">
         <Input
+          autoFocus
           placeholder={`${commonT('amount')}*`}
           inputSize="lg"
           isInputModeDecimal

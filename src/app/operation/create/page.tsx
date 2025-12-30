@@ -1,3 +1,3 @@
-import { CategoryForm } from '@/widget/category-form';
+import { OperationForm } from '@/widget/operation-form';
 
-export default () => <CategoryForm />;
+export default () => <OperationForm />;

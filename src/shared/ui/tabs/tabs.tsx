@@ -5,29 +5,23 @@ import { ReactNode } from 'react';
 interface TabsProps<TabIdType> {
   tabsInfo: {
     id: TabIdType;
-    title: string;
+    title: ReactNode;
     content?: ReactNode;
     icon?: ReactNode;
   }[];
-  defaultValue?: TabIdType;
-  selectedIdObserver?: (id: TabIdType) => void;
+  selectedId: TabIdType;
+  onSelect: (id: TabIdType) => void;
   size?: 'sm' | 'md';
 }
 
 export const Tabs = <TabIdType extends string>({
-  defaultValue,
   tabsInfo,
-  selectedIdObserver,
+  selectedId,
+  onSelect,
   size = 'md',
 }: TabsProps<TabIdType>) => {
-  const onClickTab = (id: TabIdType) => {
-    if (selectedIdObserver) {
-      selectedIdObserver(id);
-    }
-  };
-
   return (
-    <TabsShadcn defaultValue={defaultValue || tabsInfo[0].id}>
+    <TabsShadcn defaultValue={selectedId || tabsInfo[0].id}>
       <TabsList
         className={cn('w-full', {
           'h-10': size === 'md',
@@ -45,7 +39,7 @@ export const Tabs = <TabIdType extends string>({
             )}
             key={id}
             value={id}
-            onClick={() => onClickTab(id)}
+            onClick={() => onSelect(id)}
           >
             {icon && <span className="mr-2">{icon}</span>}
             {title}

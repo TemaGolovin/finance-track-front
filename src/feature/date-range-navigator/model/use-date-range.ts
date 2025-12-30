@@ -17,7 +17,7 @@ import { useLocale } from 'next-intl';
 
 interface UseDatesRangeProps {
   selectedDatesAndPeriod: DatesAndPeriod;
-  setSelectedDatesAndPeriod: React.Dispatch<React.SetStateAction<DatesAndPeriod>>;
+  setSelectedDatesAndPeriod: (datesAndPeriod: DatesAndPeriod) => void;
 }
 
 const getLabelFromPeriodName = (
@@ -25,24 +25,24 @@ const getLabelFromPeriodName = (
   dates: DatesAndPeriod['dates'],
   locale: string,
 ) => {
+  const startDate = dates.startDate || '';
+  const endDate = dates.endDate || '';
+  const dateFormatOptions = { locale: locale === 'ru' ? ru : undefined };
+
   switch (period) {
     case 'day':
-      return `${format(dates.startDate, 'dd LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`;
+      return `${format(startDate, 'dd LLLL yyyy', dateFormatOptions)}`;
     case 'week':
-      return `${format(dates.startDate, 'dd.MM.yyyy')} - ${format(dates.endDate, 'dd.MM.yyyy')}`;
+      return `${format(startDate, 'dd MMM', dateFormatOptions)} - ${format(endDate, 'dd MMM', dateFormatOptions)}`;
     case 'month':
       return (
-        `${format(dates.startDate, 'LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`
-          .slice(0, 1)
-          .toUpperCase() +
-        `${format(dates.startDate, 'LLLL yyyy', { locale: locale === 'ru' ? ru : undefined })}`.slice(
-          1,
-        )
+        `${format(startDate, 'LLLL yyyy', dateFormatOptions)}`.slice(0, 1).toUpperCase() +
+        `${format(startDate, 'LLLL yyyy', dateFormatOptions)}`.slice(1)
       );
     case 'year':
-      return `${format(dates.startDate, 'yyyy')}`;
+      return `${format(startDate, 'yyyy')}`;
     case 'custom':
-      return `${format(dates.startDate, 'dd.MM.yyyy')} - ${format(dates.endDate, 'dd.MM.yyyy')}`;
+      return `${format(startDate, 'dd MMM yyyy', dateFormatOptions)} - ${format(endDate, 'dd MMM yyyy', dateFormatOptions)}`;
     default:
       return '';
   }
@@ -62,19 +62,19 @@ export const useDateRange = ({
     );
   }, [selectedDatesAndPeriod, locale]);
 
+  const startDate = selectedDatesAndPeriod?.dates?.startDate || '';
+  const endDate = selectedDatesAndPeriod?.dates?.endDate || '';
+
   const handlePrevDatesRange = () => {
     if (
       selectedDatesAndPeriod.period === 'custom' ||
       selectedDatesAndPeriod.period === 'day' ||
       selectedDatesAndPeriod.period === 'week'
     ) {
-      const difference = differenceInDays(
-        selectedDatesAndPeriod?.dates?.startDate,
-        selectedDatesAndPeriod?.dates?.endDate,
-      );
+      const difference = differenceInDays(startDate, endDate);
 
-      const newStartDate = subDays(selectedDatesAndPeriod?.dates?.startDate, -difference + 1);
-      const newEndDate = subDays(selectedDatesAndPeriod?.dates?.endDate, -difference + 1);
+      const newStartDate = subDays(startDate, -difference + 1);
+      const newEndDate = subDays(endDate, -difference + 1);
 
       setSelectedDatesAndPeriod({
         period: selectedDatesAndPeriod?.period,
@@ -87,7 +87,7 @@ export const useDateRange = ({
       return;
     }
     if (selectedDatesAndPeriod.period === 'month') {
-      const newStartDate = subMonths(selectedDatesAndPeriod?.dates?.startDate, 1);
+      const newStartDate = subMonths(startDate, 1);
       const newEndDate = lastDayOfMonth(newStartDate);
 
       setSelectedDatesAndPeriod({
@@ -102,7 +102,7 @@ export const useDateRange = ({
     }
 
     if (selectedDatesAndPeriod.period === 'year') {
-      const newStartDate = subYears(selectedDatesAndPeriod?.dates?.startDate, 1);
+      const newStartDate = subYears(startDate, 1);
       const newEndDate = lastDayOfYear(newStartDate);
 
       setSelectedDatesAndPeriod({
@@ -121,26 +121,23 @@ export const useDateRange = ({
       selectedDatesAndPeriod.period === 'day' ||
       selectedDatesAndPeriod.period === 'week'
     ) {
-      const difference = differenceInDays(
-        selectedDatesAndPeriod?.dates?.endDate,
-        selectedDatesAndPeriod?.dates?.startDate,
-      );
+      const difference = differenceInDays(endDate, startDate);
 
-      const newStartDate = addDays(selectedDatesAndPeriod?.dates?.startDate, difference + 1);
-      const newEndDate = addDays(selectedDatesAndPeriod?.dates?.endDate, difference + 1);
+      const newStartDate = addDays(startDate, difference + 1);
+      const newEndDate = addDays(endDate, difference + 1);
 
-      setSelectedDatesAndPeriod((prev) => ({
-        ...prev,
+      setSelectedDatesAndPeriod({
+        ...selectedDatesAndPeriod,
         dates: {
           startDate: newStartDate.toISOString(),
           endDate: newEndDate.toISOString(),
         },
-      }));
+      });
 
       return;
     }
     if (selectedDatesAndPeriod.period === 'month') {
-      const newStartDate = addMonths(selectedDatesAndPeriod?.dates?.startDate, 1);
+      const newStartDate = addMonths(startDate, 1);
       const newEndDate = lastDayOfMonth(newStartDate);
 
       setSelectedDatesAndPeriod({
@@ -155,7 +152,7 @@ export const useDateRange = ({
     }
 
     if (selectedDatesAndPeriod.period === 'year') {
-      const newStartDate = addYears(selectedDatesAndPeriod?.dates?.startDate, 1);
+      const newStartDate = addYears(startDate, 1);
       const newEndDate = lastDayOfYear(newStartDate);
 
       setSelectedDatesAndPeriod({
