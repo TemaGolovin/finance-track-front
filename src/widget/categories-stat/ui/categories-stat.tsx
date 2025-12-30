@@ -113,7 +113,8 @@ export const CategoriesStat = () => {
       {data?.categories && data.categories.length > 0 && (
         <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 text-sm">
           {data.categories.map((category) => (
-            <div
+            <Link
+              href={`${ROUTES.OPERATION}?${urlParams.toString()}&categoryId=${category.id}`}
               className="grid grid-cols-subgrid col-span-full items-center px-2 rounded-lg bg-foreground/5 border border-foreground/10 py-1"
               key={category.id}
             >
@@ -130,7 +131,7 @@ export const CategoriesStat = () => {
                 {formatNumberWithRound(Number(category.proportion))} %
               </div>
               <div className="text-right">{formatNumberWithRound(Number(category.sum))}</div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

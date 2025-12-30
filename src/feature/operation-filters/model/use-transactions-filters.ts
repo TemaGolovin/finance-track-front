@@ -61,5 +61,6 @@ export const useTransactionsFilters = () => {
       },
     },
     setSelectedDatesAndPeriod: updateDatesAndPeriod,
+    categoryId: currentParams.get('categoryId') || undefined,
   };
 };

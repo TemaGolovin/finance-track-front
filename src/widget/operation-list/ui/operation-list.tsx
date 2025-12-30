@@ -16,13 +16,19 @@ import Link from 'next/link';
 export const OperationList = () => {
   const commonT = useTranslations('common');
 
-  const { operationType, setOperationType, selectedDatesAndPeriod, setSelectedDatesAndPeriod } =
-    useTransactionsFilters();
+  const {
+    operationType,
+    setOperationType,
+    selectedDatesAndPeriod,
+    setSelectedDatesAndPeriod,
+    categoryId,
+  } = useTransactionsFilters();
 
   const { data: operationsByDateWithTotalSum } = useOperations({
     startDate: selectedDatesAndPeriod?.dates?.startDate,
     endDate: selectedDatesAndPeriod?.dates?.endDate,
     operationType,
+    categoryId,
   });
 
   const operationsByDate = operationsByDateWithTotalSum?.operationsByDate;
