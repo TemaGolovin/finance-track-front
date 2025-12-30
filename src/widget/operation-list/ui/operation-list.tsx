@@ -48,7 +48,7 @@ export const OperationList = () => {
       />
       {totalSum && (
         <div>
-          <span className="text-foreground/60">{commonT('amount')}</span>:{' '}
+          <span className="text-foreground/60">{commonT('amount')}:</span>{' '}
           <span className="font-bold">{formatNumberWithRound(Number(totalSum))}</span>
         </div>
       )}
@@ -56,7 +56,9 @@ export const OperationList = () => {
         <div key={date}>
           <div className="text-sm font-bold text-foreground/80">{date}</div>
           {operations.map((operation) => (
-            <OperationSimpleCard key={operation.id} operation={operation} />
+            <Link key={operation.id} href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}>
+              <OperationSimpleCard operation={operation} />
+            </Link>
           ))}
         </div>
       ))}

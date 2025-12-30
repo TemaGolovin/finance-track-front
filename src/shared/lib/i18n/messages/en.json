@@ -15,6 +15,10 @@
     "week": "Week",
     "month": "Month",
     "year": "Year",
+    "date": "Date",
+
+    "sum": "Sum",
+    "category": "Category",
 
     "today": "Today",
     "yesterday": "Yesterday",
@@ -27,6 +31,8 @@
 
     "save": "Save",
     "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
 
     "noDataForThisPeriod": "No data for this period"
   },
@@ -52,10 +58,18 @@
     "register": "Register"
   },
 
-  "operationsCreate": {
-    "loading": "Saving transaction...",
-    "success": "Transaction saved",
-    "error": "Error saving transaction"
+  "operation": {
+    "loading": "Saving operation...",
+    "success": "Operation saved",
+    "error": "Error saving operation",
+
+    "deleteOperationLoading": "Deleting an operation",
+    "deleteOperationSuccess": "Operation deleted successfully",
+    "deleteOperationError": "Error deleting operation",
+
+    "operationDetail": "Operations details",
+    "deletingOperation": "Deleting an operation",
+    "confirmDelete": "Are you sure you want to delete this operation?"
   },
 
   "errors": {

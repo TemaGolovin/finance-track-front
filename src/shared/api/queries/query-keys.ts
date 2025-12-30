@@ -6,7 +6,7 @@ export const operations = {
     operationType?: 'INCOME' | 'EXPENSE';
     categoryId?: string;
   }) => [...operations.all, params],
-  byId: (id: string) => [...operations.all, id],
+  detail: (id: string) => [...operations.all, id],
 } as const;
 
 export const categories = {

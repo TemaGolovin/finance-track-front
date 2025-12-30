@@ -15,6 +15,10 @@
     "week": "Неделя",
     "month": "Месяц",
     "year": "Год",
+    "date": "Дата",
+
+    "sum": "Сумма",
+    "category": "Категория",
 
     "today": "Сегодня",
     "yesterday": "Вчера",
@@ -27,6 +31,8 @@
 
     "save": "Сохранить",
     "cancel": "Отменить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
 
     "noDataForThisPeriod": "Нет данных за этот период"
   },
@@ -55,10 +61,18 @@
     "authError": "Ошибка регистрации"
   },
 
-  "operationsCreate": {
-    "loading": "Сохранение транзакции...",
-    "success": "Транзакция сохранена",
-    "error": "Ошибка сохранения транзакции"
+  "operation": {
+    "loading": "Сохранение операции...",
+    "success": "Операция сохранена",
+    "error": "Ошибка сохранения операции",
+
+    "deleteOperationPromise": "Удаление операции",
+    "deleteOperationSuccess": "Операция удалена",
+    "deleteOperationError": "Ошибка удаления операции",
+
+    "operationDetail": "Детали операции",
+    "deletingOperation": "Удаление операции",
+    "confirmDelete": "Вы уверены, что хотите удалить операцию?"
   },
 
   "errors": {

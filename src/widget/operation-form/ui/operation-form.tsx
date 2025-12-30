@@ -2,7 +2,11 @@
 
 import { CategorySelector } from '@/feature/category-selector';
 import { QuickDatePicker } from '@/feature/quick-date-picker';
-import { useOperationCreate } from '@/shared/api/queries/operations';
+import {
+  useOperationCreate,
+  useOperationDetail,
+  useOperationEdit,
+} from '@/shared/api/queries/operations';
 import { ROUTES } from '@/shared/model/routes';
 import { Button, Input, Tabs } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,12 +17,16 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { createOperationSchema, OperationType } from '../model/schema';
 import { mapCrateOperationFormToApi } from '../model/mapping';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-export const OperationForm = () => {
+interface OperationFormProps {
+  editedId?: string;
+}
+
+export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
   const commonT = useTranslations('common');
   const errorsT = useTranslations('errors');
-  const operationsT = useTranslations('operationsCreate');
+  const operationsT = useTranslations('operation');
 
   const searchParams = useSearchParams();
   const currentParams = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
@@ -31,6 +39,7 @@ export const OperationForm = () => {
     formState: { errors },
     control,
     setValue,
+    reset,
   } = useForm<OperationType>({
     resolver: zodResolver(
       createOperationSchema({
@@ -50,9 +59,36 @@ export const OperationForm = () => {
   const categoryType = useWatch({ control, name: 'type' });
 
   const { mutateAsync: createOperation } = useOperationCreate();
+  const { mutateAsync: editOperation } = useOperationEdit();
+
+  const { data: editedOperation } = useOperationDetail(editedId || '', {
+    enabled: !!editedId,
+  });
+
+  useEffect(() => {
+    if (editedOperation) {
+      reset({
+        date: new Date(editedOperation.operationDate),
+        sum: editedOperation.value.toString(),
+        categoryId: editedOperation.categoryId,
+        comment: editedOperation.comment,
+        type: editedOperation.type,
+      });
+    }
+  }, [editedOperation, reset]);
 
   const onSubmit = async (data: OperationType) => {
     const dataForApi = mapCrateOperationFormToApi(data);
+    if (editedId) {
+      await toast.promise(editOperation({ id: editedId, data: dataForApi }), {
+        loading: operationsT('loading'),
+        success: operationsT('success'),
+        error: (data) => data?.message || operationsT('error'),
+      });
+      router.push(ROUTES.OPERATION_DETAIL.replace(':id', editedId));
+      return;
+    }
+
     await toast.promise(createOperation(dataForApi), {
       loading: operationsT('loading'),
       success: operationsT('success'),
