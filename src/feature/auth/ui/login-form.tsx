@@ -9,6 +9,7 @@ import { useLogin } from '../api/useLogin';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
+import { uuidV4 } from '@/shared/lib';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -45,7 +46,7 @@ export const LoginForm = () => {
     const deviceId = localStorage.getItem('deviceId');
 
     if (!deviceId) {
-      const newDeviceId = crypto.randomUUID();
+      const newDeviceId = uuidV4();
       localStorage.setItem('deviceId', newDeviceId);
 
       return loginReq(data, newDeviceId);

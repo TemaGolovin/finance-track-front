@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import { Drawer } from '../drawer/drawer';
 import { RangeCalendar } from '../calendar/range-calendar';

@@ -9,6 +9,7 @@ import { useRegistration } from '../api/useRegistration';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { ROUTES } from '@/shared/model/routes';
+import { uuidV4 } from '@/shared/lib';
 
 export const RegistrationForm = () => {
   const t = useTranslations();
@@ -25,7 +26,7 @@ export const RegistrationForm = () => {
   });
 
   const onSubmit = async (data: RegistrationFormType) => {
-    const deviceId = crypto.randomUUID();
+    const deviceId = uuidV4();
     localStorage.setItem('deviceId', deviceId);
 
     toast.promise(
