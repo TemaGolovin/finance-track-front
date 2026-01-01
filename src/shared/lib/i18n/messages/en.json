@@ -58,6 +58,12 @@
     "register": "Register"
   },
 
+  "sidebar": {
+    "menu": "Menu",
+    "main": "Main",
+    "operations": "Operations"
+  },
+
   "operation": {
     "loading": "Saving operation...",
     "success": "Operation saved",

@@ -20,3 +20,7 @@ export const categories = {
   }) => [...categories.categoriesStat, params],
   byId: (id: string) => [...categories.all, id],
 } as const;
+
+export const auth = {
+  me: ['me'],
+};
