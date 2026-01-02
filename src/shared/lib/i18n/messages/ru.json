@@ -33,6 +33,7 @@
     "cancel": "Отменить",
     "delete": "Удалить",
     "edit": "Редактировать",
+    "create": "Создать",
 
     "noDataForThisPeriod": "Нет данных за этот период"
   },
@@ -64,7 +65,8 @@
   "sidebar": {
     "menu": "Меню",
     "main": "Главная",
-    "operations": "Операции"
+    "operations": "Операции",
+    "categories": "Категории"
   },
 
   "operation": {

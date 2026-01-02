@@ -33,6 +33,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
+    "create": "Create",
 
     "noDataForThisPeriod": "No data for this period"
   },
@@ -61,7 +62,8 @@
   "sidebar": {
     "menu": "Menu",
     "main": "Main",
-    "operations": "Operations"
+    "operations": "Operations",
+    "categories": "Categories"
   },
 
   "operation": {
