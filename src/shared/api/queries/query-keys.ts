@@ -11,6 +11,7 @@ export const operations = {
 
 export const categories = {
   all: ['categories'],
+  detail: (id: string) => [...categories.all, id],
   categoriesParams: (params?: { type?: 'INCOME' | 'EXPENSE' }) => [...categories.all, params],
   categoriesStat: ['categories', 'stat'],
   categoriesStatParams: (params?: {

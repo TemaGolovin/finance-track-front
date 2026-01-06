@@ -12,3 +12,4 @@ export { Calendar } from './calendar/calendar';
 export { DatePickerDrawerSingle } from './date-picker-drawer/date-picker-drawer-single';
 export { DatePickerDrawerRange } from './date-picker-drawer/date-picker-drawer-range';
 export { Sheet } from './sheet/sheet';
+export { ColorSelector } from './color-selector/color-selector';

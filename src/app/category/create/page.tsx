@@ -1,7 +1,5 @@
+import { CategoryForm } from '@/widget/category-form';
+
 export default () => {
-  return (
-    <div>
-      <h1>Category create</h1>
-    </div>
-  );
+  return <CategoryForm />;
 };

@@ -1,5 +1,6 @@
+import { CategoryItem } from '@/entity/category';
 import { useCategories } from '@/shared/api/queries/categories';
-import { Button, iconCategoryFromBackendMap } from '@/shared/lib';
+import { Button } from '@/shared/lib';
 import { cn } from '@/shared/lib/shadcn/utils/utils';
 
 interface CategorySelectorProps {
@@ -38,17 +39,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             }}
             onClick={() => setSelectedCategoryId(category.id)}
           >
-            <div
-              className="h-10 w-10 rounded-full flex items-center justify-center"
-              style={{ background: category.color }}
-            >
-              {iconCategoryFromBackendMap?.[category.icon]}
-            </div>
-            <div className="w-full">
-              <div key={category.id} className="text-xs truncate">
-                {category.name}
-              </div>
-            </div>
+            <CategoryItem color={category.color} icon={category.icon} name={category.name} />
           </Button>
         ))}
       </div>

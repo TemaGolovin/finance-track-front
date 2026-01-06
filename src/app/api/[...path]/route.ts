@@ -11,7 +11,7 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
 
   const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}${incomingUrl?.search || ''}`;
 
-  let res = await fetch(url, {
+  const res = await fetch(url, {
     method: req.method,
     headers: {
       ...Object.fromEntries(req.headers),
@@ -40,7 +40,7 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
 
     const newCookies = await cookies();
 
-    res = await fetch(url, {
+    const newRes = await fetch(url, {
       method: req.method,
       headers: {
         Authorization: `Bearer ${newCookies.get('accessToken')?.value}`,
@@ -48,8 +48,8 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
       body: req.body,
     });
 
-    return new NextResponse(await res.text(), {
-      status: res.status,
+    return new NextResponse(await newRes.text(), {
+      status: newRes.status,
       headers: response.headers,
     });
   }

@@ -80,6 +80,24 @@
     "confirmDelete": "Are you sure you want to delete this operation?"
   },
 
+  "category": {
+    "categoryName": "Category name",
+    "categoryColor": "Category color",
+    "categoryIcon": "Category icon",
+
+    "loading": "Saving category...",
+    "success": "Category saved",
+    "error": "Error saving category",
+
+    "selectIconAndColor": "Select icon and color",
+    "colorPicker": "Color picker",
+    "iconPicker": "Icon picker",
+    "pickColor": "Pick a color",
+    "pickIcon": "Pick an icon",
+
+    "preview": "Preview"
+  },
+
   "errors": {
     "requiredField": "Required field",
     "requiredForSelect": "Required for selection",

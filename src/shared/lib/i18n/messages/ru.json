@@ -83,6 +83,24 @@
     "confirmDelete": "Вы уверены, что хотите удалить операцию?"
   },
 
+  "category": {
+    "categoryName": "Название категории",
+    "categoryColor": "Цвет категории",
+    "categoryIcon": "Иконка категории",
+
+    "loading": "Сохранение категории...",
+    "success": "Категория сохранена",
+    "error": "Ошибка сохранения категории",
+
+    "selectIconAndColor": "Выберите иконку и цвет",
+    "colorPicker": "Выбор цвета",
+    "iconPicker": "Выбор иконки",
+    "pickColor": "Выбрать цвет",
+    "pickIcon": "Выбрать иконку",
+
+    "preview": "Предпросмотр"
+  },
+
   "errors": {
     "requiredField": "Обязательное поле",
     "requiredForSelect": "Обязательно для выбора",

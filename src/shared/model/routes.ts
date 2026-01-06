@@ -11,7 +11,6 @@ export const ROUTES = {
 
   CATEGORY: '/category',
   CATEGORY_CREATE: '/category/create',
-  CATEGORY_DETAIL: '/category/:id',
   CATEGORY_EDIT: '/category/:id/edit',
 } as const;
 

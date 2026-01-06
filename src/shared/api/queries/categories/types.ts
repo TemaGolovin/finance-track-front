@@ -10,3 +10,6 @@ export interface Category {
   icon: IconCategory;
   categoryType: 'INCOME' | 'EXPENSE';
 }
+
+export interface CreateCategoryReq
+  extends Pick<Category, 'name' | 'categoryType' | 'color' | 'icon'> {}

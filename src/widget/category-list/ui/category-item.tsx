@@ -10,7 +10,7 @@ interface CategoryItemProps {
 export const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
   return (
     <Link
-      href={ROUTES.CATEGORY_DETAIL.replace(':id', category?.id)}
+      href={ROUTES.CATEGORY_EDIT.replace(':id', category?.id)}
       className={
         'text-center h-auto flex flex-col items-center py-2 border border-transparent border-solid rounded-2xl'
       }
