@@ -63,3 +63,17 @@ export const useCategoryEdit = () => {
     },
   });
 };
+
+export const useCategoryDelete = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id }: { id: string }) =>
+      instanceFetch(`/category/${id}`, {
+        method: 'DELETE',
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: categories.all });
+    },
+  });
+};

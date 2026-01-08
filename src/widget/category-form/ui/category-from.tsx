@@ -18,6 +18,7 @@ import { mapCategoryFormToDto } from '../model/mapCategoryFormToDto';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
 import { useEffect } from 'react';
+import { CategoryDelete } from '@/feature/category-delete';
 
 interface CategoryFormProps {
   editedId?: string;
@@ -143,7 +144,10 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
         </div>
         <CategoryResult />
 
-        <Button className="fixed bottom-4 inset-x-4" variant={'primary'} type="submit">
+        {editedId && (
+          <CategoryDelete categoryId={editedId} triggerBtnClasses="fixed bottom-16 inset-x-2" />
+        )}
+        <Button className="fixed bottom-4 inset-x-2" variant={'primary'} type="submit">
           {commonT('save')}
         </Button>
       </form>

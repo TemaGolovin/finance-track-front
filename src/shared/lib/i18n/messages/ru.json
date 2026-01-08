@@ -98,7 +98,14 @@
     "pickColor": "Выбрать цвет",
     "pickIcon": "Выбрать иконку",
 
-    "preview": "Предпросмотр"
+    "preview": "Предпросмотр",
+
+    "deletingCategory": "Удаление категории",
+    "confirmDelete": "Вы уверены, что хотите удалить категорию?",
+
+    "deleteCategoryLoading": "Удаление категории...",
+    "deleteCategorySuccess": "Категория удалена",
+    "deleteCategoryError": "Ошибка удаления категории"
   },
 
   "errors": {

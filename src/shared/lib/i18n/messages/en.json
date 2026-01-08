@@ -95,7 +95,14 @@
     "pickColor": "Pick a color",
     "pickIcon": "Pick an icon",
 
-    "preview": "Preview"
+    "preview": "Preview",
+
+    "deletingCategory": "Deleting a category",
+    "confirmDelete": "Are you sure you want to delete this category?",
+
+    "deleteCategoryLoading": "Deleting a category...",
+    "deleteCategorySuccess": "Category deleted successfully",
+    "deleteCategoryError": "Error deleting category"
   },
 
   "errors": {

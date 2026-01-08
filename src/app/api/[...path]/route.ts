@@ -11,13 +11,16 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
 
   const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}${incomingUrl?.search || ''}`;
 
+  const reqBody =
+    req.method === 'GET' || req.method === 'HEAD' ? undefined : await req.arrayBuffer();
+
   const res = await fetch(url, {
     method: req.method,
     headers: {
       ...Object.fromEntries(req.headers),
       Authorization: `Bearer ${cookieStore.get('accessToken')?.value}`,
     },
-    body: req.body,
+    body: reqBody,
     // @ts-ignore
     duplex: 'half',
   });
@@ -45,7 +48,7 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
       headers: {
         Authorization: `Bearer ${newCookies.get('accessToken')?.value}`,
       },
-      body: req.body,
+      body: reqBody,
     });
 
     return new NextResponse(await newRes.text(), {
@@ -54,7 +57,15 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
     });
   }
 
-  return new NextResponse(await res.text(), { status: res.status, headers: res.headers });
+  const resText = await res.text();
+
+  console.log(resText);
+
+  return new NextResponse(resText, {
+    status: res.status,
+    headers: res.headers,
+    statusText: res.statusText,
+  });
 }
 
 export const GET = handler;

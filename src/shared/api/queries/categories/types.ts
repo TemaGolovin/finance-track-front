@@ -9,6 +9,7 @@ export interface Category {
   color: string;
   icon: IconCategory;
   categoryType: 'INCOME' | 'EXPENSE';
+  defaultKey?: string;
 }
 
 export interface CreateCategoryReq
