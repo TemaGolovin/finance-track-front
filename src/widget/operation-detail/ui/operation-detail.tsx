@@ -4,9 +4,9 @@ import { OperationDelete } from '@/feature/operation-delete';
 import { useOperationDetail } from '@/shared/api/queries/operations';
 import { iconCategoryFromBackendMap } from '@/shared/lib';
 import { ROUTES } from '@/shared/model/routes';
-import { Button } from '@/shared/ui';
+import { Button, TitlePage } from '@/shared/ui';
 import { format } from 'date-fns';
-import { ArrowLeft, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -22,17 +22,10 @@ export const OperationDetail = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="font-bold flex items-center gap-3 bg-secondary text-secondary-foreground/80 p-2 -mx-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-secondary-foreground"
-          onClick={router.back}
-        >
-          <ArrowLeft />
-        </Button>
-        <div>{operationT('operationDetail')}</div>
-      </div>
+      <TitlePage
+        title={operationT('operationDetail')}
+        onBackBtnClick={() => router.push(ROUTES.OPERATION)}
+      />
       <div className="bg-card rounded-md p-2">
         <div className="text-foreground/60 mb-1 text-sm">{commonT('category')}</div>
         <div className="flex items-center gap-2">

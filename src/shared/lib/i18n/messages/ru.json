@@ -66,7 +66,8 @@
     "menu": "Меню",
     "main": "Главная",
     "operations": "Операции",
-    "categories": "Категории"
+    "categories": "Категории",
+    "groups": "Группы"
   },
 
   "operation": {
@@ -80,7 +81,9 @@
 
     "operationDetail": "Детали операции",
     "deletingOperation": "Удаление операции",
-    "confirmDelete": "Вы уверены, что хотите удалить операцию?"
+    "confirmDelete": "Вы уверены, что хотите удалить операцию?",
+
+    "operationsTitle": "Твои операции"
   },
 
   "category": {
@@ -105,7 +108,15 @@
 
     "deleteCategoryLoading": "Удаление категории...",
     "deleteCategorySuccess": "Категория удалена",
-    "deleteCategoryError": "Ошибка удаления категории"
+    "deleteCategoryError": "Ошибка удаления категории",
+
+    "categoriesTitle": "Твои категории"
+  },
+
+  "group": {
+    "groupsTitle": "Твои группы",
+    "creator": "Автор",
+    "members": "Участники"
   },
 
   "errors": {

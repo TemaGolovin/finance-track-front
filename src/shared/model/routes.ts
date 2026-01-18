@@ -12,6 +12,10 @@ export const ROUTES = {
   CATEGORY: '/category',
   CATEGORY_CREATE: '/category/create',
   CATEGORY_EDIT: '/category/:id/edit',
+
+  GROUP: '/group',
+  GROUP_CREATE: '/group/create',
+  GROUP_EDIT: '/group/:id/edit',
 } as const;
 
 export type RoutesType = (typeof ROUTES)[keyof typeof ROUTES];

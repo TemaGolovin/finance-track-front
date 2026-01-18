@@ -25,3 +25,7 @@ export const categories = {
 export const auth = {
   me: ['me'],
 };
+
+export const groups = {
+  all: ['groups'],
+};

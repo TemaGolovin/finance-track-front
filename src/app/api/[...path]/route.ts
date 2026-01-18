@@ -59,8 +59,6 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
 
   const resText = await res.text();
 
-  console.log(resText);
-
   return new NextResponse(resText, {
     status: res.status,
     headers: res.headers,
