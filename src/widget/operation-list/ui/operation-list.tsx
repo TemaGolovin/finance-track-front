@@ -7,9 +7,9 @@ import {
   useTransactionsFilters,
 } from '@/feature/operation-filters';
 import { useOperations } from '@/shared/api/queries/operations';
-import { Button, formatNumberWithRound } from '@/shared/lib';
+import { formatNumberWithRound } from '@/shared/lib';
 import { ROUTES } from '@/shared/model/routes';
-import { PlusIcon } from 'lucide-react';
+import { FixedPlusLinkButton } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
@@ -69,13 +69,7 @@ export const OperationList = () => {
         </div>
       )}
 
-      <div className="fixed bottom-4 right-4">
-        <Link href={`${ROUTES.OPERATION_CREATE}?type=${operationType}`}>
-          <Button size={'icon'} variant={'primary'}>
-            <PlusIcon />
-          </Button>
-        </Link>
-      </div>
+      <FixedPlusLinkButton link={`${ROUTES.OPERATION_CREATE}?type=${operationType}`} />
     </div>
   );
 };

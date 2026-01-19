@@ -22,9 +22,8 @@ export const CategoryList = () => {
           <CategoryItem category={category} key={category.id} />
         ))}
       </div>
-      <div className="text-center">
-        <CategoryCreateAction />
-      </div>
+
+      <CategoryCreateAction />
     </div>
   );
 };

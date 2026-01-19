@@ -80,7 +80,8 @@
     "deletingOperation": "Deleting an operation",
     "confirmDelete": "Are you sure you want to delete this operation?",
 
-    "operationsTitle": "Your operations"
+    "operationsTitle": "Your operations",
+    "operationCreateTitle": "Operation creation"
   },
 
   "category": {

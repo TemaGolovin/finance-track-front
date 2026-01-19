@@ -83,7 +83,8 @@
     "deletingOperation": "Удаление операции",
     "confirmDelete": "Вы уверены, что хотите удалить операцию?",
 
-    "operationsTitle": "Твои операции"
+    "operationsTitle": "Твои операции",
+    "operationCreateTitle": "Создание операции"
   },
 
   "category": {
