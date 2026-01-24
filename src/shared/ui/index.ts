@@ -15,3 +15,4 @@ export { Sheet } from './sheet/sheet';
 export { ColorSelector } from './color-selector/color-selector';
 export { TitlePage } from './title-page/title-page';
 export { FixedPlusLinkButton } from './button/fixed-plus-link-button';
+export { Badge } from '../lib/shadcn/badge';

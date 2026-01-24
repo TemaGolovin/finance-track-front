@@ -117,7 +117,26 @@
   "group": {
     "groupsTitle": "Твои группы",
     "creator": "Автор",
-    "members": "Участники"
+    "members": "Участники",
+
+    "groupCreateTitle": "Создание группы",
+    "groupCreate": "Создать группу",
+    "groupCreateAndInviteMembers": "Создать группу и пригласить участников",
+    "groupName": "Название группы",
+
+    "searchAndAddMembers": "Поиск и добавление участников",
+    "searchPlaceholder": "Введите ник, чтобы начать поиск",
+    "userNotFound": "Пользователь с таким ником не найден",
+    "selectedUsers": "Выбранные пользователи",
+    "selectUsers": "Выбрать пользователей",
+
+    "groupCreateLoading": "Создание группы...",
+    "groupCreateSuccess": "Группа создана",
+    "groupCreateError": "Ошибка создания группы",
+
+    "groupInviteMembersLoading": "Приглашение участников...",
+    "groupInviteMembersSuccess": "Участники приглашены",
+    "groupInviteMembersError": "Ошибка приглашения участников"
   },
 
   "errors": {

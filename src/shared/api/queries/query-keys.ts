@@ -24,8 +24,12 @@ export const categories = {
 
 export const auth = {
   me: ['me'],
-};
+} as const;
 
 export const groups = {
   all: ['groups'],
-};
+} as const;
+
+export const users = {
+  search: (name: string) => ['users', 'search', name],
+} as const;

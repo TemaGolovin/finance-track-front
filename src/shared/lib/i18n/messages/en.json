@@ -114,7 +114,26 @@
   "group": {
     "groupsTitle": "Your groups",
     "creator": "Creator",
-    "members": "Members"
+    "members": "Members",
+
+    "groupCreateTitle": "Group creation",
+    "groupCreate": "Create group",
+    "groupCreateAndInviteMembers": "Create group and invite members",
+    "groupName": "Group name",
+
+    "searchAndAddMembers": "Search and add members",
+    "searchPlaceholder": "Enter nickname to start search",
+    "userNotFound": "A user with that username was not found",
+    "selectedUsers": "Selected users",
+    "selectUsers": "Select user",
+
+    "groupCreateLoading": "Creating group...",
+    "groupCreateSuccess": "Group created",
+    "groupCreateError": "Error creating group",
+
+    "groupInviteMembersLoading": "Inviting members...",
+    "groupInviteMembersSuccess": "Members invited",
+    "groupInviteMembersError": "Error inviting members"
   },
 
   "errors": {
