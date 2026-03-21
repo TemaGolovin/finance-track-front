@@ -9,11 +9,10 @@ import { format } from 'date-fns';
 import { Pencil } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 export const OperationDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const router = useRouter();
 
   const commonT = useTranslations('common');
   const operationT = useTranslations('operation');
@@ -22,10 +21,7 @@ export const OperationDetail = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <TitlePage
-        title={operationT('operationDetail')}
-        onBackBtnClick={() => router.push(ROUTES.OPERATION)}
-      />
+      <TitlePage title={operationT('operationDetail')} backLink={ROUTES.OPERATION} />
       <div className="bg-card rounded-md p-2">
         <div className="text-foreground/60 mb-1 text-sm">{commonT('category')}</div>
         <div className="flex items-center gap-2">

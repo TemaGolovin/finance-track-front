@@ -11,16 +11,19 @@ import { useState } from 'react';
 interface UserSelectorProps {
   selectedUsers: User[];
   onAcceptSelectUsers: (user: User[]) => void;
+  excludeUserIds?: string[];
 }
 
 export const UserSelector: React.FC<UserSelectorProps> = ({
   selectedUsers,
   onAcceptSelectUsers,
+  excludeUserIds,
 }) => {
   const [innerName, setInnerName] = useState('');
   const [innerSelectedUsers, setInnerSelectedUsers] = useState<User[]>(selectedUsers);
 
   const groupT = useTranslations('group');
+  const commonT = useTranslations('common');
 
   const debouncedName = useDebounce({
     value: innerName,
@@ -67,7 +70,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
       renderContent={(onClose) => (
         <div>
           <Input
-            placeholder="Search user"
+            placeholder={groupT('searchUser')}
             value={innerName}
             onChange={(e) => setInnerName(e.target.value)}
           />
@@ -75,19 +78,21 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
           <div className="min-h-90">
             <div className="max-h-70 overflow-y-auto">
               {!!innerName &&
-                searchedUsers?.map((user) => (
-                  <button
-                    onClick={() => onSelectUser(user)}
-                    className={cn(
-                      'block w-full text-left text-sm py-1 px-2 mb-1 rounded-md border bg-muted/40 max-h-70 overflow-y-auto',
-                      { 'bg-muted': innerSelectedUsers.some((u) => u.id === user.id) },
-                    )}
-                    key={user.id}
-                    type="button"
-                  >
-                    {user.name}
-                  </button>
-                ))}
+                searchedUsers
+                  ?.filter((user) => !excludeUserIds?.includes(user.id))
+                  ?.map((user) => (
+                    <button
+                      onClick={() => onSelectUser(user)}
+                      className={cn(
+                        'block w-full text-left text-sm py-1 px-2 mb-1 rounded-md border bg-muted/40 max-h-70 overflow-y-auto',
+                        { 'bg-muted': innerSelectedUsers.some((u) => u.id === user.id) },
+                      )}
+                      key={user.id}
+                      type="button"
+                    >
+                      {user.name}
+                    </button>
+                  ))}
             </div>
             {!innerName?.length && (
               <div className="text-center h-full min-h-44 flex flex-col justify-center items-center">
@@ -118,7 +123,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
             )}
           </div>
           <Button className="w-full" onClick={() => onAccept(onClose)} variant={'primary'}>
-            Подтвердить
+            {commonT('confirm')}
           </Button>
         </div>
       )}

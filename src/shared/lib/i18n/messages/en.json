@@ -34,6 +34,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "create": "Create",
+    "confirm": "Confirm",
 
     "noDataForThisPeriod": "No data for this period"
   },
@@ -121,8 +122,11 @@
     "groupCreateAndInviteMembers": "Create group and invite members",
     "groupName": "Group name",
 
+    "groupEditTitle": "Group editing",
+
     "searchAndAddMembers": "Search and add members",
     "searchPlaceholder": "Enter nickname to start search",
+    "searchUser": "Search user",
     "userNotFound": "A user with that username was not found",
     "selectedUsers": "Selected users",
     "selectUsers": "Select user",
@@ -133,7 +137,15 @@
 
     "groupInviteMembersLoading": "Inviting members...",
     "groupInviteMembersSuccess": "Members invited",
-    "groupInviteMembersError": "Error inviting members"
+    "groupInviteMembersError": "Error inviting members",
+
+    "groupCreator": "Group creator",
+    "noMembersExceptCreator": "There are no members except the creator",
+
+    "inactiveMembers": "Inactive members",
+    "invitationAcceptPending": "Waiting for invitation acceptance",
+    "invitationDeclined": "Invitation declined",
+    "invitationCancelled": "Invitation cancelled"
   },
 
   "errors": {

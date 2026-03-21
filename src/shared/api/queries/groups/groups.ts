@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
 import { Group } from './types';
+import { Invitation } from '../user/types';
 
 export const useGroups = () => {
   return useQuery({
@@ -27,5 +28,50 @@ export const useGroupCreate = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: groups.all });
     },
+  });
+};
+
+export const useGroupUpdate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      instanceFetch<Group>(`/user-group/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ name }),
+      }),
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries({ queryKey: groups.all });
+      queryClient.invalidateQueries({ queryKey: groups.detail(id) });
+    },
+  });
+};
+
+export const useGroupDetail = ({ id }: { id: string }) => {
+  return useQuery({
+    queryKey: groups.detail(id || ''),
+    queryFn: () => instanceFetch<Group>(`/user-group/${id}`),
+    enabled: !!id,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retryOnMount: false,
+    retry: 2,
+  });
+};
+
+export const useGroupInvitations = ({ id }: { id?: string }) => {
+  return useQuery({
+    queryKey: groups.invitations(id || ''),
+    queryFn: () =>
+      instanceFetch<(Invitation & { recipient: { id: string; name: string } })[]>(
+        `/user-group/${id}/invitations`,
+      ),
+    enabled: !!id,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retryOnMount: false,
+    retry: 2,
   });
 };

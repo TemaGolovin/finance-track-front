@@ -1,33 +1,28 @@
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '../button/button';
-import { cn } from '@/shared/lib/shadcn/utils/utils';
+import { Skeleton } from '..';
+import { RoutesType } from '@/shared/model/routes';
+import Link from 'next/link';
 
 interface TitlePageProps {
   title: string;
   onBackBtnClick?: () => void;
+  backLink?: RoutesType;
+  isLoading?: boolean;
 }
 
-export const TitlePage: React.FC<TitlePageProps> = ({ title, onBackBtnClick }) => {
+export const TitlePage: React.FC<TitlePageProps> = ({ title, isLoading, backLink }) => {
   return (
     <div
-      className={cn(
-        'font-bold flex items-center gap-3 bg-secondary text-secondary-foreground/80 p-2 -mx-2 px-3',
-        {
-          'py-1': onBackBtnClick,
-        },
-      )}
+      className={
+        'font-bold flex items-center gap-3 bg-secondary text-secondary-foreground/80 p-2 -mx-2 px-3'
+      }
     >
-      {onBackBtnClick && (
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-secondary-foreground"
-          onClick={onBackBtnClick}
-        >
+      {backLink && (
+        <Link href={backLink} className="text-secondary-foreground">
           <ArrowLeft />
-        </Button>
+        </Link>
       )}
-      <div>{title}</div>
+      <div>{isLoading ? <Skeleton className="h-6 w-40 bg-background/50" /> : title}</div>
     </div>
   );
 };

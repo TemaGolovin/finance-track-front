@@ -28,6 +28,8 @@ export const auth = {
 
 export const groups = {
   all: ['groups'],
+  detail: (id: string) => [...groups.all, id],
+  invitations: (id: string) => [...groups.detail(id), 'invitations'],
 } as const;
 
 export const users = {

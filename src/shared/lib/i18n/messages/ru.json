@@ -34,6 +34,7 @@
     "delete": "Удалить",
     "edit": "Редактировать",
     "create": "Создать",
+    "confirm": "Подтвердить",
 
     "noDataForThisPeriod": "Нет данных за этот период"
   },
@@ -124,8 +125,11 @@
     "groupCreateAndInviteMembers": "Создать группу и пригласить участников",
     "groupName": "Название группы",
 
+    "groupEditTitle": "Редактирование группы",
+
     "searchAndAddMembers": "Поиск и добавление участников",
     "searchPlaceholder": "Введите ник, чтобы начать поиск",
+    "searchUser": "Поиск пользователя",
     "userNotFound": "Пользователь с таким ником не найден",
     "selectedUsers": "Выбранные пользователи",
     "selectUsers": "Выбрать пользователей",
@@ -136,7 +140,15 @@
 
     "groupInviteMembersLoading": "Приглашение участников...",
     "groupInviteMembersSuccess": "Участники приглашены",
-    "groupInviteMembersError": "Ошибка приглашения участников"
+    "groupInviteMembersError": "Ошибка приглашения участников",
+
+    "groupCreator": "Автор группы",
+    "noMembersExceptCreator": "Нет участников кроме автора",
+
+    "inactiveMembers": "Неактивные участники",
+    "invitationAcceptPending": "Ожидание принятия приглашения",
+    "invitationDeclined": "Приглашение отклонено",
+    "invitationCancelled": "Приглашение отменено"
   },
 
   "errors": {

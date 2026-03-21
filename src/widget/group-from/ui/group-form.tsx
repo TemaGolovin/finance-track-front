@@ -4,62 +4,44 @@ import { useTranslations } from 'next-intl';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { createGroupFormSchema, GroupFormType } from '../model/schema';
 import { UserSelector } from '@/feature/user-selector';
-import { useGroupCreate } from '@/shared/api/queries/groups';
-import { useInvitationUser } from '@/shared/api/queries/user';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/shared/model/routes';
+import { Group } from '@/shared/api/queries/groups';
+import { useMemo } from 'react';
+import { useGroupFormActions } from '../model/useGroupFormctions';
 
-export const GroupForm = () => {
+type GroupFormMode = 'create' | 'edit';
+
+interface GroupFormProps {
+  mode?: GroupFormMode;
+  group?: Group & { invitedUsersIds?: string[] };
+}
+
+export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) => {
   const groupT = useTranslations('group');
   const errorsT = useTranslations('errors');
 
-  const router = useRouter();
-
-  const { mutateAsync: groupCreate } = useGroupCreate();
-  const { mutateAsync: invitationUser } = useInvitationUser();
+  const { onSubmit } = useGroupFormActions(mode, group);
 
   const {
     control,
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<GroupFormType>({
     resolver: zodResolver(
       createGroupFormSchema({
         requiredField: errorsT('requiredField'),
       }),
     ),
+    defaultValues: {
+      name: group?.name ?? '',
+    },
   });
 
   const invitedUsers = useWatch({ control, name: 'invitedUsers' });
 
-  const onSubmit = async (data: GroupFormType) => {
-    const createdGroup = groupCreate(data.name);
-
-    toast.promise(createdGroup, {
-      loading: groupT('groupCreateLoading'),
-      success: groupT('groupCreateSuccess'),
-      error: (data) => data?.message || groupT('groupCreateError'),
-    });
-
-    const { id } = await createdGroup;
-
-    if (data?.invitedUsers?.length && id) {
-      toast.promise(
-        invitationUser({
-          groupId: id,
-          userIds: data.invitedUsers.map((user) => user.id),
-        }),
-        {
-          loading: groupT('groupInviteMembersLoading'),
-          success: groupT('groupInviteMembersSuccess'),
-          error: (data) => data?.message || groupT('groupInviteMembersError'),
-        },
-      );
-    }
-    router.push(ROUTES.GROUP);
-  };
+  const excludeUserIdsForSelector = useMemo(() => {
+    return [...(group?.invitedUsersIds || []), ...(group?.users?.map((user) => user.id) || [])];
+  }, [group]);
 
   return (
     <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
@@ -68,11 +50,16 @@ export const GroupForm = () => {
         {...register('name')}
         error={errors?.name?.message}
       />
+
       <Controller
         name="invitedUsers"
         control={control}
         render={({ field: { onChange, value } }) => (
-          <UserSelector selectedUsers={value || []} onAcceptSelectUsers={onChange} />
+          <UserSelector
+            selectedUsers={value || []}
+            onAcceptSelectUsers={onChange}
+            excludeUserIds={excludeUserIdsForSelector}
+          />
         )}
       />
 
