@@ -22,12 +22,8 @@ export const RemoveMemberDrawer: FC<RemoveMemberDrawerProps> = ({
   return (
     <Drawer
       trigger={
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-7 w-7 text-destructive hover:text-destructive"
-        >
-          <Trash2 className="h-4 w-4" />
+        <Button variant="ghost" size="icon-lg" className="text-destructive hover:text-destructive">
+          <Trash2 />
         </Button>
       }
       title={groupT('removeMemberTitle')}

@@ -12,7 +12,7 @@ interface TitlePageProps {
 
 export const TitlePage: React.FC<TitlePageProps> = ({ title, isLoading, backLink }) => {
   return (
-    <div className="flex items-center gap-2 py-3 -mx-2 px-3 border-b rounded-b-xl bg-linear-to-b dark:from-secondary/30 from-secondary/45 border-secondary/60 to-secondary/10">
+    <div className="flex items-center gap-2 py-3 -mx-2 px-3 rounded-b-xl bg-linear-to-b dark:from-secondary/30 from-secondary/45 to-secondary/10">
       {backLink && (
         <Link
           href={backLink}
