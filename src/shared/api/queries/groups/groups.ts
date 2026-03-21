@@ -75,3 +75,15 @@ export const useGroupInvitations = ({ id }: { id?: string }) => {
     retry: 2,
   });
 };
+
+export const useGroupRemoveMember = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ groupId, memberId }: { groupId: string; memberId: string }) =>
+      instanceFetch(`/user-group/${groupId}/members/${memberId}`, { method: 'DELETE' }),
+    onSuccess: (_, { groupId }) => {
+      queryClient.invalidateQueries({ queryKey: groups.detail(groupId) });
+    },
+  });
+};

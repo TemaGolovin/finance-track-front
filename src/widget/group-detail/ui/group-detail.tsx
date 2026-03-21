@@ -1,4 +1,5 @@
 import { Group, useGroupInvitations } from '@/shared/api/queries/groups';
+import { useAboutMe } from '@/shared/api/queries/auth';
 import { SecondaryCard } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 import { FC, Fragment } from 'react';
@@ -8,6 +9,7 @@ import { InvitationStatuses } from '@/shared/api/queries/invitation/types';
 import { SkeletonInfoStr } from './skeleton-info-str';
 import { FixedEditLinkIcon } from '@/shared/ui/button/fixed-edit-link-icon';
 import { ROUTES } from '@/shared/model/routes';
+import { RemoveMemberDrawer } from './remove-member-drawer';
 
 interface GroupDetailProps {
   group: Group | undefined;
@@ -19,8 +21,10 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
   const { data: groupInvitations, isLoading: isLoadingInvitation } = useGroupInvitations({
     id: group?.id,
   });
+  const { data: me } = useAboutMe();
 
   const membersWithoutCreator = group?.users?.filter((user) => user?.id !== group?.creatorId);
+  const isCreator = !!me?.data?.id && me.data.id === group?.creatorId;
 
   return (
     <>
@@ -34,7 +38,18 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
         <SecondaryCard title={groupT('members')}>
           <SkeletonInfoStr isLoading={isLoading}>
             {membersWithoutCreator?.length ? (
-              membersWithoutCreator?.map((user) => <div key={user.id}>{user.name}</div>)
+              membersWithoutCreator?.map((user) => (
+                <div key={user.id} className="flex items-center justify-between gap-2">
+                  <span>{user.name}</span>
+                  {isCreator && group && (
+                    <RemoveMemberDrawer
+                      groupId={group.id}
+                      memberId={user.id}
+                      memberName={user.name}
+                    />
+                  )}
+                </div>
+              ))
             ) : (
               <div className="text-sm">{groupT('noMembersExceptCreator')}</div>
             )}

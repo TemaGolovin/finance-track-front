@@ -148,7 +148,11 @@
     "inactiveMembers": "Неактивные участники",
     "invitationAcceptPending": "Ожидание принятия приглашения",
     "invitationDeclined": "Приглашение отклонено",
-    "invitationCancelled": "Приглашение отменено"
+    "invitationCancelled": "Приглашение отменено",
+
+    "removeMemberTitle": "Удалить участника",
+    "removeMemberDescription": "Вы уверены, что хотите удалить {name} из группы?",
+    "removeMemberAction": "Удалить"
   },
 
   "errors": {
