@@ -58,21 +58,23 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
         {!isLoadingInvitation && !!groupInvitations?.length && (
           <SecondaryCard title={groupT('inactiveMembers')}>
             <div className="grid grid-cols-[max-content_max-content] gap-x-4 gap-y-2 items-center">
-              {groupInvitations?.map((invitation) => (
-                <Fragment key={invitation.id}>
-                  <div>{invitation?.recipient?.name}</div>
-                  <div
-                    className={cn('text-xs', {
-                      'text-warning': invitation?.status === InvitationStatuses?.PENDING,
-                      'text-destructive':
-                        invitation?.status === InvitationStatuses?.DECLINED ||
-                        invitation?.status === InvitationStatuses?.CANCELLED,
-                    })}
-                  >
-                    {groupT(invitationStatusToKeyMessage?.[invitation?.status])}
-                  </div>
-                </Fragment>
-              ))}
+              {groupInvitations
+                ?.filter((invitation) => invitation.status === InvitationStatuses.PENDING)
+                ?.map((invitation) => (
+                  <Fragment key={invitation.id}>
+                    <div>{invitation?.recipient?.name}</div>
+                    <div
+                      className={cn('text-xs', {
+                        'text-warning': invitation?.status === InvitationStatuses?.PENDING,
+                        'text-destructive':
+                          invitation?.status === InvitationStatuses?.DECLINED ||
+                          invitation?.status === InvitationStatuses?.CANCELLED,
+                      })}
+                    >
+                      {groupT(invitationStatusToKeyMessage?.[invitation?.status])}
+                    </div>
+                  </Fragment>
+                ))}
             </div>
           </SecondaryCard>
         )}
