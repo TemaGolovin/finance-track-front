@@ -19,3 +19,23 @@ export interface InvitationUserReq {
   groupId: string;
   userIds: string[];
 }
+
+export interface ReceivedInvitation extends Invitation {
+  sender: { name: string };
+  group: { name: string };
+}
+
+export interface SentInvitation extends Invitation {
+  recipient: { name: string };
+  group: { name: string };
+}
+
+export interface InvitationsResponse {
+  received: ReceivedInvitation[];
+  sent: SentInvitation[];
+}
+
+export interface UpdateInvitationReq {
+  id: string;
+  status: InvitationStatusesType;
+}

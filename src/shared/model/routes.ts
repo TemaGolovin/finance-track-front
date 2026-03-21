@@ -17,6 +17,8 @@ export const ROUTES = {
   GROUP_CREATE: '/group/create',
   GROUP_DETAIL: '/group/:id',
   GROUP_EDIT: '/group/:id/edit',
+
+  INVITATION: '/invitation',
 } as const;
 
 export type RoutesType = (typeof ROUTES)[keyof typeof ROUTES];

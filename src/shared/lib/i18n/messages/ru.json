@@ -68,7 +68,8 @@
     "main": "Главная",
     "operations": "Операции",
     "categories": "Категории",
-    "groups": "Группы"
+    "groups": "Группы",
+    "invitations": "Приглашения"
   },
 
   "operation": {
@@ -153,6 +154,26 @@
     "removeMemberTitle": "Удалить участника",
     "removeMemberDescription": "Вы уверены, что хотите удалить {name} из группы?",
     "removeMemberAction": "Удалить"
+  },
+
+  "invitation": {
+    "invitationsTitle": "Приглашения",
+    "received": "Входящие",
+    "sent": "Исходящие",
+    "from": "От",
+    "to": "Кому",
+    "status": "Статус",
+    "accept": "Принять",
+    "decline": "Отклонить",
+    "cancel": "Отменить",
+    "noReceived": "Нет входящих приглашений",
+    "noSent": "Нет исходящих приглашений",
+    "statuses": {
+      "PENDING": "Ожидает",
+      "ACCEPTED": "Принято",
+      "DECLINED": "Отклонено",
+      "CANCELLED": "Отменено"
+    }
   },
 
   "errors": {

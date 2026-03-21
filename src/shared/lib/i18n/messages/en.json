@@ -65,7 +65,8 @@
     "main": "Main",
     "operations": "Operations",
     "categories": "Categories",
-    "groups": "Groups"
+    "groups": "Groups",
+    "invitations": "Invitations"
   },
 
   "operation": {
@@ -150,6 +151,26 @@
     "removeMemberTitle": "Remove member",
     "removeMemberDescription": "Are you sure you want to remove {name} from the group?",
     "removeMemberAction": "Remove"
+  },
+
+  "invitation": {
+    "invitationsTitle": "Invitations",
+    "received": "Received",
+    "sent": "Sent",
+    "from": "From",
+    "to": "To",
+    "status": "Status",
+    "accept": "Accept",
+    "decline": "Decline",
+    "cancel": "Cancel",
+    "noReceived": "No incoming invitations",
+    "noSent": "No outgoing invitations",
+    "statuses": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "DECLINED": "Declined",
+      "CANCELLED": "Cancelled"
+    }
   },
 
   "errors": {

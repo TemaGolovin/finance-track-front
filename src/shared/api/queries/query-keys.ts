@@ -35,3 +35,7 @@ export const groups = {
 export const users = {
   search: (name: string) => ['users', 'search', name],
 } as const;
+
+export const invitations = {
+  all: ['invitations'],
+} as const;
