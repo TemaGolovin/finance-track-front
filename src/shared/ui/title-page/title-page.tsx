@@ -12,17 +12,18 @@ interface TitlePageProps {
 
 export const TitlePage: React.FC<TitlePageProps> = ({ title, isLoading, backLink }) => {
   return (
-    <div
-      className={
-        'font-bold flex items-center gap-3 bg-secondary text-secondary-foreground/80 p-2 -mx-2 px-3'
-      }
-    >
+    <div className="flex items-center gap-2 py-3 -mx-2 px-3 border-b rounded-b-xl bg-linear-to-b from-secondary/30 border-secondary/60 to-secondary/10">
       {backLink && (
-        <Link href={backLink} className="text-secondary-foreground">
-          <ArrowLeft />
+        <Link
+          href={backLink}
+          className="flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent transition-colors shrink-0"
+        >
+          <ArrowLeft size={18} />
         </Link>
       )}
-      <div>{isLoading ? <Skeleton className="h-6 w-40 bg-background/50" /> : title}</div>
+      <h1 className="text-lg font-semibold tracking-tight text-foreground truncate">
+        {isLoading ? <Skeleton className="h-6 w-40" /> : title}
+      </h1>
     </div>
   );
 };

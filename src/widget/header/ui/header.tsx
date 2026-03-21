@@ -5,7 +5,7 @@ import { Sidebar } from '@/widget/sidebar';
 
 export const Header = async () => {
   return (
-    <header className="bg-base-300 border-b border-border py-0.5">
+    <header className="bg-base-300 py-0.5 bg-linear-to-b from-secondary/60 dark:from-secondary/50 to-secondary/33">
       <div className="container mx-auto px-2 sm:px-0 flex justify-between items-center">
         <div className="flex gap-2">
           <Sidebar />
