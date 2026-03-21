@@ -6,7 +6,11 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-export const ThemeSwitcher = () => {
+interface ThemeSwitcherProps {
+  btnClassName?: string;
+}
+
+export const ThemeSwitcher = ({ btnClassName }: ThemeSwitcherProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const { setTheme, theme, systemTheme } = useTheme();
   const t = useTranslations();
@@ -20,6 +24,7 @@ export const ThemeSwitcher = () => {
   return (
     <Tooltip content={t('common.changeTheme')}>
       <Button
+        className={btnClassName}
         variant="default"
         size="icon"
         onClick={() => {

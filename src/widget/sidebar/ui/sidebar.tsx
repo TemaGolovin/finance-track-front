@@ -23,7 +23,12 @@ export const Sidebar = () => {
       isOpen={isOpenSidebar}
       onOpenChange={setIsOpenSidebar}
       trigger={
-        <Button asChild size="icon" variant="outline">
+        <Button
+          asChild
+          size="icon"
+          className="bg-linear-to-t from-secondary/60 to-background/70"
+          variant="outline"
+        >
           <Menu />
         </Button>
       }

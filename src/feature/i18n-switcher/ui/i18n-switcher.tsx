@@ -6,7 +6,11 @@ import { Button, DropdownRadio, Tooltip } from '@/shared/ui';
 import { Languages } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
-export const I18nSwitcher = () => {
+interface I18nSwitcherProps {
+  btnClassName?: string;
+}
+
+export const I18nSwitcher = ({ btnClassName }: I18nSwitcherProps) => {
   const locale = useLocale();
   const t = useTranslations();
 
@@ -16,7 +20,7 @@ export const I18nSwitcher = () => {
       trigger={
         <div className="max-w-max inline">
           <Tooltip content={t('common.changeLanguage')}>
-            <Button size="icon" variant="default">
+            <Button size="icon" variant="default" className={btnClassName}>
               <Languages />
             </Button>
           </Tooltip>

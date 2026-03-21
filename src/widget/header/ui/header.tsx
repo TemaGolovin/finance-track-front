@@ -5,16 +5,16 @@ import { Sidebar } from '@/widget/sidebar';
 
 export const Header = async () => {
   return (
-    <header className="bg-base-300 py-0.5 bg-linear-to-b from-secondary/60 dark:from-secondary/50 to-secondary/33">
+    <header className="bg-base-300 py-0.5 bg-linear-to-b from-secondary/60 to-secondary/33">
       <div className="container mx-auto px-2 sm:px-0 flex justify-between items-center">
         <div className="flex gap-2">
           <Sidebar />
           <MainLogoAction />
         </div>
 
-        <div>
-          <ThemeSwitcher />
-          <I18nSwitcher />
+        <div className="flex gap-2">
+          <ThemeSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
+          <I18nSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
           <LoginAction />
         </div>
       </div>
