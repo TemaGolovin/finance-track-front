@@ -18,3 +18,4 @@ export { FixedPlusLinkButton } from './button/fixed-plus-link-button';
 export { Badge } from '../lib/shadcn/badge';
 export { Skeleton } from '../lib/shadcn/skeleton';
 export { SecondaryCard } from './secondary-card/secondary-card';
+export { Hint } from './hint/hint';

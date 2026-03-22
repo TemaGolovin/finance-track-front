@@ -154,7 +154,15 @@
 
     "removeMemberTitle": "Удалить участника",
     "removeMemberDescription": "Вы уверены, что хотите удалить {name} из группы?",
-    "removeMemberAction": "Удалить"
+    "removeMemberAction": "Удалить",
+
+    "connectCategoriesTitle": "Привязка категорий",
+    "connectCategoriesDescription": "Сопоставьте личную категорию для каждой групповой",
+    "connectCategoriesSkip": "Пропустить",
+    "connectCategoriesLoading": "Сохранение привязок...",
+    "connectCategoriesSuccess": "Категории привязаны",
+    "connectCategoriesError": "Ошибка привязки категорий",
+    "notConnected": "Не привязана"
   },
 
   "invitation": {

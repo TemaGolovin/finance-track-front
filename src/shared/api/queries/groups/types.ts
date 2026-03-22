@@ -16,3 +16,16 @@ export interface Group {
     status: InvitationStatusesType;
   }[];
 }
+
+export interface GroupCategory {
+  id: string;
+  name: string;
+  categoryType: 'EXPENSE' | 'INCOME';
+  defaultKey: string | null;
+  connectedPersonalCategoryId: string | null;
+}
+
+export interface ConnectGroupCategoriesReq {
+  groupId: string;
+  relatedCategories: { personalCategoryId: string; groupCategoryId: string }[];
+}

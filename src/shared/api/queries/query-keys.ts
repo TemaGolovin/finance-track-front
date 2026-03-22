@@ -30,6 +30,7 @@ export const groups = {
   all: ['groups'],
   detail: (id: string) => [...groups.all, id],
   invitations: (id: string) => [...groups.detail(id), 'invitations'],
+  categories: (id: string) => [...groups.detail(id), 'categories'],
 } as const;
 
 export const users = {

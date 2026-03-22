@@ -19,9 +19,13 @@ export const OperationTypeFilter: React.FC<OperationTypeFilterProps> = ({
         {
           id: 'EXPENSE',
           title: commonT('expenses'),
-          icon: <BanknoteArrowDown />,
+          icon: <BanknoteArrowDown className="text-destructive/80" />,
         },
-        { id: 'INCOME', title: commonT('income'), icon: <BanknoteArrowUp /> },
+        {
+          id: 'INCOME',
+          title: commonT('income'),
+          icon: <BanknoteArrowUp className="text-success/80" />,
+        },
       ]}
       selectedId={operationType}
       onSelect={setOperationType}

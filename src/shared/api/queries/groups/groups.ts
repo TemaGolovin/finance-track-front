@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
-import { Group } from './types';
+import { ConnectGroupCategoriesReq, Group, GroupCategory } from './types';
 import { Invitation } from '../user/types';
 
 export const useGroups = () => {
@@ -84,6 +84,34 @@ export const useGroupRemoveMember = () => {
       instanceFetch(`/user-group/${groupId}/members/${memberId}`, { method: 'DELETE' }),
     onSuccess: (_, { groupId }) => {
       queryClient.invalidateQueries({ queryKey: groups.detail(groupId) });
+    },
+  });
+};
+
+export const useGroupCategories = ({ groupId }: { groupId: string }) => {
+  return useQuery({
+    queryKey: groups.categories(groupId),
+    queryFn: () => instanceFetch<GroupCategory[]>(`/user-group/${groupId}/categories`),
+    enabled: !!groupId,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retryOnMount: false,
+    retry: 2,
+  });
+};
+
+export const useConnectGroupCategories = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ groupId, relatedCategories }: ConnectGroupCategoriesReq) =>
+      instanceFetch(`/user-group/${groupId}/category/connect`, {
+        method: 'PATCH',
+        body: JSON.stringify({ relatedCategories }),
+      }),
+    onSuccess: (_, { groupId }) => {
+      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
     },
   });
 };

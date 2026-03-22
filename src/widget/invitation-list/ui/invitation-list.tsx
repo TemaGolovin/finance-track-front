@@ -1,28 +1,37 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useInvitations, useUpdateInvitation } from '@/shared/api/queries/user';
 import { Tabs } from '@/shared/ui';
 import { ReceivedInvitationCard, SentInvitationCard } from '@/entity/invitation';
 import { InvitationStatuses } from '@/shared/api/queries/invitation/types';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+import { ROUTES } from '@/shared/model/routes';
 
 type TabId = 'received' | 'sent';
 
 export const InvitationList = () => {
   const t = useTranslations('invitation');
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabId>('received');
 
   const { data } = useInvitations();
   const { mutateAsync: updateInvitation, isPending } = useUpdateInvitation();
 
-  const handleAccept = (id: string) => {
-    toast.promise(updateInvitation({ id, status: InvitationStatuses.ACCEPTED }), {
+  const handleAccept = async (id: string) => {
+    const invitation = data?.received.find((inv) => inv.id === id);
+
+    await toast.promise(updateInvitation({ id, status: InvitationStatuses.ACCEPTED }), {
       loading: t('acceptLoading'),
       success: t('acceptSuccess'),
       error: (err) => err?.message || t('updateError'),
     });
+
+    if (invitation?.groupId) {
+      router.push(ROUTES.GROUP_CONNECT_CATEGORIES.replace(':id', invitation.groupId));
+    }
   };
 
   const handleDecline = (id: string) => {

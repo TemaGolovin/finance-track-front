@@ -8,11 +8,15 @@ export const useCategories = (params?: {
 }) => {
   const searchParams = new URLSearchParams();
 
-  searchParams.set('type', params?.type || '');
+  if (params?.type) {
+    searchParams.set('type', params.type);
+  }
+
+  const queryString = searchParams.toString();
 
   return useQuery({
     queryKey: categories.categoriesParams(params),
-    queryFn: () => instanceFetch<Category[]>(`/category?${searchParams.toString()}`),
+    queryFn: () => instanceFetch<Category[]>(`/category${queryString ? `?${queryString}` : ''}`),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

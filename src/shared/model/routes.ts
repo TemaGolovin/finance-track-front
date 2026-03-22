@@ -17,6 +17,7 @@ export const ROUTES = {
   GROUP_CREATE: '/group/create',
   GROUP_DETAIL: '/group/:id',
   GROUP_EDIT: '/group/:id/edit',
+  GROUP_CONNECT_CATEGORIES: '/group/:id/connect-categories',
 
   INVITATION: '/invitation',
 } as const;

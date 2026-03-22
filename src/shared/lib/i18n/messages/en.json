@@ -151,7 +151,15 @@
 
     "removeMemberTitle": "Remove member",
     "removeMemberDescription": "Are you sure you want to remove {name} from the group?",
-    "removeMemberAction": "Remove"
+    "removeMemberAction": "Remove",
+
+    "connectCategoriesTitle": "Link categories",
+    "connectCategoriesDescription": "Map your personal category for each group category",
+    "connectCategoriesSkip": "Skip",
+    "connectCategoriesLoading": "Saving links...",
+    "connectCategoriesSuccess": "Categories linked",
+    "connectCategoriesError": "Error linking categories",
+    "notConnected": "Not linked"
   },
 
   "invitation": {
