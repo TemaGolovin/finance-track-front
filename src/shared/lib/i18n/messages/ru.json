@@ -169,6 +169,13 @@
     "cancel": "Отменить",
     "noReceived": "Нет входящих приглашений",
     "noSent": "Нет исходящих приглашений",
+    "acceptLoading": "Принимаем приглашение...",
+    "acceptSuccess": "Приглашение принято",
+    "declineLoading": "Отклоняем приглашение...",
+    "declineSuccess": "Приглашение отклонено",
+    "cancelLoading": "Отменяем приглашение...",
+    "cancelSuccess": "Приглашение отменено",
+    "updateError": "Что-то пошло не так",
     "statuses": {
       "PENDING": "Ожидает",
       "ACCEPTED": "Принято",

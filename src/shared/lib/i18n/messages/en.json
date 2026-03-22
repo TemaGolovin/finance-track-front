@@ -166,6 +166,13 @@
     "cancel": "Cancel",
     "noReceived": "No incoming invitations",
     "noSent": "No outgoing invitations",
+    "acceptLoading": "Accepting invitation...",
+    "acceptSuccess": "Invitation accepted",
+    "declineLoading": "Declining invitation...",
+    "declineSuccess": "Invitation declined",
+    "cancelLoading": "Cancelling invitation...",
+    "cancelSuccess": "Invitation cancelled",
+    "updateError": "Something went wrong",
     "statuses": {
       "PENDING": "Pending",
       "ACCEPTED": "Accepted",

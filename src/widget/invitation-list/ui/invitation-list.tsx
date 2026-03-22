@@ -6,6 +6,7 @@ import { Tabs } from '@/shared/ui';
 import { ReceivedInvitationCard, SentInvitationCard } from '@/entity/invitation';
 import { InvitationStatuses } from '@/shared/api/queries/invitation/types';
 import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
 type TabId = 'received' | 'sent';
 
@@ -14,18 +15,30 @@ export const InvitationList = () => {
   const [activeTab, setActiveTab] = useState<TabId>('received');
 
   const { data } = useInvitations();
-  const { mutate: updateInvitation, isPending } = useUpdateInvitation();
+  const { mutateAsync: updateInvitation, isPending } = useUpdateInvitation();
 
   const handleAccept = (id: string) => {
-    updateInvitation({ id, status: InvitationStatuses.ACCEPTED });
+    toast.promise(updateInvitation({ id, status: InvitationStatuses.ACCEPTED }), {
+      loading: t('acceptLoading'),
+      success: t('acceptSuccess'),
+      error: (err) => err?.message || t('updateError'),
+    });
   };
 
   const handleDecline = (id: string) => {
-    updateInvitation({ id, status: InvitationStatuses.DECLINED });
+    toast.promise(updateInvitation({ id, status: InvitationStatuses.DECLINED }), {
+      loading: t('declineLoading'),
+      success: t('declineSuccess'),
+      error: (err) => err?.message || t('updateError'),
+    });
   };
 
   const handleCancel = (id: string) => {
-    updateInvitation({ id, status: InvitationStatuses.CANCELLED });
+    toast.promise(updateInvitation({ id, status: InvitationStatuses.CANCELLED }), {
+      loading: t('cancelLoading'),
+      success: t('cancelSuccess'),
+      error: (err) => err?.message || t('updateError'),
+    });
   };
 
   const receivedContent = (
