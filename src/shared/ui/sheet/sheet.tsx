@@ -1,6 +1,7 @@
 import {
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   Sheet as SheetShadcn,
   SheetTitle,
@@ -10,6 +11,7 @@ import {
 interface SheetProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   title?: string;
   description?: string;
   isOpen?: boolean;
@@ -19,6 +21,7 @@ interface SheetProps {
 export const Sheet: React.FC<SheetProps> = ({
   trigger,
   children,
+  footer,
   title,
   description,
   isOpen,
@@ -33,6 +36,7 @@ export const Sheet: React.FC<SheetProps> = ({
           <SheetDescription>{description}</SheetDescription>
           {children}
         </SheetHeader>
+        {footer && <SheetFooter>{footer}</SheetFooter>}
       </SheetContent>
     </SheetShadcn>
   );

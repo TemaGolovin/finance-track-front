@@ -1,6 +1,7 @@
 'use client';
+import { LogoutAction } from '@/feature/auth';
 import { Button, Sheet } from '@/shared/ui';
-import { Menu } from 'lucide-react';
+import { LogOut, Menu } from 'lucide-react';
 import { getSidebarItems } from '../lib/sidebar-items';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -22,6 +23,15 @@ export const Sidebar = () => {
       title="Menu"
       isOpen={isOpenSidebar}
       onOpenChange={setIsOpenSidebar}
+      footer={
+        <LogoutAction
+          btnClassName="w-full bg-destructive text-destructive-foreground"
+          onSuccessAdditional={() => setIsOpenSidebar(false)}
+        >
+          <LogOut className="w-6 h-6" />
+          {sidebarT('logout')}
+        </LogoutAction>
+      }
       trigger={
         <Button
           asChild

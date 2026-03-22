@@ -61,6 +61,7 @@
   },
 
   "sidebar": {
+    "logout": "Logout",
     "menu": "Menu",
     "main": "Main",
     "operations": "Operations",

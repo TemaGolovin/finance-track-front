@@ -14,6 +14,7 @@ const badgeVariants = cva(
         destructive:
           'border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline: 'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        accent: 'border-transparent bg-accent text-accent-foreground [a&]:hover:bg-accent/90',
       },
     },
     defaultVariants: {
@@ -27,7 +28,11 @@ function Badge({
   variant,
   asChild = false,
   ...props
-}: React.ComponentProps<'span'> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+}: React.ComponentProps<'span'> &
+  VariantProps<typeof badgeVariants> & {
+    asChild?: boolean;
+    size?: 'default' | 'sm' | 'lg' | 'xl';
+  }) {
   const Comp = asChild ? Slot : 'span';
 
   return (

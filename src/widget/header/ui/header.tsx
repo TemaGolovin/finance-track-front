@@ -2,7 +2,7 @@ import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { LoginAction } from './login-action';
 import { MainLogoAction } from './main-logo';
 import { Sidebar } from '@/widget/sidebar';
-import { LogoutAction } from './logout-action';
+import { InvitationAction } from './invitation-action';
 
 export const Header = async () => {
   return (
@@ -17,7 +17,7 @@ export const Header = async () => {
           <ThemeSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
           <I18nSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
           <LoginAction />
-          <LogoutAction />
+          <InvitationAction />
         </div>
       </div>
     </header>

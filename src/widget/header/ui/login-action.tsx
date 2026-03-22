@@ -16,7 +16,7 @@ export const LoginAction = () => {
     <Button size="icon" variant="default" asChild>
       <Link
         href={ROUTES.LOGIN}
-        className="inline-flex bg-primary text-primary-foreground items-center justify-center p-2 hover:bg-base-200 transition-colors"
+        className="inline-flex bg-primary text-primary-foreground items-center justify-center p-2 hover:bg-primary/80 hover:shadow-lg transition-colors"
         title="Login"
         aria-label="Login"
       >
