@@ -24,17 +24,21 @@ export const useOperations = (params?: {
   endDate?: string;
   operationType?: 'INCOME' | 'EXPENSE';
   categoryId?: string;
+  enabled?: boolean;
 }) => {
+  const { startDate, endDate, operationType, categoryId, enabled = true } = params || {};
+  
   const searchParams = new URLSearchParams();
 
-  if (params?.startDate) searchParams.set('startDate', params.startDate);
-  if (params?.endDate) searchParams.set('endDate', params.endDate);
-  if (params?.operationType) searchParams.set('operationType', params.operationType);
-  if (params?.categoryId) searchParams.set('categoryId', params.categoryId);
+  if (startDate) searchParams.set('startDate', startDate);
+  if (endDate) searchParams.set('endDate', endDate);
+  if (operationType) searchParams.set('operationType', operationType);
+  if (categoryId) searchParams.set('categoryId', categoryId);
 
   return useQuery({
     queryKey: operations.operationsParams(params),
     queryFn: () => instanceFetch<GetOperationsRes>(`/operation?${searchParams.toString()}`),
+    enabled,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

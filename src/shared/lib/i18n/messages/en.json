@@ -37,7 +37,8 @@
     "confirm": "Confirm",
 
     "noDataForThisPeriod": "No data for this period",
-    "personal": "Personal"
+    "personal": "Personal",
+    "user": "User"
   },
   "landing": {
     "startControl": "Start Controlling Your Finances",

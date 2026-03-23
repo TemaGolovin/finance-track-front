@@ -37,7 +37,8 @@
     "confirm": "Подтвердить",
 
     "noDataForThisPeriod": "Нет данных за этот период",
-    "personal": "Личные"
+    "personal": "Личные",
+    "user": "Пользователь"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",

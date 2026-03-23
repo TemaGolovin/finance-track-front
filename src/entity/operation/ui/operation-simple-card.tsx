@@ -3,8 +3,14 @@ import { formatNumberWithRound, iconCategoryFromBackendMap } from '@/shared/lib'
 
 interface OperationSimpleProps {
   operation: Operation;
+  showUser?: boolean;
+  userName?: string;
 }
-export const OperationSimpleCard: React.FC<OperationSimpleProps> = ({ operation }) => {
+export const OperationSimpleCard: React.FC<OperationSimpleProps> = ({
+  operation,
+  showUser = false,
+  userName,
+}) => {
   return (
     <div className="bg-card rounded-sm px-2 py-1">
       <div className="flex items-center gap-3">
@@ -16,6 +22,9 @@ export const OperationSimpleCard: React.FC<OperationSimpleProps> = ({ operation 
         </div>
         <div>
           <div className="text-sm font-bold text-foreground/50">{operation.category.name}</div>
+          {showUser && userName && (
+            <div className="text-xs text-foreground/60">{userName}</div>
+          )}
           <div className="font-bold text-foreground/80">
             {formatNumberWithRound(operation.value)}{' '}
           </div>

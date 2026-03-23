@@ -35,6 +35,15 @@ export const groups = {
     id: string,
     params?: { operationType?: 'INCOME' | 'EXPENSE'; startDate?: string; endDate?: string },
   ) => [...groups.detail(id), 'stat', params],
+  operations: (
+    id: string,
+    params?: {
+      startDate?: string;
+      endDate?: string;
+      operationType?: 'INCOME' | 'EXPENSE';
+      categoryId?: string;
+    },
+  ) => [...groups.detail(id), 'operations', params],
 } as const;
 
 export const users = {

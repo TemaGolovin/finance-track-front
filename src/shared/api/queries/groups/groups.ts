@@ -128,6 +128,35 @@ export const useGroupStat = (params: {
   });
 };
 
+export const useGroupOperations = (params: {
+  groupId: string;
+  operationType?: 'INCOME' | 'EXPENSE';
+  startDate?: string;
+  endDate?: string;
+  categoryId?: string;
+  enabled?: boolean;
+}) => {
+  const { groupId, operationType, startDate, endDate, categoryId, enabled = true } = params;
+
+  const searchParams = new URLSearchParams();
+  if (operationType) searchParams.set('operationType', operationType);
+  if (startDate) searchParams.set('startDate', startDate);
+  if (endDate) searchParams.set('endDate', endDate);
+  if (categoryId) searchParams.set('categoryId', categoryId);
+
+  return useQuery({
+    queryKey: groups.operations(groupId, { operationType, startDate, endDate, categoryId }),
+    queryFn: () =>
+      instanceFetch(`/user-group/${groupId}/operations?${searchParams.toString()}`),
+    enabled: enabled && !!groupId,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retryOnMount: false,
+    retry: 2,
+  });
+};
+
 export const useConnectGroupCategories = () => {
   const queryClient = useQueryClient();
 
