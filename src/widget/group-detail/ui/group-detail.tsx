@@ -23,8 +23,12 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
   });
   const { data: me } = useAboutMe();
 
-  const membersWithoutCreator = group?.users?.filter((user) => user?.id !== group?.creatorId);
+  const membersWithoutCreator = group?.users?.filter(({ user }) => user?.id !== group?.creatorId);
   const isCreator = !!me?.data?.id && me.data.id === group?.creatorId;
+
+  const pendingInvitations = groupInvitations?.filter(
+    (invitation) => invitation.status === InvitationStatuses.PENDING,
+  );
 
   return (
     <>
@@ -38,7 +42,7 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
         <SecondaryCard title={groupT('members')}>
           <SkeletonInfoStr isLoading={isLoading}>
             {membersWithoutCreator?.length ? (
-              membersWithoutCreator?.map((user) => (
+              membersWithoutCreator?.map(({ user }) => (
                 <div key={user.id} className="flex items-center justify-between gap-2">
                   <span>{user.name}</span>
                   {isCreator && group && (
@@ -55,26 +59,24 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
             )}
           </SkeletonInfoStr>
         </SecondaryCard>
-        {!isLoadingInvitation && !!groupInvitations?.length && (
+        {!isLoadingInvitation && !!pendingInvitations?.length && (
           <SecondaryCard title={groupT('inactiveMembers')}>
             <div className="grid grid-cols-[max-content_max-content] gap-x-4 gap-y-2 items-center">
-              {groupInvitations
-                ?.filter((invitation) => invitation.status === InvitationStatuses.PENDING)
-                ?.map((invitation) => (
-                  <Fragment key={invitation.id}>
-                    <div>{invitation?.recipient?.name}</div>
-                    <div
-                      className={cn('text-xs', {
-                        'text-warning': invitation?.status === InvitationStatuses?.PENDING,
-                        'text-destructive':
-                          invitation?.status === InvitationStatuses?.DECLINED ||
-                          invitation?.status === InvitationStatuses?.CANCELLED,
-                      })}
-                    >
-                      {groupT(invitationStatusToKeyMessage?.[invitation?.status])}
-                    </div>
-                  </Fragment>
-                ))}
+              {pendingInvitations?.map((invitation) => (
+                <Fragment key={invitation.id}>
+                  <div>{invitation?.recipient?.name}</div>
+                  <div
+                    className={cn('text-xs', {
+                      'text-warning': invitation?.status === InvitationStatuses?.PENDING,
+                      'text-destructive':
+                        invitation?.status === InvitationStatuses?.DECLINED ||
+                        invitation?.status === InvitationStatuses?.CANCELLED,
+                    })}
+                  >
+                    {groupT(invitationStatusToKeyMessage?.[invitation?.status])}
+                  </div>
+                </Fragment>
+              ))}
             </div>
           </SecondaryCard>
         )}
