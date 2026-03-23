@@ -3,6 +3,7 @@ import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
 import { ConnectGroupCategoriesReq, Group, GroupCategory, GroupStatRes } from './types';
 import { Invitation } from '../user/types';
+import { GetOperationsRes } from '../operations/types';
 
 export const useGroups = () => {
   return useQuery({
@@ -147,7 +148,9 @@ export const useGroupOperations = (params: {
   return useQuery({
     queryKey: groups.operations(groupId, { operationType, startDate, endDate, categoryId }),
     queryFn: () =>
-      instanceFetch(`/user-group/${groupId}/operations?${searchParams.toString()}`),
+      instanceFetch<GetOperationsRes>(
+        `/user-group/${groupId}/operations?${searchParams.toString()}`,
+      ),
     enabled: enabled && !!groupId,
     refetchOnMount: false,
     refetchOnReconnect: false,

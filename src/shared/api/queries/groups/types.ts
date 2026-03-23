@@ -11,9 +11,11 @@ export interface Group {
     name: string;
   };
   users: {
-    id: string;
-    name: string;
-    status: InvitationStatusesType;
+    user: {
+      id: string;
+      name: string;
+      status: InvitationStatusesType;
+    };
   }[];
 }
 
