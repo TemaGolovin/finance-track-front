@@ -9,6 +9,7 @@ import { InvitationStatuses } from '@/shared/api/queries/invitation/types';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { ROUTES } from '@/shared/model/routes';
+import { Inbox, Send } from 'lucide-react';
 
 type TabId = 'received' | 'sent';
 
@@ -89,8 +90,18 @@ export const InvitationList = () => {
         selectedId={activeTab}
         onSelect={setActiveTab}
         tabsInfo={[
-          { id: 'received', title: t('received'), content: receivedContent },
-          { id: 'sent', title: t('sent'), content: sentContent },
+          {
+            id: 'received',
+            title: t('received'),
+            icon: <Inbox className="min-w-5 min-h-5" />,
+            content: receivedContent,
+          },
+          {
+            id: 'sent',
+            title: t('sent'),
+            icon: <Send className="min-w-5 min-h-5" />,
+            content: sentContent,
+          },
         ]}
       />
     </div>
