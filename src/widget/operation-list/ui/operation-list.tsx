@@ -86,11 +86,13 @@ export const OperationList = () => {
           <div className="text-sm font-bold text-foreground/80">{date}</div>
           {operations.map((operation) => (
             <Link key={operation.id} href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}>
-              <OperationSimpleCard
-                operation={operation}
-                showUser={!!selectedGroupId}
-                userName={selectedGroupId ? getUserName(operation.userId) : undefined}
-              />
+              <div className="mb-1">
+                <OperationSimpleCard
+                  operation={operation}
+                  showUser={!!selectedGroupId}
+                  userName={selectedGroupId ? getUserName(operation.userId) : undefined}
+                />
+              </div>
             </Link>
           ))}
         </div>

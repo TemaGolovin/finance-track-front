@@ -20,11 +20,11 @@ export const OperationSimpleCard: React.FC<OperationSimpleProps> = ({
         >
           {iconCategoryFromBackendMap[operation.category.icon]}
         </div>
-        <div>
-          <div className="text-sm font-bold text-foreground/50">{operation.category.name}</div>
-          {showUser && userName && (
-            <div className="text-xs text-foreground/60">{userName}</div>
-          )}
+        <div className="flex-1">
+          <div className="flex items-center gap-2 w-full justify-between">
+            <div className="text-sm font-bold text-foreground/50">{operation.category.name}</div>
+            {showUser && userName && <div className="text-xs text-foreground/60">{userName}</div>}
+          </div>
           <div className="font-bold text-foreground/80">
             {formatNumberWithRound(operation.value)}{' '}
           </div>
