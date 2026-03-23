@@ -41,7 +41,7 @@ export const Tabs = <TabIdType extends string>({
             value={id}
             onClick={() => onSelect(id)}
           >
-            {icon && <span className="mr-2">{icon}</span>}
+            {icon}
             {title}
           </TabsTrigger>
         ))}

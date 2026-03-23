@@ -19,12 +19,12 @@ export const OperationTypeFilter: React.FC<OperationTypeFilterProps> = ({
         {
           id: 'EXPENSE',
           title: commonT('expenses'),
-          icon: <BanknoteArrowDown className="text-destructive/80" />,
+          icon: <BanknoteArrowDown className="text-destructive/80 min-w-5 min-h-5" />,
         },
         {
           id: 'INCOME',
           title: commonT('income'),
-          icon: <BanknoteArrowUp className="text-success/80" />,
+          icon: <BanknoteArrowUp className="text-success/80 min-w-5 min-h-5" />,
         },
       ]}
       selectedId={operationType}
