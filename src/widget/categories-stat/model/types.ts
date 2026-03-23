@@ -13,3 +13,12 @@ export interface CategoryInStat {
   color: string;
   icon: IconCategory;
 }
+
+export interface NormalizedStatCategory {
+  id: string;
+  name: string;
+  sum: string;
+  proportion: string;
+  color: string;
+  icon?: IconCategory;
+}

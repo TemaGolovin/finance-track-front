@@ -20,8 +20,24 @@ import {
   PeriodFilter,
   useTransactionsFilters,
 } from '@/feature/operation-filters';
+import { GroupSelector, useGroupSelector } from '@/feature/group-selector';
+import { useGroupStat } from '@/shared/api/queries/groups';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
+import { NormalizedStatCategory } from '../model/types';
+
+const GROUP_CATEGORY_COLORS = [
+  '#6366f1',
+  '#f59e0b',
+  '#10b981',
+  '#ef4444',
+  '#3b82f6',
+  '#8b5cf6',
+  '#ec4899',
+  '#14b8a6',
+  '#f97316',
+  '#84cc16',
+];
 
 export const CategoriesStat = () => {
   const commonT = useTranslations('common');
@@ -32,25 +48,50 @@ export const CategoriesStat = () => {
   const { operationType, setOperationType, selectedDatesAndPeriod, setSelectedDatesAndPeriod } =
     useTransactionsFilters();
 
-  const { data } = useCategoriesStat({
+  const { selectedGroupId } = useGroupSelector();
+
+  const { data: personalData } = useCategoriesStat({
     operationType,
     startDate: selectedDatesAndPeriod?.dates?.startDate,
     endDate: selectedDatesAndPeriod?.dates?.endDate,
+    enabled: !selectedGroupId,
   });
 
-  const chartConfig = data?.categories?.reduce((acc: ChartConfig, category) => {
-    const newAcc = acc;
-    return {
-      ...newAcc,
-      [category.id]: {
-        id: category.id,
-        label: category.name,
-      },
-    };
+  const { data: groupData } = useGroupStat({
+    groupId: selectedGroupId ?? '',
+    operationType,
+    startDate: selectedDatesAndPeriod?.dates?.startDate,
+    endDate: selectedDatesAndPeriod?.dates?.endDate,
+    enabled: !!selectedGroupId,
+  });
+
+  const categories: NormalizedStatCategory[] = selectedGroupId
+    ? (groupData?.byCategories ?? []).map((cat, index) => ({
+        id: cat.id,
+        name: cat.name,
+        sum: cat.totalAmount,
+        proportion: cat.proportion,
+        color: GROUP_CATEGORY_COLORS[index % GROUP_CATEGORY_COLORS.length],
+      }))
+    : (personalData?.categories ?? []).map((cat) => ({
+        id: cat.id,
+        name: cat.name,
+        sum: cat.sum,
+        proportion: cat.proportion,
+        color: cat.color,
+        icon: cat.icon,
+      }));
+
+  const totalSum = selectedGroupId ? groupData?.totalSum : personalData?.totalSum;
+
+  const chartConfig = categories.reduce((acc: ChartConfig, category) => {
+    acc[category.id] = { label: category.name };
+    return acc;
   }, {} as ChartConfig);
 
   return (
     <div className="flex flex-col gap-2 mt-2 pb-4">
+      <GroupSelector />
       <OperationTypeFilter operationType={operationType} setOperationType={setOperationType} />
       <PeriodFilter
         selectedDatesAndPeriod={selectedDatesAndPeriod}
@@ -63,11 +104,11 @@ export const CategoriesStat = () => {
           setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
         />
         <div className="flex justify-center h-62.5 relative">
-          <ChartContainer config={chartConfig || {}} style={{ aspectRatio: 1, maxHeight: '250px' }}>
-            {data?.categories && data.categories.length > 0 ? (
+          <ChartContainer config={chartConfig} style={{ aspectRatio: 1, maxHeight: '250px' }}>
+            {categories.length > 0 ? (
               <PieChart
                 accessibilityLayer
-                data={data?.categories.map((category) => ({
+                data={categories.map((category) => ({
                   ...category,
                   sum: Number(category.sum),
                 }))}
@@ -77,7 +118,7 @@ export const CategoriesStat = () => {
                   dataKey="sum"
                   nameKey="name"
                   cornerRadius="20%"
-                  data={data?.categories.map((category) => ({
+                  data={categories.map((category) => ({
                     ...category,
                     sum: Number(category.sum),
                     fill: category.color,
@@ -88,7 +129,7 @@ export const CategoriesStat = () => {
                   strokeWidth={2}
                 >
                   <Label position={'center'} className="text-md font-bold text-lg">
-                    {formatNumberWithRound(Number(data?.totalSum || 0) || 0)}
+                    {formatNumberWithRound(Number(totalSum || 0))}
                   </Label>
                 </Pie>
               </PieChart>
@@ -110,9 +151,9 @@ export const CategoriesStat = () => {
           </Link>
         </div>
       </BaseCard>
-      {data?.categories && data.categories.length > 0 && (
+      {categories.length > 0 && (
         <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 text-sm">
-          {data.categories.map((category) => (
+          {categories.map((category) => (
             <Link
               href={`${ROUTES.OPERATION}?${urlParams.toString()}&categoryId=${category.id}`}
               className="grid grid-cols-subgrid col-span-full items-center px-2 rounded-lg bg-foreground/5 border border-foreground/10 py-1"
@@ -123,7 +164,7 @@ export const CategoriesStat = () => {
                   className="w-8 h-8 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: category.color }}
                 >
-                  {iconCategoryFromBackendMap?.[category.icon]}
+                  {category.icon && iconCategoryFromBackendMap?.[category.icon]}
                 </div>
                 <div>{category.name}</div>
               </div>

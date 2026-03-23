@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
-import { ConnectGroupCategoriesReq, Group, GroupCategory } from './types';
+import { ConnectGroupCategoriesReq, Group, GroupCategory, GroupStatRes } from './types';
 import { Invitation } from '../user/types';
 
 export const useGroups = () => {
@@ -93,6 +93,33 @@ export const useGroupCategories = ({ groupId }: { groupId: string }) => {
     queryKey: groups.categories(groupId),
     queryFn: () => instanceFetch<GroupCategory[]>(`/user-group/${groupId}/categories`),
     enabled: !!groupId,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retryOnMount: false,
+    retry: 2,
+  });
+};
+
+export const useGroupStat = (params: {
+  groupId: string;
+  operationType?: 'INCOME' | 'EXPENSE';
+  startDate?: string;
+  endDate?: string;
+  enabled?: boolean;
+}) => {
+  const { groupId, operationType, startDate, endDate, enabled = true } = params;
+
+  const searchParams = new URLSearchParams();
+  if (operationType) searchParams.set('operationType', operationType);
+  if (startDate) searchParams.set('startDate', startDate);
+  if (endDate) searchParams.set('endDate', endDate);
+
+  return useQuery({
+    queryKey: groups.stat(groupId, { operationType, startDate, endDate }),
+    queryFn: () =>
+      instanceFetch<GroupStatRes>(`/user-group/${groupId}/stat?${searchParams.toString()}`),
+    enabled: enabled && !!groupId,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

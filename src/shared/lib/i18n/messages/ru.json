@@ -36,7 +36,8 @@
     "create": "Создать",
     "confirm": "Подтвердить",
 
-    "noDataForThisPeriod": "Нет данных за этот период"
+    "noDataForThisPeriod": "Нет данных за этот период",
+    "personal": "Личные"
   },
   "landing": {
     "startControl": "Начать контролировать свои финансы",

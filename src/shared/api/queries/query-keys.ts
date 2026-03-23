@@ -31,6 +31,10 @@ export const groups = {
   detail: (id: string) => [...groups.all, id],
   invitations: (id: string) => [...groups.detail(id), 'invitations'],
   categories: (id: string) => [...groups.detail(id), 'categories'],
+  stat: (
+    id: string,
+    params?: { operationType?: 'INCOME' | 'EXPENSE'; startDate?: string; endDate?: string },
+  ) => [...groups.detail(id), 'stat', params],
 } as const;
 
 export const users = {

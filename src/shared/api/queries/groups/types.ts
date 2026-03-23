@@ -29,3 +29,15 @@ export interface ConnectGroupCategoriesReq {
   groupId: string;
   relatedCategories: { personalCategoryId: string; groupCategoryId: string }[];
 }
+
+export interface GroupStatCategory {
+  id: string;
+  name: string;
+  totalAmount: string;
+  proportion: string;
+}
+
+export interface GroupStatRes {
+  totalSum: string;
+  byCategories: GroupStatCategory[];
+}
