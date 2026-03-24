@@ -1,7 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
-import { ConnectGroupCategoriesReq, Group, GroupCategory, GroupStatRes } from './types';
+import {
+  ConnectGroupCategoriesReq,
+  CreateGroupCategoryReq,
+  Group,
+  GroupCategory,
+  GroupStatRes,
+  UpdateGroupCategoryReq,
+} from './types';
 import { Invitation } from '../user/types';
 import { GetOperationsRes } from '../operations/types';
 
@@ -168,6 +175,58 @@ export const useConnectGroupCategories = () => {
       instanceFetch(`/user-group/${groupId}/category/connect`, {
         method: 'PATCH',
         body: JSON.stringify({ relatedCategories }),
+      }),
+    onSuccess: (_, { groupId }) => {
+      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+    },
+  });
+};
+
+export const useGroupCategoryCreate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ groupId, data }: { groupId: string; data: CreateGroupCategoryReq }) =>
+      instanceFetch<GroupCategory>(`/user-group/${groupId}/categories`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    onSuccess: (_, { groupId }) => {
+      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+    },
+  });
+};
+
+export const useGroupCategoryUpdate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      groupId,
+      categoryId,
+      data,
+    }: {
+      groupId: string;
+      categoryId: string;
+      data: UpdateGroupCategoryReq;
+    }) =>
+      instanceFetch<GroupCategory>(`/user-group/${groupId}/categories/${categoryId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+      }),
+    onSuccess: (_, { groupId }) => {
+      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+    },
+  });
+};
+
+export const useGroupCategoryDelete = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ groupId, categoryId }: { groupId: string; categoryId: string }) =>
+      instanceFetch(`/user-group/${groupId}/categories/${categoryId}`, {
+        method: 'DELETE',
       }),
     onSuccess: (_, { groupId }) => {
       queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });

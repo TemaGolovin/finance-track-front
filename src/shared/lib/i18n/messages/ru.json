@@ -164,7 +164,32 @@
     "connectCategoriesLoading": "Сохранение привязок...",
     "connectCategoriesSuccess": "Категории привязаны",
     "connectCategoriesError": "Ошибка привязки категорий",
-    "notConnected": "Не привязана"
+    "notConnected": "Не привязана",
+
+    "tabInfo": "Информация",
+    "tabMapping": "Маппинг",
+    "tabCategories": "Категории",
+
+    "groupCategoriesEmpty": "Нет категорий группы",
+
+    "groupCategoryCreateTitle": "Создать категорию",
+    "groupCategoryEditTitle": "Редактировать категорию",
+    "groupCategoryDeleteTitle": "Удалить категорию",
+    "groupCategoryDeleteDescription": "Вы уверены, что хотите удалить категорию «{name}»?",
+    "groupCategoryDeleteAction": "Удалить",
+    "groupCategoryName": "Название категории",
+
+    "groupCategoryCreateLoading": "Создание...",
+    "groupCategoryCreateSuccess": "Категория создана",
+    "groupCategoryCreateError": "Ошибка создания категории",
+
+    "groupCategoryUpdateLoading": "Сохранение...",
+    "groupCategoryUpdateSuccess": "Категория обновлена",
+    "groupCategoryUpdateError": "Ошибка обновления категории",
+
+    "groupCategoryDeleteLoading": "Удаление...",
+    "groupCategoryDeleteSuccess": "Категория удалена",
+    "groupCategoryDeleteError": "Ошибка удаления категории"
   },
 
   "invitation": {

@@ -49,7 +49,7 @@ export const Tabs = <TabIdType extends string>({
       {tabsInfo?.map(
         ({ id, content }) =>
           content && (
-            <TabsContent key={id} value={id}>
+            <TabsContent key={id} value={id} className="mt-0">
               {content}
             </TabsContent>
           ),

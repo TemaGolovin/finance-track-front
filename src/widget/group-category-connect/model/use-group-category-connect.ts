@@ -8,7 +8,14 @@ import { ROUTES } from '@/shared/model/routes';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 
-export const useGroupCategoryConnect = (groupId: string) => {
+interface UseGroupCategoryConnectOptions {
+  onAfterAction?: () => void;
+}
+
+export const useGroupCategoryConnect = (
+  groupId: string,
+  options?: UseGroupCategoryConnectOptions,
+) => {
   const router = useRouter();
   const t = useTranslations('group');
 
@@ -52,13 +59,21 @@ export const useGroupCategoryConnect = (groupId: string) => {
 
   const groupDetailRoute = ROUTES.GROUP_DETAIL.replace(':id', groupId);
 
+  const navigate = () => {
+    if (options?.onAfterAction) {
+      options.onAfterAction();
+    } else {
+      router.push(groupDetailRoute);
+    }
+  };
+
   const handleSubmit = async () => {
     const relatedCategories = Object.entries(mapping)
       .filter(([, personalCategoryId]) => !!personalCategoryId)
       .map(([groupCategoryId, personalCategoryId]) => ({ groupCategoryId, personalCategoryId }));
 
     if (relatedCategories.length === 0) {
-      router.push(groupDetailRoute);
+      navigate();
       return;
     }
 
@@ -68,11 +83,11 @@ export const useGroupCategoryConnect = (groupId: string) => {
       error: (err) => err?.message || t('connectCategoriesError'),
     });
 
-    router.push(groupDetailRoute);
+    navigate();
   };
 
   const handleSkip = () => {
-    router.push(groupDetailRoute);
+    navigate();
   };
 
   return {

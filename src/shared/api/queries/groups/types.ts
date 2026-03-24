@@ -32,6 +32,16 @@ export interface ConnectGroupCategoriesReq {
   relatedCategories: { personalCategoryId: string; groupCategoryId: string }[];
 }
 
+export interface CreateGroupCategoryReq {
+  name: string;
+  categoryType: 'EXPENSE' | 'INCOME';
+}
+
+export interface UpdateGroupCategoryReq {
+  name?: string;
+  categoryType?: 'EXPENSE' | 'INCOME';
+}
+
 export interface GroupStatCategory {
   id: string;
   name: string;

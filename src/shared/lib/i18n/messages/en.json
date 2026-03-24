@@ -161,7 +161,32 @@
     "connectCategoriesLoading": "Saving links...",
     "connectCategoriesSuccess": "Categories linked",
     "connectCategoriesError": "Error linking categories",
-    "notConnected": "Not linked"
+    "notConnected": "Not linked",
+
+    "tabInfo": "Info",
+    "tabMapping": "Mapping",
+    "tabCategories": "Categories",
+
+    "groupCategoriesEmpty": "No group categories",
+
+    "groupCategoryCreateTitle": "Create category",
+    "groupCategoryEditTitle": "Edit category",
+    "groupCategoryDeleteTitle": "Delete category",
+    "groupCategoryDeleteDescription": "Are you sure you want to delete category \"{name}\"?",
+    "groupCategoryDeleteAction": "Delete",
+    "groupCategoryName": "Category name",
+
+    "groupCategoryCreateLoading": "Creating...",
+    "groupCategoryCreateSuccess": "Category created",
+    "groupCategoryCreateError": "Error creating category",
+
+    "groupCategoryUpdateLoading": "Saving...",
+    "groupCategoryUpdateSuccess": "Category updated",
+    "groupCategoryUpdateError": "Error updating category",
+
+    "groupCategoryDeleteLoading": "Deleting...",
+    "groupCategoryDeleteSuccess": "Category deleted",
+    "groupCategoryDeleteError": "Error deleting category"
   },
 
   "invitation": {

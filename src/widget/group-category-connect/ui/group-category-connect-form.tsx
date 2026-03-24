@@ -8,9 +8,13 @@ import { BanknoteArrowDown, BanknoteArrowUp, ChevronDown } from 'lucide-react';
 
 interface GroupCategoryConnectFormProps {
   groupId: string;
+  mode?: 'page' | 'tab';
 }
 
-export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({ groupId }) => {
+export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({
+  groupId,
+  mode = 'page',
+}) => {
   const t = useTranslations('group');
   const commonT = useTranslations('common');
 
@@ -36,7 +40,7 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({ gr
   }
 
   return (
-    <div className="flex flex-col gap-3 py-2 pb-16">
+    <div className={`flex flex-col gap-3 py-2 ${mode === 'page' ? 'pb-16' : ''}`}>
       <Hint>{t('connectCategoriesDescription')}</Hint>
       <div className="grid grid-cols-2 gap-2 items-center px-2">
         <div className="grid grid-cols-subgrid col-span-full gap-0 py-2 px-1 text-center bg-muted/60 rounded-lg">
@@ -85,10 +89,23 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({ gr
         })}
       </div>
 
-      <div className="flex gap-2 mt-2 fixed bottom-4 inset-x-2">
-        <Button variant="destructive" className="flex-1" onClick={handleSkip} disabled={isPending}>
-          {t('connectCategoriesSkip')}
-        </Button>
+      <div
+        className={
+          mode === 'tab'
+            ? 'flex gap-2 mt-2'
+            : 'flex gap-2 mt-2 fixed bottom-4 inset-x-2'
+        }
+      >
+        {mode === 'page' && (
+          <Button
+            variant="destructive"
+            className="flex-1"
+            onClick={handleSkip}
+            disabled={isPending}
+          >
+            {t('connectCategoriesSkip')}
+          </Button>
+        )}
         <Button className="flex-1" variant={'primary'} onClick={handleSubmit} disabled={isPending}>
           {commonT('save')}
         </Button>
