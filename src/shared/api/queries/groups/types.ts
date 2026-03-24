@@ -29,7 +29,7 @@ export interface GroupCategory {
 
 export interface ConnectGroupCategoriesReq {
   groupId: string;
-  relatedCategories: { personalCategoryId: string; groupCategoryId: string }[];
+  relatedCategories: { personalCategoryId: string | null; groupCategoryId: string }[];
 }
 
 export interface CreateGroupCategoryReq {

@@ -162,6 +162,7 @@
     "connectCategoriesSuccess": "Categories linked",
     "connectCategoriesError": "Error linking categories",
     "notConnected": "Not linked",
+    "connectCategoryNoLink": "No link",
 
     "tabInfo": "Info",
     "tabMapping": "Mapping",

@@ -165,6 +165,7 @@
     "connectCategoriesSuccess": "Категории привязаны",
     "connectCategoriesError": "Ошибка привязки категорий",
     "notConnected": "Не привязана",
+    "connectCategoryNoLink": "Без привязки",
 
     "tabInfo": "Информация",
     "tabMapping": "Маппинг",

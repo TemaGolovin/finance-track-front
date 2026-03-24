@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button, DropdownRadio, Hint, Skeleton } from '@/shared/ui';
+import { GROUP_CATEGORY_CONNECT_NONE_ID } from '../model/consts';
 import { useGroupCategoryConnect } from '../model/use-group-category-connect';
 import { BanknoteArrowDown, BanknoteArrowUp, ChevronDown } from 'lucide-react';
 
@@ -25,6 +26,7 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({
     isPending,
     mapping,
     setPersonalCategory,
+    getPersonalIdsUsedElsewhere,
     handleSubmit,
     handleSkip,
   } = useGroupCategoryConnect(groupId);
@@ -48,11 +50,16 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({
           <div className="text-sm font-semibold">Ваша категория</div>
         </div>
         {groupCategories?.map((groupCategory) => {
+          const usedElsewhere = getPersonalIdsUsedElsewhere(groupCategory.id);
           const compatiblePersonal =
-            personalCategories?.filter((pc) => pc.categoryType === groupCategory.categoryType) ??
-            [];
+            personalCategories?.filter(
+              (pc) =>
+                pc.categoryType === groupCategory.categoryType &&
+                (!usedElsewhere.has(pc.id) || pc.id === (mapping[groupCategory.id] ?? '')),
+            ) ?? [];
 
           const selectedId = mapping[groupCategory.id] ?? '';
+          const radioSelectedId = selectedId === '' ? GROUP_CATEGORY_CONNECT_NONE_ID : selectedId;
           const selectedLabel =
             compatiblePersonal.find((pc) => pc.id === selectedId)?.name ?? t('notConnected');
 
@@ -70,9 +77,17 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({
                 )}
               </div>
               <DropdownRadio
-                selectedId={selectedId}
-                onSelect={(id) => setPersonalCategory(groupCategory.id, id)}
-                list={compatiblePersonal.map((pc) => ({ id: pc.id, label: pc.name }))}
+                selectedId={radioSelectedId}
+                onSelect={(id) =>
+                  setPersonalCategory(
+                    groupCategory.id,
+                    id === GROUP_CATEGORY_CONNECT_NONE_ID ? '' : id,
+                  )
+                }
+                list={[
+                  { id: GROUP_CATEGORY_CONNECT_NONE_ID, label: t('connectCategoryNoLink') },
+                  ...compatiblePersonal.map((pc) => ({ id: pc.id, label: pc.name })),
+                ]}
                 trigger={
                   <Button
                     variant="outline"

@@ -31,19 +31,25 @@ export const useGroupCategoryConnect = (
     if (!groupCategories || !personalCategories) return {};
 
     const result: Record<string, string> = {};
+    const usedPersonalIds = new Set<string>();
 
     for (const gc of groupCategories) {
       if (gc.connectedPersonalCategoryId) {
         result[gc.id] = gc.connectedPersonalCategoryId;
+        usedPersonalIds.add(gc.connectedPersonalCategoryId);
         continue;
       }
 
       if (gc.defaultKey) {
         const match = personalCategories.find(
-          (pc) => pc.defaultKey === gc.defaultKey && pc.categoryType === gc.categoryType,
+          (pc) =>
+            pc.defaultKey === gc.defaultKey &&
+            pc.categoryType === gc.categoryType &&
+            !usedPersonalIds.has(pc.id),
         );
         if (match) {
           result[gc.id] = match.id;
+          usedPersonalIds.add(match.id);
         }
       }
     }
@@ -54,7 +60,32 @@ export const useGroupCategoryConnect = (
   const mapping = useMemo(() => ({ ...autoMapping, ...userMapping }), [autoMapping, userMapping]);
 
   const setPersonalCategory = (groupCategoryId: string, personalCategoryId: string) => {
-    setUserMapping((prev) => ({ ...prev, [groupCategoryId]: personalCategoryId }));
+    setUserMapping((prev) => {
+      const mergedBefore = { ...autoMapping, ...prev };
+      const next = { ...prev };
+
+      if (personalCategoryId) {
+        for (const gc of groupCategories ?? []) {
+          if (gc.id === groupCategoryId) continue;
+          if (mergedBefore[gc.id] === personalCategoryId) {
+            next[gc.id] = '';
+          }
+        }
+      }
+
+      next[groupCategoryId] = personalCategoryId;
+      return next;
+    });
+  };
+
+  const getPersonalIdsUsedElsewhere = (forGroupCategoryId: string) => {
+    const used = new Set<string>();
+    for (const gc of groupCategories ?? []) {
+      if (gc.id === forGroupCategoryId) continue;
+      const id = mapping[gc.id];
+      if (id) used.add(id);
+    }
+    return used;
   };
 
   const groupDetailRoute = ROUTES.GROUP_DETAIL.replace(':id', groupId);
@@ -68,14 +99,15 @@ export const useGroupCategoryConnect = (
   };
 
   const handleSubmit = async () => {
-    const relatedCategories = Object.entries(mapping)
-      .filter(([, personalCategoryId]) => !!personalCategoryId)
-      .map(([groupCategoryId, personalCategoryId]) => ({ groupCategoryId, personalCategoryId }));
-
-    if (relatedCategories.length === 0) {
+    if (!groupCategories?.length) {
       navigate();
       return;
     }
+
+    const relatedCategories = groupCategories.map((gc) => ({
+      groupCategoryId: gc.id,
+      personalCategoryId: mapping[gc.id] ? mapping[gc.id]! : null,
+    }));
 
     await toast.promise(connectCategories({ groupId, relatedCategories }), {
       loading: t('connectCategoriesLoading'),
@@ -97,6 +129,7 @@ export const useGroupCategoryConnect = (
     isPending,
     mapping,
     setPersonalCategory,
+    getPersonalIdsUsedElsewhere,
     handleSubmit,
     handleSkip,
   };
