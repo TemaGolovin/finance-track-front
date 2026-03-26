@@ -1,11 +1,16 @@
+import { getClientLocale } from '../lib/i18n/client-locale';
+
 export const instanceFetch = async <ResData>(url: string, init?: RequestInit) => {
+  const locale = getClientLocale();
+  const { headers: initHeaders, ...restInit } = init ?? {};
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_BFF}${url}`, {
+    credentials: 'include',
+    ...restInit,
     headers: {
       'Content-Type': 'application/json',
-      ...init?.headers,
+      'Accept-Language': locale,
+      ...initHeaders,
     },
-    credentials: 'include',
-    ...init,
   });
 
   if (!data.ok) {

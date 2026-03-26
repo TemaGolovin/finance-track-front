@@ -25,7 +25,13 @@ async function handler(req: Request, { params }: { params: { path: string[] } })
     duplex: 'half',
   });
 
-  if (res.status === 401) {
+  const proxiedPath = awaitedParams.path.join('/');
+  const isLoginOrRegistration401 =
+    res.status === 401 &&
+    req.method === 'POST' &&
+    (proxiedPath === 'auth/login' || proxiedPath === 'auth/registration');
+
+  if (res.status === 401 && !isLoginOrRegistration401) {
     const refreshRes = await fetch(`${process.env.NEXT_API_BACKEND}/auth/refresh`, {
       method: 'POST',
       headers: { cookie: `refreshToken=${cookieStore.get('refreshToken')?.value}` },
