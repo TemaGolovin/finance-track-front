@@ -1,5 +1,6 @@
-import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { LoginAction } from './login-action';
+import { HeaderAppearanceActions } from './header-appearance-actions';
+import { ProfileAction } from './profile-action';
 import { MainLogoAction } from './main-logo';
 import { Sidebar } from '@/widget/sidebar';
 import { InvitationAction } from './invitation-action';
@@ -14,10 +15,10 @@ export const Header = async () => {
         </div>
 
         <div className="flex gap-2">
-          <ThemeSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
-          <I18nSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
+          <HeaderAppearanceActions />
           <LoginAction />
           <InvitationAction />
+          <ProfileAction />
         </div>
       </div>
     </header>

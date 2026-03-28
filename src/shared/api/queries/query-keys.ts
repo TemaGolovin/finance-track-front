@@ -24,6 +24,7 @@ export const categories = {
 
 export const auth = {
   me: ['me'],
+  sessions: ['auth', 'sessions'] as const,
 } as const;
 
 export const groups = {

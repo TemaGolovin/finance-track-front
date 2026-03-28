@@ -69,7 +69,40 @@
     "operations": "Operations",
     "categories": "Categories",
     "groups": "Groups",
-    "invitations": "Invitations"
+    "invitations": "Invitations",
+    "profile": "Profile"
+  },
+
+  "profile": {
+    "title": "Profile & settings",
+    "needLogin": "Sign in to view your profile.",
+    "accountSection": "Account",
+    "emailLabel": "Email",
+    "nameLabel": "Display name",
+    "nameHint": "Used in groups and invitations.",
+    "nameSave": "Save name",
+    "nameLoading": "Saving...",
+    "nameSuccess": "Name updated",
+    "nameError": "Could not update name",
+    "passwordSection": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "passwordSubmit": "Change password",
+    "passwordLoading": "Updating password...",
+    "passwordSuccess": "Password updated",
+    "passwordError": "Could not change password",
+    "appearanceSection": "Theme & language",
+    "appearanceHint": "These apply only on your devices. They are not synced to the server.",
+    "sessionsSection": "Devices & sessions",
+    "sessionUnknownDevice": "Other device",
+    "sessionCurrent": "This device",
+    "sessionExpires": "Valid until",
+    "sessionRevoke": "Sign out device",
+    "sessionRevokeLoading": "Signing out device...",
+    "sessionRevokeSuccess": "Device signed out",
+    "sessionRevokeError": "Could not sign out device",
+    "logoutSection": "Session",
+    "logoutDescription": "Sign out on this device."
   },
 
   "operation": {

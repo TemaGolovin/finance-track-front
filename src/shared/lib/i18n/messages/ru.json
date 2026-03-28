@@ -72,7 +72,40 @@
     "operations": "Операции",
     "categories": "Категории",
     "groups": "Группы",
-    "invitations": "Приглашения"
+    "invitations": "Приглашения",
+    "profile": "Профиль"
+  },
+
+  "profile": {
+    "title": "Профиль и настройки",
+    "needLogin": "Войдите, чтобы открыть профиль.",
+    "accountSection": "Учётная запись",
+    "emailLabel": "Почта",
+    "nameLabel": "Отображаемое имя",
+    "nameHint": "Используется в группах и приглашениях.",
+    "nameSave": "Сохранить имя",
+    "nameLoading": "Сохраняем...",
+    "nameSuccess": "Имя обновлено",
+    "nameError": "Не удалось обновить имя",
+    "passwordSection": "Пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "passwordSubmit": "Сменить пароль",
+    "passwordLoading": "Обновляем пароль...",
+    "passwordSuccess": "Пароль обновлён",
+    "passwordError": "Не удалось сменить пароль",
+    "appearanceSection": "Тема и язык",
+    "appearanceHint": "Настройки только на этом устройстве, на сервер не сохраняются.",
+    "sessionsSection": "Устройства и сессии",
+    "sessionUnknownDevice": "Другое устройство",
+    "sessionCurrent": "Это устройство",
+    "sessionExpires": "Действует до",
+    "sessionRevoke": "Выйти на устройстве",
+    "sessionRevokeLoading": "Завершаем сессию...",
+    "sessionRevokeSuccess": "Сессия на устройстве завершена",
+    "sessionRevokeError": "Не удалось завершить сессию",
+    "logoutSection": "Текущая сессия",
+    "logoutDescription": "Выход из аккаунта на этом устройстве."
   },
 
   "operation": {
