@@ -6,6 +6,7 @@ import {
   ChangePasswordResponse,
   Me,
   RevokeSessionResponse,
+  SuccessResponse,
   UpdateProfileResponse,
 } from './types';
 
@@ -75,5 +76,65 @@ export const useRevokeSession = () => {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: auth.sessions });
     },
+  });
+};
+
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: (token: string) =>
+      instanceFetch<SuccessResponse>('/auth/verify-email', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+      }),
+  });
+};
+
+export const useResendVerification = () => {
+  return useMutation({
+    mutationFn: (email: string) =>
+      instanceFetch<SuccessResponse>('/auth/resend-verification', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      }),
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: (email: string) =>
+      instanceFetch<SuccessResponse>('/auth/forgot-password', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      }),
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (payload: { token: string; newPassword: string }) =>
+      instanceFetch<SuccessResponse>('/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+  });
+};
+
+export const useRequestEmailChange = () => {
+  return useMutation({
+    mutationFn: (newEmail: string) =>
+      instanceFetch<SuccessResponse>('/user/request-email-change', {
+        method: 'POST',
+        body: JSON.stringify({ newEmail }),
+      }),
+  });
+};
+
+export const useConfirmEmailChange = () => {
+  return useMutation({
+    mutationFn: (token: string) =>
+      instanceFetch<SuccessResponse>('/user/confirm-email-change', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+      }),
   });
 };

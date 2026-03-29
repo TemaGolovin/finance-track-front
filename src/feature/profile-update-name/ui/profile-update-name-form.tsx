@@ -59,7 +59,7 @@ export const ProfileUpdateNameForm = ({ initialName }: ProfileUpdateNameFormProp
           {...register('name')}
         />
       </div>
-      <Button type="submit" variant="primary" className="w-full sm:w-auto">
+      <Button type="submit" variant="outline" className="w-full sm:w-auto">
         {t('nameSave')}
       </Button>
     </form>

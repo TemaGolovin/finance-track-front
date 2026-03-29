@@ -59,7 +59,61 @@
   "registration": {
     "registration": "Registration",
     "accAlreadyExist": "Already have an account?",
-    "register": "Register"
+    "register": "Register",
+    "authLoading": "Registering...",
+    "authSuccess": "Registration successful",
+    "authError": "Registration error"
+  },
+
+  "verifyEmail": {
+    "title": "Email verification",
+    "verifying": "Verifying your email...",
+    "success": "Your email has been verified!",
+    "successDesc": "You can now use all features of the app.",
+    "error": "Verification failed",
+    "errorExpired": "The link has expired. Request a new one.",
+    "toMain": "Go to main page",
+    "toLogin": "Log in",
+    "sentTitle": "Check your inbox",
+    "sentDesc": "We sent a verification link to your email. Click the link in the email to confirm your address.",
+    "resendLabel": "Didn't receive the email?",
+    "resendBtn": "Send again",
+    "resendEmail": "Your email",
+    "resendLoading": "Sending...",
+    "resendSuccess": "Email sent",
+    "resendError": "Could not send email"
+  },
+
+  "forgotPassword": {
+    "title": "Forgot password?",
+    "desc": "Enter your email and we will send you a reset link.",
+    "emailLabel": "Email",
+    "submit": "Send link",
+    "loading": "Sending...",
+    "success": "If that email is registered, a reset link has been sent.",
+    "error": "Could not send the email",
+    "backToLogin": "Back to login"
+  },
+
+  "resetPassword": {
+    "title": "New password",
+    "desc": "Enter a new password for your account.",
+    "newPassword": "New password",
+    "submit": "Reset password",
+    "loading": "Saving...",
+    "success": "Password updated! You can now log in.",
+    "error": "Could not reset password",
+    "invalidToken": "The link is invalid or has expired.",
+    "toLogin": "Log in"
+  },
+
+  "confirmEmailChange": {
+    "title": "Confirm new email",
+    "verifying": "Confirming new email...",
+    "success": "Email changed successfully!",
+    "error": "Failed to confirm email change",
+    "errorExpired": "The link has expired. Request a new one.",
+    "toProfile": "Go to profile"
   },
 
   "sidebar": {
@@ -78,6 +132,15 @@
     "needLogin": "Sign in to view your profile.",
     "accountSection": "Account",
     "emailLabel": "Email",
+    "emailNotVerified": "Not verified",
+    "emailVerified": "Verified",
+    "emailVerifyHint": "Verify your email to secure your account.",
+    "emailChangeSection": "Change email",
+    "emailChangeNewEmail": "New email address",
+    "emailChangeSubmit": "Send confirmation",
+    "emailChangeLoading": "Sending...",
+    "emailChangeSuccess": "Confirmation email sent to the new address",
+    "emailChangeError": "Could not send confirmation email",
     "nameLabel": "Display name",
     "nameHint": "Used in groups and invitations.",
     "nameSave": "Save name",

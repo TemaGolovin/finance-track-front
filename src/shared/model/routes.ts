@@ -5,6 +5,12 @@ export const ROUTES = {
   MAIN: '/main',
   PROFILE: '/profile',
 
+  VERIFY_EMAIL: '/verify-email',
+  VERIFY_EMAIL_SENT: '/verify-email/sent',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
+  CONFIRM_EMAIL_CHANGE: '/confirm-email-change',
+
   OPERATION_CREATE: '/operation/create',
   OPERATION: '/operation',
   OPERATION_DETAIL: '/operation/:id',

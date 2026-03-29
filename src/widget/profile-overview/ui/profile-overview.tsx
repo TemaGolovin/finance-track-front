@@ -3,12 +3,13 @@
 import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { LogoutAction } from '@/feature/auth';
 import { ProfileChangePasswordForm } from '@/feature/profile-change-password';
+import { ProfileChangeEmailForm } from '@/feature/profile-change-email';
 import { ProfileUpdateNameForm } from '@/feature/profile-update-name';
 import { useAboutMe } from '@/shared/api/queries/auth';
 import { ROUTES } from '@/shared/model/routes';
 import { Button, Skeleton } from '@/shared/ui';
 import { ProfileSessionsSection } from './profile-sessions-section';
-import { LogOut } from 'lucide-react';
+import { LogOut, ShieldCheck, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
@@ -40,7 +41,7 @@ export const ProfileOverview = () => {
     );
   }
 
-  const { email, name } = me.data;
+  const { email, name, emailVerified } = me.data;
 
   return (
     <div className="flex flex-col gap-4 mt-2 pb-8">
@@ -48,12 +49,29 @@ export const ProfileOverview = () => {
         <div className="text-foreground/60 text-sm">{t('accountSection')}</div>
         <div>
           <div className="text-xs text-muted-foreground">{t('emailLabel')}</div>
-          <div className="text-base font-medium break-all">{email}</div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-base font-medium break-all">{email}</span>
+            {emailVerified ? (
+              <span className="inline-flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-medium">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                {t('emailVerified')}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-medium">
+                <ShieldAlert className="h-3.5 w-3.5" />
+                {t('emailNotVerified')}
+              </span>
+            )}
+          </div>
+          {!emailVerified && (
+            <p className="text-xs text-muted-foreground mt-1">{t('emailVerifyHint')}</p>
+          )}
         </div>
       </div>
 
       <ProfileUpdateNameForm initialName={name} />
       <ProfileChangePasswordForm />
+      <ProfileChangeEmailForm />
 
       <div className="bg-card rounded-md p-3 flex flex-col gap-3">
         <div className="text-foreground/60 text-sm">{t('appearanceSection')}</div>

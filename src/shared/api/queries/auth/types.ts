@@ -4,7 +4,12 @@ export interface Me {
     email: string;
     name: string;
     id: string;
+    emailVerified: boolean;
   };
+}
+
+export interface SuccessResponse {
+  success: boolean;
 }
 
 export interface AuthSession {

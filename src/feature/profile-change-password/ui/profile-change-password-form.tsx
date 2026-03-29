@@ -73,7 +73,7 @@ export const ProfileChangePasswordForm = () => {
           {...register('newPassword')}
         />
       </div>
-      <Button type="submit" variant="primary" className="w-full sm:w-auto">
+      <Button type="submit" variant="outline" className="w-full sm:w-auto">
         {t('passwordSubmit')}
       </Button>
     </form>

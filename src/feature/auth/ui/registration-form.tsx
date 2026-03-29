@@ -35,7 +35,7 @@ export const RegistrationForm = () => {
           ...data,
           deviceId,
         }).then(() => {
-          router.push(ROUTES.MAIN);
+          router.push(`${ROUTES.VERIFY_EMAIL_SENT}?email=${encodeURIComponent(data.email)}`);
         }),
       {
         loading: t('registration.authLoading'),
