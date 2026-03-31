@@ -178,6 +178,7 @@
     "deleteOperationError": "Ошибка удаления операции",
 
     "operationDetail": "Детали операции",
+    "operationAuthor": "Автор операции",
     "deletingOperation": "Удаление операции",
     "confirmDelete": "Вы уверены, что хотите удалить операцию?",
 

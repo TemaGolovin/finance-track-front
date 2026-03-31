@@ -18,6 +18,9 @@ export interface Operation {
   createAt: string;
   updateAt: string;
   userId: string;
+  user?: {
+    name: string;
+  };
   category: {
     name: string;
     color: string;

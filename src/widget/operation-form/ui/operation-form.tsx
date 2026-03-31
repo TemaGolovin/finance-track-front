@@ -2,6 +2,7 @@
 
 import { CategorySelector } from '@/feature/category-selector';
 import { QuickDatePicker } from '@/feature/quick-date-picker';
+import { useAboutMe } from '@/shared/api/queries/auth';
 import {
   useOperationCreate,
   useOperationDetail,
@@ -38,7 +39,6 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
     handleSubmit,
     formState: { errors },
     control,
-    setValue,
     reset,
   } = useForm<OperationType>({
     resolver: zodResolver(
@@ -61,9 +61,20 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
   const { mutateAsync: createOperation } = useOperationCreate();
   const { mutateAsync: editOperation } = useOperationEdit();
 
-  const { data: editedOperation } = useOperationDetail(editedId || '', {
-    enabled: !!editedId,
-  });
+  const { data: editedOperation, isLoading: isLoadingOperation } = useOperationDetail(
+    editedId || '',
+    {
+      enabled: !!editedId,
+    },
+  );
+  const { data: me, isLoading: isLoadingMe } = useAboutMe();
+
+  useEffect(() => {
+    if (!editedId || !editedOperation || !me?.data?.id) return;
+    if (editedOperation.userId !== me.data.id) {
+      router.replace(ROUTES.OPERATION_DETAIL.replace(':id', editedId));
+    }
+  }, [editedId, editedOperation, me?.data?.id, router]);
 
   useEffect(() => {
     if (editedOperation) {
@@ -76,6 +87,19 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
       });
     }
   }, [editedOperation, reset]);
+
+  const isResolvingEditOwnership =
+    Boolean(editedId) && (isLoadingOperation || isLoadingMe);
+  const currentUserId = me?.data?.id;
+  const isEditingForbidden =
+    Boolean(editedId) &&
+    editedOperation !== undefined &&
+    currentUserId !== undefined &&
+    editedOperation.userId !== currentUserId;
+
+  if (isResolvingEditOwnership || isEditingForbidden) {
+    return null;
+  }
 
   const onSubmit = async (data: OperationType) => {
     const dataForApi = mapCrateOperationFormToApi(data);

@@ -1,6 +1,7 @@
 'use client';
 
 import { OperationDelete } from '@/feature/operation-delete';
+import { useAboutMe } from '@/shared/api/queries/auth';
 import { useOperationDetail } from '@/shared/api/queries/operations';
 import { iconCategoryFromBackendMap } from '@/shared/lib';
 import { ROUTES } from '@/shared/model/routes';
@@ -18,10 +19,27 @@ export const OperationDetail = () => {
   const operationT = useTranslations('operation');
 
   const { data: operation } = useOperationDetail(id);
+  const { data: me } = useAboutMe();
+
+  const currentUserId = me?.data?.id;
+  const canEditOrDelete =
+    operation !== undefined &&
+    currentUserId !== undefined &&
+    operation.userId === currentUserId;
+  const isForeignOperation =
+    operation !== undefined &&
+    currentUserId !== undefined &&
+    operation.userId !== currentUserId;
 
   return (
     <div className="flex flex-col gap-3">
       <TitlePage title={operationT('operationDetail')} backLink={ROUTES.OPERATION} />
+      {isForeignOperation && operation.user?.name && (
+        <div className="bg-card rounded-md p-2">
+          <div className="text-foreground/60 mb-1 text-sm">{operationT('operationAuthor')}</div>
+          <div className="text-lg font-semibold text-foreground/80">{operation.user.name}</div>
+        </div>
+      )}
       <div className="bg-card rounded-md p-2">
         <div className="text-foreground/60 mb-1 text-sm">{commonT('category')}</div>
         <div className="flex items-center gap-2">
@@ -54,15 +72,17 @@ export const OperationDetail = () => {
         </div>
       )}
 
-      <div className="flex gap-3 mt-3">
-        <Link href={ROUTES.OPERATION_EDIT.replace(':id', id)} className="flex-1">
-          <Button variant={'outline'} size={'default'} className="w-full">
-            <Pencil className="w-5" />
-            {commonT('edit')}
-          </Button>
-        </Link>
-        <OperationDelete id={id} />
-      </div>
+      {canEditOrDelete && (
+        <div className="flex gap-3 mt-3">
+          <Link href={ROUTES.OPERATION_EDIT.replace(':id', id)} className="flex-1">
+            <Button variant={'outline'} size={'default'} className="w-full">
+              <Pencil className="w-5" />
+              {commonT('edit')}
+            </Button>
+          </Link>
+          <OperationDelete id={id} />
+        </div>
+      )}
     </div>
   );
 };
