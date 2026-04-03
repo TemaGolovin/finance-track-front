@@ -3,10 +3,10 @@ import { cookies } from 'next/headers';
 import { ROUTES } from '@/shared/model/routes';
 import { redirect } from 'next/navigation';
 
-async function handler(req: Request, { params }: { params: { path: string[] } }) {
+async function handler(req: Request, context: { params: Promise<{ path: string[] }> }) {
   const cookieStore = await cookies();
 
-  const awaitedParams = await params;
+  const awaitedParams = await context.params;
   const incomingUrl = new URL(req.url);
 
   const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}${incomingUrl?.search || ''}`;

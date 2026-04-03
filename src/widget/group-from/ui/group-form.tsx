@@ -40,7 +40,7 @@ export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) 
   const invitedUsers = useWatch({ control, name: 'invitedUsers' });
 
   const excludeUserIdsForSelector = useMemo(() => {
-    return [...(group?.invitedUsersIds || []), ...(group?.users?.map((user) => user.id) || [])];
+    return [...(group?.invitedUsersIds || []), ...(group?.users?.map((u) => u.user.id) || [])];
   }, [group]);
 
   return (

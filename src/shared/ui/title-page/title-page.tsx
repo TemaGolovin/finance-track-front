@@ -1,12 +1,12 @@
 import { ArrowLeft } from 'lucide-react';
 import { Skeleton } from '..';
-import { RoutesType } from '@/shared/model/routes';
+import type { RoutesType } from '@/shared/model/routes';
 import Link from 'next/link';
 
 interface TitlePageProps {
   title: string;
   onBackBtnClick?: () => void;
-  backLink?: RoutesType;
+  backLink?: RoutesType | string;
   isLoading?: boolean;
 }
 

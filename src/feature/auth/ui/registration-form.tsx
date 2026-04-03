@@ -2,14 +2,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { RegistrationFormType, createRegistrationSchema } from '../lib/validate-registration-form';
-import { Button, Input, InputPassword } from '@/shared/ui';
+import { Button, Checkbox, Input, InputPassword } from '@/shared/ui';
 import { useRegistration } from '../api/useRegistration';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { ROUTES } from '@/shared/model/routes';
 import { uuidV4 } from '@/shared/lib';
+import Link from 'next/link';
 
 export const RegistrationForm = () => {
   const t = useTranslations();
@@ -19,13 +20,15 @@ export const RegistrationForm = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegistrationFormType>({
     resolver: zodResolver(createRegistrationSchema(t)),
+    defaultValues: { privacyAccepted: false },
   });
 
-  const onSubmit = async (data: RegistrationFormType) => {
+  const onSubmit = async ({ privacyAccepted: _consent, ...data }: RegistrationFormType) => {
     const deviceId = uuidV4();
     localStorage.setItem('deviceId', deviceId);
 
@@ -65,6 +68,35 @@ export const RegistrationForm = () => {
         label={`${t('common.password')}*`}
         id={'password'}
         {...register('password')}
+      />
+
+      <Controller
+        name="privacyAccepted"
+        control={control}
+        render={({ field }) => (
+          <Checkbox
+            id="privacyAccepted"
+            ref={field.ref}
+            checked={field.value}
+            onCheckedChange={(v) => {
+              field.onChange(v === true);
+            }}
+            onBlur={field.onBlur}
+            label={t.rich('registration.privacyConsentLabel', {
+              link: (chunks) => (
+                <Link
+                  href={ROUTES.PRIVACY}
+                  className="text-primary underline underline-offset-2 hover:no-underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+            error={errors.privacyAccepted?.message}
+          />
+        )}
       />
 
       <Button variant={'primary'} size={'lg'} type="submit">
