@@ -83,9 +83,19 @@ export const RegistrationForm = () => {
             }}
             onBlur={field.onBlur}
             label={t.rich('registration.privacyConsentLabel', {
-              link: (chunks) => (
+              privacy: (chunks) => (
                 <Link
                   href={ROUTES.PRIVACY}
+                  className="text-primary underline underline-offset-2 hover:no-underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {chunks}
+                </Link>
+              ),
+              terms: (chunks) => (
+                <Link
+                  href={ROUTES.TERMS}
                   className="text-primary underline underline-offset-2 hover:no-underline"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -99,7 +109,7 @@ export const RegistrationForm = () => {
         )}
       />
 
-      <Button variant={'primary'} size={'lg'} type="submit">
+      <Button variant={'primary'} size={'lg'} className="w-full" type="submit">
         {t('registration.register')}
       </Button>
     </form>

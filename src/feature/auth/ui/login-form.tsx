@@ -71,7 +71,7 @@ export const LoginForm = () => {
         {...register('password')}
       />
 
-      <Button variant={'primary'} size={'lg'} type="submit">
+      <Button variant={'primary'} size={'lg'} type="submit" className="w-full">
         {t('auth.entrance')}
       </Button>
     </form>

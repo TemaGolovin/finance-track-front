@@ -1,5 +1,14 @@
+import {
+  LEGAL_CONTACT_EMAIL,
+  LEGAL_OPERATOR_AS_IN_PRIVACY_POLICY,
+  LEGAL_SITE_ORIGIN,
+} from './legal-public-meta';
+
 const linkClass =
   'text-primary underline underline-offset-2 hover:no-underline break-words';
+
+const siteUrl = LEGAL_SITE_ORIGIN;
+const privacyUrl = `${LEGAL_SITE_ORIGIN}/privacy`;
 
 export function PrivacyRuContent() {
   return (
@@ -10,18 +19,13 @@ export function PrivacyRuContent() {
           Настоящая политика обработки персональных данных составлена в соответствии с требованиями
           Федерального закона от 27.07.2006 №152-ФЗ «О персональных данных» и определяет порядок
           обработки персональных данных и меры по обеспечению безопасности персональных данных,
-          предпринимаемые Тестовым тестом тестовичем (далее — Оператор).
+          предпринимаемые {LEGAL_OPERATOR_AS_IN_PRIVACY_POLICY} (далее — Оператор).
         </p>
         <p>
           1.1. Настоящая Политика применяется ко всей информации, которую Оператор может получить о
           пользователях веб-приложения, расположенного по адресу{' '}
-          <a
-            className={linkClass}
-            href="https://localhost:3000"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            https://localhost:3000
+          <a className={linkClass} href={siteUrl} target="_blank" rel="noopener noreferrer">
+            {siteUrl}
           </a>
           .
         </p>
@@ -149,8 +153,8 @@ export function PrivacyRuContent() {
         <p>
           Пользователь вправе в любой момент отозвать согласие, направив уведомление на электронную
           почту{' '}
-          <a className={linkClass} href="mailto:test@mail.ru">
-            test@mail.ru
+          <a className={linkClass} href={`mailto:${LEGAL_CONTACT_EMAIL}`}>
+            {LEGAL_CONTACT_EMAIL}
           </a>
           .
         </p>
@@ -180,20 +184,15 @@ export function PrivacyRuContent() {
         <p>
           10.1. Пользователь может получить разъяснения по вопросам обработки персональных данных,
           обратившись по адресу{' '}
-          <a className={linkClass} href="mailto:test@mail.ru">
-            test@mail.ru
+          <a className={linkClass} href={`mailto:${LEGAL_CONTACT_EMAIL}`}>
+            {LEGAL_CONTACT_EMAIL}
           </a>
           .
         </p>
         <p>
           10.2. Актуальная версия Политики доступна по адресу:{' '}
-          <a
-            className={linkClass}
-            href="https://localhost:3000/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            https://localhost:3000/privacy
+          <a className={linkClass} href={privacyUrl} target="_blank" rel="noopener noreferrer">
+            {privacyUrl}
           </a>
           .
         </p>

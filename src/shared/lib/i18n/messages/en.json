@@ -63,12 +63,13 @@
     "authLoading": "Registering...",
     "authSuccess": "Registration successful",
     "authError": "Registration error",
-    "privacyConsentLabel": "I agree to the processing of my personal data and confirm that I have read the <link>personal data processing policy</link> (Russian).",
-    "privacyConsentRequired": "Please confirm your consent to continue registration."
+    "privacyConsentLabel": "I agree to the processing of my personal data, accept the <terms>user agreement</terms>, and confirm that I have read the <privacy>personal data processing policy</privacy> (Russian).",
+    "privacyConsentRequired": "Please confirm your consent to the documents to continue registration."
   },
 
   "legal": {
-    "privacyPolicy": "Personal data processing policy (Russian)"
+    "privacyPolicy": "Personal data processing policy (Russian)",
+    "userAgreement": "User agreement (Russian)"
   },
 
   "verifyEmail": {
