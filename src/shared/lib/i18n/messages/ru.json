@@ -172,7 +172,17 @@
     "sessionRevokeSuccess": "Сессия на устройстве завершена",
     "sessionRevokeError": "Не удалось завершить сессию",
     "logoutSection": "Текущая сессия",
-    "logoutDescription": "Выход из аккаунта на этом устройстве."
+    "logoutDescription": "Выход из аккаунта на этом устройстве.",
+    "deleteAccountSection": "Удаление аккаунта",
+    "deleteAccountWarning": "Аккаунт и все связанные данные будут удалены безвозвратно. Это действие нельзя отменить.",
+    "deleteAccountButton": "Удалить аккаунт",
+    "deleteAccountDrawerTitle": "Вы уверены?",
+    "deleteAccountDrawerDescription": "Введите пароль для подтверждения удаления. Все ваши данные будут удалены навсегда.",
+    "deleteAccountPasswordLabel": "Текущий пароль",
+    "deleteAccountConfirm": "Удалить мой аккаунт",
+    "deleteAccountLoading": "Удаляем аккаунт...",
+    "deleteAccountSuccess": "Аккаунт удалён",
+    "deleteAccountError": "Не удалось удалить аккаунт"
   },
 
   "operation": {

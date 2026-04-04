@@ -138,3 +138,19 @@ export const useConfirmEmailChange = () => {
       }),
   });
 };
+
+export const useDeleteAccount = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (password: string) =>
+      instanceFetch<SuccessResponse>('/auth/delete-account', {
+        method: 'POST',
+        body: JSON.stringify({ password }),
+      }),
+    onSuccess: () => {
+      queryClient.setQueryData(auth.me, null);
+      queryClient.removeQueries({ queryKey: auth.sessions });
+    },
+  });
+};

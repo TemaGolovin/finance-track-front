@@ -172,7 +172,17 @@
     "sessionRevokeSuccess": "Device signed out",
     "sessionRevokeError": "Could not sign out device",
     "logoutSection": "Session",
-    "logoutDescription": "Sign out on this device."
+    "logoutDescription": "Sign out on this device.",
+    "deleteAccountSection": "Delete account",
+    "deleteAccountWarning": "This will permanently delete your account and all associated data. This action cannot be undone.",
+    "deleteAccountButton": "Delete account",
+    "deleteAccountDrawerTitle": "Are you sure?",
+    "deleteAccountDrawerDescription": "Enter your password to confirm account deletion. All your data will be permanently removed.",
+    "deleteAccountPasswordLabel": "Current password",
+    "deleteAccountConfirm": "Delete my account",
+    "deleteAccountLoading": "Deleting account...",
+    "deleteAccountSuccess": "Account deleted",
+    "deleteAccountError": "Could not delete account"
   },
 
   "operation": {

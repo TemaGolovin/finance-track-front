@@ -1,5 +1,6 @@
 'use client';
 
+import { AccountDeleteSection } from '@/feature/account-delete';
 import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { LogoutAction } from '@/feature/auth';
 import { ProfileChangePasswordForm } from '@/feature/profile-change-password';
@@ -92,6 +93,8 @@ export const ProfileOverview = () => {
           {tSidebar('logout')}
         </LogoutAction>
       </div>
+
+      <AccountDeleteSection />
     </div>
   );
 };
