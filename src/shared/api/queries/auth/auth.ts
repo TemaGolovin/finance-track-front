@@ -27,8 +27,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: () => instanceFetch<{ success: boolean }>('/auth/logout', { method: 'POST' }),
     onSuccess: () => {
-      queryClient.setQueryData(auth.me, null);
-      queryClient.removeQueries({ queryKey: auth.sessions });
+      queryClient.clear();
     },
   });
 };
