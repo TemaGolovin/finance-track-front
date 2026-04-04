@@ -56,7 +56,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <form className="mb-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="mb-4 w-full" onSubmit={handleSubmit(onSubmit)}>
       <Input
         label={t('common.email')}
         type="email"
