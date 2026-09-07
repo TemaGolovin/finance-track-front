@@ -31,15 +31,24 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         {categories?.map((category) => (
           <Button
             key={category.id}
-            className={
-              'text-center h-auto flex flex-col items-center py-2 border border-transparent border-solid'
-            }
+            className={cn(
+              'text-center h-auto flex flex-col items-center py-2 border border-transparent border-solid transition-colors',
+              { 'p-0': selectedCategoryId === category.id },
+            )}
             style={{
               background: selectedCategoryId === category.id ? category.color : undefined,
             }}
             onClick={() => setSelectedCategoryId(category.id)}
           >
-            <CategoryItem color={category.color} icon={category.icon} name={category.name} />
+            <CategoryItem
+              nameClasses={cn({
+                'overflow-visible wrap-anywhere whitespace-pre-wrap':
+                  selectedCategoryId === category.id,
+              })}
+              color={category.color}
+              icon={category.icon}
+              name={category.name}
+            />
           </Button>
         ))}
       </div>

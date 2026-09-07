@@ -18,6 +18,7 @@ interface GroupFormProps {
 export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) => {
   const groupT = useTranslations('group');
   const errorsT = useTranslations('errors');
+  const commonT = useTranslations('common');
 
   const { onSubmit } = useGroupFormActions(mode, group);
 
@@ -43,6 +44,16 @@ export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) 
     return [...(group?.invitedUsersIds || []), ...(group?.users?.map((u) => u.user.id) || [])];
   }, [group]);
 
+  const getBtnText = () => {
+    if (mode === 'create') {
+      return !!invitedUsers?.length && invitedUsers.length > 0
+        ? groupT('groupCreateAndInviteMembers')
+        : groupT('groupCreate');
+    }
+
+    return commonT('save');
+  };
+
   return (
     <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -65,9 +76,7 @@ export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) 
 
       <div className="fixed inset-x-3 bottom-4">
         <Button type="submit" className="w-full" variant={'primary'}>
-          {!!invitedUsers?.length && invitedUsers.length > 0
-            ? groupT('groupCreateAndInviteMembers')
-            : groupT('groupCreate')}
+          {getBtnText()}
         </Button>
       </div>
     </form>

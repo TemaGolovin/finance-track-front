@@ -25,9 +25,7 @@ export const CategoryItem: FC<CategoryItemProps> = ({
       >
         {iconCategoryFromBackendMap?.[icon]}
       </div>
-      <div className={cn('w-full text-xs', [nameClasses])}>
-        <div className="truncate">{name}</div>
-      </div>
+      <div className={cn('w-full text-xs truncate', [nameClasses])}>{name}</div>
     </>
   );
 };

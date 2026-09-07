@@ -223,6 +223,9 @@
     "deletingCategory": "Deleting a category",
     "confirmDelete": "Are you sure you want to delete this category?",
 
+    "creation": "Category creation",
+    "edition": "Category edition",
+
     "deleteCategoryLoading": "Deleting a category...",
     "deleteCategorySuccess": "Category deleted successfully",
     "deleteCategoryError": "Error deleting category",

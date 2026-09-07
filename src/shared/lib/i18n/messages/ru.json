@@ -223,6 +223,9 @@
     "deletingCategory": "Удаление категории",
     "confirmDelete": "Вы уверены, что хотите удалить категорию?",
 
+    "creation": "Добавление категории",
+    "edition": "Редактирование категории",
+
     "deleteCategoryLoading": "Удаление категории...",
     "deleteCategorySuccess": "Категория удалена",
     "deleteCategoryError": "Ошибка удаления категории",
@@ -237,6 +240,7 @@
 
     "groupCreateTitle": "Создание группы",
     "groupCreate": "Создать группу",
+    "groupSave": "Сохранить",
     "groupCreateAndInviteMembers": "Создать группу и пригласить участников",
     "groupName": "Название группы",
 
