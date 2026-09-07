@@ -14,7 +14,6 @@
 
 | Приоритет | Задача | Что не так | Где |
 |-----------|--------|------------|-----|
-| Критично | **BFF: refresh для PUT/POST/PATCH** | После 401 повтор запроса без `Content-Type` / `Accept-Language`; access берётся из **старых** request-cookies, не из ответа refresh. Через ~15 мин мутации отваливаются. | `src/app/api/[...path]/route.ts` |
 | Критично | **Цвет и иконка категории при редактировании** | Форма шлёт `color`/`icon`, `UpdateCategoryDto` их нет, репозиторий пишет только `name`. | Бэк: `category.repository.ts` → `updateCategory`, `UpdateCategoryDto` |
 | Высокий | **Инвалидация кэша после create/update** | `invalidateQueries` помечает stale, но у списков `refetchOnMount: false` — после перехода на список данные старые (создал группу — в списке нет). | Хуки в `src/shared/api/queries/` (`useGroups` и аналоги) |
 | Высокий | **Куки при HTTPS** | `secure: false` зашит. На HTTP-стенде ок; на HTTPS сессия может не прилипать. Вынести в env (`COOKIE_SECURE` / `NODE_ENV`). | `auth.controller.ts` |
@@ -45,7 +44,6 @@ IDOR по операциям/категориям и базовый auth — в 
 |-----------|--------|------------|
 | Средний | **Rate limiting** | Лимиты на `auth/login`, `auth/registration` (брутфорс). |
 | Средний | **Swagger / OpenAPI** | В публичном доступе отключить или закрыть (VPN, Basic Auth). |
-| Средний | **BFF: лишние заголовки** | Не прокидывать на бэкенд все клиентские заголовки без необходимости; после refresh — тот же набор, что у исходного запроса (см. критичный пункт про PUT/POST/PATCH). |
 | Низкий | **Access token в JSON** | Дублируется с httpOnly cookie; можно не отдавать в теле ответа. |
 | Низкий | **Политика паролей** | Сейчас минимум 6 символов. |
 | Низкий | **ValidationPipe whitelist** | Сейчас extra-поля с клиента не отсекаются. |
@@ -152,6 +150,5 @@ flowchart TD
 
 - Фильтры: `src/feature/operation-filters/model/use-transactions-filters.ts`
 - Выбор группы: `src/feature/group-selector/model/use-group-selector.ts`
-- BFF: `src/app/api/[...path]/route.ts`
 - Апдейт категории (бэк): `finance-track-back` → `src/category/`
 - Refresh: `finance-track-back` → `src/auth/strategies/refresh-jwt.strategy.ts`, `AuthService.refresh`
