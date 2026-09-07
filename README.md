@@ -4,7 +4,7 @@ Web client for shared family or group income and expense tracking: transactions,
 
 **Related repository:** [finance-track-back](../finance-track-back) — NestJS API.
 
-**Roadmap and backlog:** [docs/ROADMAP.md](docs/ROADMAP.md).
+**Roadmap and backlog:** [docs/ROADMAP.md](docs/ROADMAP.md). Completed work: [docs/DONE.md](docs/DONE.md).
 
 ## Stack
 
