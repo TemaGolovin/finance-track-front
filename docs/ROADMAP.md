@@ -14,7 +14,6 @@
 
 | Приоритет | Задача | Что не так | Где |
 |-----------|--------|------------|-----|
-| Критично | **Редактирование группы — 404** | Фронт шлёт `PATCH /user-group/:id`, на бэке маршрута нет (`UpdateUserGroupDto` есть, эндпоинт не подключён). | Фронт: `useGroupUpdate` в `src/shared/api/queries/groups/groups.ts`. Бэк: `user-group.controller.ts`. |
 | Критично | **BFF: refresh для PUT/POST/PATCH** | После 401 повтор запроса без `Content-Type` / `Accept-Language`; access берётся из **старых** request-cookies, не из ответа refresh. Через ~15 мин мутации отваливаются. | `src/app/api/[...path]/route.ts` |
 | Критично | **Цвет и иконка категории при редактировании** | Форма шлёт `color`/`icon`, `UpdateCategoryDto` их нет, репозиторий пишет только `name`. | Бэк: `category.repository.ts` → `updateCategory`, `UpdateCategoryDto` |
 | Высокий | **Инвалидация кэша после create/update** | `invalidateQueries` помечает stale, но у списков `refetchOnMount: false` — после перехода на список данные старые (создал группу — в списке нет). | Хуки в `src/shared/api/queries/` (`useGroups` и аналоги) |
@@ -154,6 +153,5 @@ flowchart TD
 - Фильтры: `src/feature/operation-filters/model/use-transactions-filters.ts`
 - Выбор группы: `src/feature/group-selector/model/use-group-selector.ts`
 - BFF: `src/app/api/[...path]/route.ts`
-- Апдейт группы (фронт): `src/shared/api/queries/groups/groups.ts` (`useGroupUpdate`)
 - Апдейт категории (бэк): `finance-track-back` → `src/category/`
 - Refresh: `finance-track-back` → `src/auth/strategies/refresh-jwt.strategy.ts`, `AuthService.refresh`

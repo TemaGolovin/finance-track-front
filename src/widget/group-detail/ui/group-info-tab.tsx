@@ -81,7 +81,9 @@ export const GroupInfoTab: FC<GroupInfoTabProps> = ({ group, isLoading, isCreato
           </SecondaryCard>
         )}
       </div>
-      {group && <FixedEditLinkIcon link={ROUTES.GROUP_EDIT.replace(':id', group.id)} />}
+      {group && isCreator && (
+        <FixedEditLinkIcon link={ROUTES.GROUP_EDIT.replace(':id', group.id)} />
+      )}
     </>
   );
 };
