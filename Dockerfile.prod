@@ -1,0 +1,38 @@
+FROM node:24.22-alpine AS builder
+
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@12.14.0 --activate
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=pnpm-front,target=/pnpm/store pnpm install --frozen-lockfile
+
+COPY . .
+
+ARG NEXT_PUBLIC_API_BFF
+ARG NEXT_PUBLIC_VAPID_PUBLIC_KEY=
+ENV NEXT_PUBLIC_API_BFF=$NEXT_PUBLIC_API_BFF
+ENV NEXT_PUBLIC_VAPID_PUBLIC_KEY=$NEXT_PUBLIC_VAPID_PUBLIC_KEY
+
+RUN pnpm build
+
+FROM node:24.22-alpine AS runner
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+WORKDIR /app
+ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
+
+COPY --from=builder --chown=appuser:appgroup /app/public ./public
+COPY --from=builder --chown=appuser:appgroup /app/.next/standalone ./
+COPY --from=builder --chown=appuser:appgroup /app/.next/static ./.next/static
+
+USER appuser
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok||r.status===404?0:1)).catch(()=>process.exit(1))"
+
+CMD ["node", "server.js"]
