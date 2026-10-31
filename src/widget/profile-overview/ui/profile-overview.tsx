@@ -1,18 +1,19 @@
 'use client';
 
-import { AccountDeleteSection } from '@/feature/account-delete';
 import { I18nSwitcher, ThemeSwitcher } from '@/feature';
+import { AccountDeleteSection } from '@/feature/account-delete';
 import { LogoutAction } from '@/feature/auth';
-import { ProfileChangePasswordForm } from '@/feature/profile-change-password';
 import { ProfileChangeEmailForm } from '@/feature/profile-change-email';
+import { ProfileChangePasswordForm } from '@/feature/profile-change-password';
+import { ProfileResendVerificationButton } from '@/feature/profile-resend-verification';
 import { ProfileUpdateNameForm } from '@/feature/profile-update-name';
 import { useAboutMe } from '@/shared/api/queries/auth';
 import { ROUTES } from '@/shared/model/routes';
 import { Button, Skeleton } from '@/shared/ui';
-import { ProfileSessionsSection } from './profile-sessions-section';
-import { LogOut, ShieldCheck, ShieldAlert } from 'lucide-react';
-import Link from 'next/link';
+import { LogOut, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { ProfileSessionsSection } from './profile-sessions-section';
 
 export const ProfileOverview = () => {
   const t = useTranslations('profile');
@@ -65,7 +66,10 @@ export const ProfileOverview = () => {
             )}
           </div>
           {!emailVerified && (
-            <p className="text-xs text-muted-foreground mt-1">{t('emailVerifyHint')}</p>
+            <div className="mt-2 flex flex-col gap-2 items-start">
+              <p className="text-xs text-muted-foreground">{t('emailVerifyHint')}</p>
+              <ProfileResendVerificationButton email={email} />
+            </div>
           )}
         </div>
       </div>

@@ -142,6 +142,7 @@
     "emailNotVerified": "Не подтверждена",
     "emailVerified": "Подтверждена",
     "emailVerifyHint": "Подтвердите почту для защиты аккаунта.",
+    "resendVerificationBtn": "Отправить письмо подтверждения",
     "emailChangeSection": "Смена почты",
     "emailChangeNewEmail": "Новый адрес почты",
     "emailChangeSubmit": "Отправить подтверждение",

@@ -142,6 +142,7 @@
     "emailNotVerified": "Not verified",
     "emailVerified": "Verified",
     "emailVerifyHint": "Verify your email to secure your account.",
+    "resendVerificationBtn": "Send verification email",
     "emailChangeSection": "Change email",
     "emailChangeNewEmail": "New email address",
     "emailChangeSubmit": "Send confirmation",
