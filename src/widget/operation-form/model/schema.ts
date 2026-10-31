@@ -1,3 +1,4 @@
+import { parseDecimalInputToNumber } from '@/shared/lib/utils/decimal-input-format';
 import z from 'zod';
 
 export const createOperationSchema = (errors: {
@@ -13,7 +14,7 @@ export const createOperationSchema = (errors: {
       .min(1, { message: errors.sum.required })
       .refine(
         (value) => {
-          if (Number(value.replace(',', '.')) > 0) {
+          if (parseDecimalInputToNumber(value) > 0) {
             return true;
           }
 

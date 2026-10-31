@@ -1,17 +1,17 @@
 'use client';
 import { OperationSimpleCard } from '@/entity/operation';
 import { DateRangeNavigator } from '@/feature/date-range-navigator';
+import { GroupSelector, useGroupSelector } from '@/feature/group-selector';
 import {
   OperationTypeFilter,
   PeriodFilter,
   useTransactionsFilters,
 } from '@/feature/operation-filters';
-import { GroupSelector, useGroupSelector } from '@/feature/group-selector';
-import { useOperations } from '@/shared/api/queries/operations';
 import { useGroupOperations, useGroups } from '@/shared/api/queries/groups';
+import { useOperations } from '@/shared/api/queries/operations';
 import { formatNumberWithRound } from '@/shared/lib';
 import { ROUTES } from '@/shared/model/routes';
-import { FixedPlusLinkButton } from '@/shared/ui';
+import { FixedPlusLinkButton, Skeleton } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
@@ -29,26 +29,31 @@ export const OperationList = () => {
   const { selectedGroupId } = useGroupSelector();
   const { data: groups } = useGroups();
 
-  const { data: personalOperationsByDateWithTotalSum } = useOperations({
-    startDate: selectedDatesAndPeriod?.dates?.startDate,
-    endDate: selectedDatesAndPeriod?.dates?.endDate,
-    operationType,
-    categoryId,
-    enabled: !selectedGroupId,
-  });
+  const { data: personalOperationsByDateWithTotalSum, isLoading: isLoadingPersonal } =
+    useOperations({
+      startDate: selectedDatesAndPeriod?.dates?.startDate,
+      endDate: selectedDatesAndPeriod?.dates?.endDate,
+      operationType,
+      categoryId,
+      enabled: !selectedGroupId,
+    });
 
-  const { data: groupOperationsByDateWithTotalSum } = useGroupOperations({
-    groupId: selectedGroupId ?? '',
-    operationType,
-    startDate: selectedDatesAndPeriod?.dates?.startDate,
-    endDate: selectedDatesAndPeriod?.dates?.endDate,
-    categoryId,
-    enabled: !!selectedGroupId,
-  });
+  const { data: groupOperationsByDateWithTotalSum, isLoading: isLoadingGroup } = useGroupOperations(
+    {
+      groupId: selectedGroupId ?? '',
+      operationType,
+      startDate: selectedDatesAndPeriod?.dates?.startDate,
+      endDate: selectedDatesAndPeriod?.dates?.endDate,
+      categoryId,
+      enabled: !!selectedGroupId,
+    },
+  );
 
   const operationsByDateWithTotalSum = selectedGroupId
     ? groupOperationsByDateWithTotalSum
     : personalOperationsByDateWithTotalSum;
+
+  const isLoadingOperations = selectedGroupId ? isLoadingGroup : isLoadingPersonal;
 
   const operationsByDate = operationsByDateWithTotalSum?.operationsByDate;
   const totalSum = operationsByDateWithTotalSum?.totalSum;
@@ -75,34 +80,44 @@ export const OperationList = () => {
         selectedDatesAndPeriod={selectedDatesAndPeriod}
         setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
       />
-      {totalSum && (
+      {!isLoadingOperations && totalSum ? (
         <div>
           <span className="text-foreground/60">{commonT('amount')}:</span>{' '}
           <span className="font-bold">{formatNumberWithRound(Number(totalSum))}</span>
         </div>
-      )}
-      {operationsByDate?.map(({ operations, date }) => (
-        <div key={date}>
-          <div className="text-sm font-bold text-foreground/80">{date}</div>
-          {operations.map((operation) => (
-            <Link key={operation.id} href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}>
-              <div className="mb-1">
-                <OperationSimpleCard
-                  operation={operation}
-                  showUser={!!selectedGroupId}
-                  userName={selectedGroupId ? getUserName(operation.userId) : undefined}
-                />
-              </div>
-            </Link>
-          ))}
-        </div>
-      ))}
+      ) : null}
+      {isLoadingOperations
+        ? ['sk-1', 'sk-2', 'sk-3', 'sk-4'].map((key) => (
+            <Skeleton key={key} className="h-14 w-full rounded-md" />
+          ))
+        : null}
+      {!isLoadingOperations
+        ? operationsByDate?.map(({ operations, date }) => (
+            <div key={date}>
+              <div className="text-sm font-bold text-foreground/80">{date}</div>
+              {operations.map((operation) => (
+                <Link
+                  key={operation.id}
+                  href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}
+                >
+                  <div className="mb-1">
+                    <OperationSimpleCard
+                      operation={operation}
+                      showUser={!!selectedGroupId}
+                      userName={selectedGroupId ? getUserName(operation.userId) : undefined}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ))
+        : null}
 
-      {operationsByDate?.length === 0 && (
+      {!isLoadingOperations && operationsByDate?.length === 0 ? (
         <div className="text-xs flex justify-center h-10 items-center">
           {commonT('noDataForThisPeriod')}
         </div>
-      )}
+      ) : null}
 
       <FixedPlusLinkButton link={`${ROUTES.OPERATION_CREATE}?type=${operationType}`} />
     </div>

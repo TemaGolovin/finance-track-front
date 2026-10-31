@@ -231,11 +231,14 @@
     "deleteCategorySuccess": "Category deleted successfully",
     "deleteCategoryError": "Error deleting category",
 
-    "categoriesTitle": "Your categories"
+    "categoriesTitle": "Your categories",
+    "listEmpty": "No categories yet",
+    "createCategory": "Create category"
   },
 
   "group": {
     "groupsTitle": "Your groups",
+    "listEmpty": "No groups yet",
     "creator": "Creator",
     "members": "Members",
 
@@ -320,6 +323,8 @@
     "cancel": "Cancel",
     "noReceived": "No incoming invitations",
     "noSent": "No outgoing invitations",
+    "emptySentCta": "Go to groups",
+    "loadError": "Could not load invitations",
     "acceptLoading": "Accepting invitation...",
     "acceptSuccess": "Invitation accepted",
     "declineLoading": "Declining invitation...",

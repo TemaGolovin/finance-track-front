@@ -1,6 +1,7 @@
 'use client';
 
 import { CategorySelector } from '@/feature/category-selector';
+import { OperationTypeFilter } from '@/feature/operation-filters/ui/operation-type-filter';
 import { QuickDatePicker } from '@/feature/quick-date-picker';
 import { useAboutMe } from '@/shared/api/queries/auth';
 import {
@@ -8,17 +9,17 @@ import {
   useOperationDetail,
   useOperationEdit,
 } from '@/shared/api/queries/operations';
+import { formatDecimalInputWithSpaceSeparators } from '@/shared/lib/utils/decimal-input-format';
 import { ROUTES } from '@/shared/model/routes';
 import { Button, Input } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
-import { createOperationSchema, OperationType } from '../model/schema';
 import { mapCrateOperationFormToApi } from '../model/mapping';
-import { useEffect, useMemo } from 'react';
-import { OperationTypeFilter } from '@/feature/operation-filters/ui/operation-type-filter';
+import { OperationType, createOperationSchema } from '../model/schema';
 
 interface OperationFormProps {
   editedId?: string;
@@ -80,7 +81,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
     if (editedOperation) {
       reset({
         date: new Date(editedOperation.operationDate),
-        sum: editedOperation.value.toString(),
+        sum: formatDecimalInputWithSpaceSeparators(editedOperation.value.toString()),
         categoryId: editedOperation.categoryId,
         comment: editedOperation.comment,
         type: editedOperation.type,
@@ -88,8 +89,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
     }
   }, [editedOperation, reset]);
 
-  const isResolvingEditOwnership =
-    Boolean(editedId) && (isLoadingOperation || isLoadingMe);
+  const isResolvingEditOwnership = Boolean(editedId) && (isLoadingOperation || isLoadingMe);
   const currentUserId = me?.data?.id;
   const isEditingForbidden =
     Boolean(editedId) &&

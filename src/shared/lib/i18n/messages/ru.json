@@ -191,7 +191,7 @@
     "success": "Операция сохранена",
     "error": "Ошибка сохранения операции",
 
-    "deleteOperationPromise": "Удаление операции",
+    "deleteOperationLoading": "Удаление операции",
     "deleteOperationSuccess": "Операция удалена",
     "deleteOperationError": "Ошибка удаления операции",
 
@@ -231,11 +231,14 @@
     "deleteCategorySuccess": "Категория удалена",
     "deleteCategoryError": "Ошибка удаления категории",
 
-    "categoriesTitle": "Твои категории"
+    "categoriesTitle": "Твои категории",
+    "listEmpty": "Категорий пока нет",
+    "createCategory": "Создать категорию"
   },
 
   "group": {
     "groupsTitle": "Твои группы",
+    "listEmpty": "Групп пока нет",
     "creator": "Автор",
     "members": "Участники",
 
@@ -321,6 +324,8 @@
     "cancel": "Отменить",
     "noReceived": "Нет входящих приглашений",
     "noSent": "Нет исходящих приглашений",
+    "emptySentCta": "Перейти к группам",
+    "loadError": "Не удалось загрузить приглашения",
     "acceptLoading": "Принимаем приглашение...",
     "acceptSuccess": "Приглашение принято",
     "declineLoading": "Отклоняем приглашение...",

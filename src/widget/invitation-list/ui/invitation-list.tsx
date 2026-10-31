@@ -1,15 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useInvitations, useUpdateInvitation } from '@/shared/api/queries/user';
-import { Tabs } from '@/shared/ui';
 import { ReceivedInvitationCard, SentInvitationCard } from '@/entity/invitation';
 import { InvitationStatuses } from '@/shared/api/queries/invitation/types';
-import { useTranslations } from 'next-intl';
-import { toast } from 'sonner';
+import { useInvitations, useUpdateInvitation } from '@/shared/api/queries/user';
 import { ROUTES } from '@/shared/model/routes';
+import { ListEmptyState, Skeleton, Tabs } from '@/shared/ui';
 import { Inbox, Send } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 type TabId = 'received' | 'sent';
 
@@ -18,7 +18,7 @@ export const InvitationList = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabId>('received');
 
-  const { data } = useInvitations();
+  const { data, isLoading, isError } = useInvitations();
   const { mutateAsync: updateInvitation, isPending } = useUpdateInvitation();
 
   const handleAccept = async (id: string) => {
@@ -51,11 +51,25 @@ export const InvitationList = () => {
     });
   };
 
-  const receivedContent = (
+  const loadingSkeleton = (
     <div className="flex flex-col gap-2 mt-2">
-      {data?.received.length === 0 && (
-        <p className="text-sm text-foreground/60 text-center py-4">{t('noReceived')}</p>
-      )}
+      {['sk-1', 'sk-2'].map((key) => (
+        <Skeleton key={key} className="h-20 w-full rounded-md" />
+      ))}
+    </div>
+  );
+
+  const loadErrorMessage = (
+    <p className="text-sm text-destructive text-center py-4">{t('loadError')}</p>
+  );
+
+  const receivedContent = isLoading ? (
+    loadingSkeleton
+  ) : isError || !data ? (
+    loadErrorMessage
+  ) : (
+    <div className="flex flex-col gap-2 mt-2">
+      {data?.received.length === 0 ? <ListEmptyState message={t('noReceived')} /> : null}
       {data?.received.map((invitation) => (
         <ReceivedInvitationCard
           key={invitation.id}
@@ -68,11 +82,19 @@ export const InvitationList = () => {
     </div>
   );
 
-  const sentContent = (
+  const sentContent = isLoading ? (
+    loadingSkeleton
+  ) : isError || !data ? (
+    loadErrorMessage
+  ) : (
     <div className="flex flex-col gap-2 mt-2">
-      {data?.sent.length === 0 && (
-        <p className="text-sm text-foreground/60 text-center py-4">{t('noSent')}</p>
-      )}
+      {data?.sent.length === 0 ? (
+        <ListEmptyState
+          message={t('noSent')}
+          actionLabel={t('emptySentCta')}
+          actionHref={ROUTES.GROUP}
+        />
+      ) : null}
       {data?.sent.map((invitation) => (
         <SentInvitationCard
           key={invitation.id}

@@ -1,4 +1,5 @@
 import { CreateOperationReq } from '@/shared/api/queries/operations';
+import { parseDecimalInputToNumber } from '@/shared/lib/utils/decimal-input-format';
 import { OperationType } from './schema';
 
 export const mapCrateOperationFormToApi = (
@@ -6,7 +7,7 @@ export const mapCrateOperationFormToApi = (
 ): CreateOperationReq => {
   return {
     type: createOperationFormState.type,
-    value: Number(createOperationFormState.sum.replace(',', '.')),
+    value: parseDecimalInputToNumber(createOperationFormState.sum),
     operationDate: createOperationFormState.date.toISOString(),
     categoryId: createOperationFormState.categoryId,
     comment: createOperationFormState.comment,

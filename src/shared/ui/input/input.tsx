@@ -1,4 +1,5 @@
 import { Input as InputShadcn } from '@/shared/lib/shadcn/input';
+import { formatDecimalInputWithSpaceSeparators } from '@/shared/lib/utils/decimal-input-format';
 import { ComponentProps } from 'react';
 
 const clearInvalidSymbols = (
@@ -48,16 +49,16 @@ export const Input: React.FC<InputProps> = ({
           if (e.target.value.startsWith('.')) e.target.value = e.target.value.replace('.', '');
           if (e.target.value.startsWith(',')) e.target.value = e.target.value.replace(',', '');
 
-          e.target.value = clearInvalidSymbols(
-            e.target.value,
-            amountSymbolsAfterDot,
-            isOnlyPositive,
+          e.target.value = formatDecimalInputWithSpaceSeparators(
+            clearInvalidSymbols(e.target.value, amountSymbolsAfterDot, isOnlyPositive),
           );
 
           props?.onChange?.(e);
         },
         onBlur: (e) => {
-          e.target.value = e.target.value.replace(/^(.*)([.,]$)/g, '$1');
+          e.target.value = formatDecimalInputWithSpaceSeparators(
+            e.target.value.replace(/^(.*)([.,]$)/g, '$1'),
+          );
           props?.onBlur?.(e);
           props?.onChange?.(e);
         },
