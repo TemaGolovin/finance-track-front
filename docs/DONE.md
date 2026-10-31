@@ -25,6 +25,8 @@
 | **Сверка refresh с хешем в БД** | `AuthService.refresh`: cookie сверяется с bcrypt в `RefreshToken` через SHA-256 digest (обход лимита bcrypt 72 байта); в refresh JWT — `jti`; при reuse — отзыв сессии устройства и 401. Legacy-хеши (bcrypt от полного JWT) принимаются до следующей ротации. |
 | **Цвет и иконка категории при редактировании** | **Бэкенд:** `UpdateCategoryDto` — `color`, `icon`, `categoryType`; `CategoryRepository.updateCategory` сохраняет все поля, не только `name`. |
 | **Инвалидация кэша после create/update** | **Фронт:** `invalidateAndRefetchQueries` — `invalidateQueries` с `refetchType: 'all'` (не только активные запросы); `onSuccess` возвращает Promise, чтобы `mutateAsync` завершался после refetch до `router.push`. |
+| **Фильтр групповых операций по категории** | **Бэкенд:** при `categoryId` (group category) всегда фильтр по мапам; если мапов нет — пустой список, не все операции группы. `UserGroupRepository.getUserGroupOperations`. E2e: `test/user-group.e2e-spec.ts`. |
+| **Мапы после выхода / кика** | **Бэкенд:** в одной транзакции с удалением членства — `personalCategoryMap.deleteMany({ userId, groupId })`. `removeUserFromGroup` (выход, кик через `removeMember`). E2e в `test/user-group.e2e-spec.ts`. |
 
 ---
 
