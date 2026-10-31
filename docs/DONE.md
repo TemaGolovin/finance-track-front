@@ -30,6 +30,7 @@
 | **Мапы после выхода / кика** | **Бэкенд:** в одной транзакции с удалением членства — `personalCategoryMap.deleteMany({ userId, groupId })`. `removeUserFromGroup` (выход, кик через `removeMember`). E2e в `test/user-group.e2e-spec.ts`. |
 | **Семейные группы: тип операции, connect, повторный инвайт** | **Бэкенд:** `create`/`update` операции — `type` совпадает с `category.categoryType` (`400`); `getUserGroupStat` не суммирует операции с другим типом; при `connect` личная и групповая категория одного `categoryType`; partial unique `Invitation (recipientId, groupId) WHERE status = PENDING` — повторное приглашение после `DECLINED`/`CANCELLED`. E2e: `test/operation.e2e-spec.ts`, `test/user-group.e2e-spec.ts`, `test/user.e2e-spec.ts`. |
 | **Тело запроса в 400 валидации** | **Бэкенд:** `SafeI18nValidationExceptionFilter` + `sanitizeValidationErrors` — в `message` только `property`, `constraints` и вложенные `children`, без `value`/`target`. Unit: `src/i18n/sanitize-validation-errors.spec.ts`; e2e: `test/validation-response.e2e-spec.ts`. |
+| **UX: empty-экраны, скелетоны, маски сумм, i18n удаления операции** | **Empty:** `ListEmptyState` в `shared/ui`; группы (`GroupListPlaceholder`), категории (`CategoryListEmpty`), приглашения (входящие/исходящие + CTA «Перейти к группам»). **Skeletons:** списки групп, категорий, операций, приглашений. **Суммы:** `decimal-input-format.ts`, пробелы как разделитель тысяч в decimal-инпуте; парсинг в schema/mapping формы операции. **i18n:** в `ru.json` ключ `operation.deleteOperationLoading` (был `deleteOperationPromise`). |
 
 ---
 
@@ -42,3 +43,4 @@
 - BFF proxy + refresh retry: `src/app/api/[...path]/route.ts`
 - Категории (update): `finance-track-back` → `src/category/dto/update-category.dto.ts`, `category.repository.ts`
 - Refetch кэша после мутаций: `src/shared/api/lib/invalidate-and-refetch-queries.ts`, хуки в `src/shared/api/queries/`
+- UX (empty/skeleton/суммы): `src/shared/ui/list-empty-state/`, `src/shared/lib/utils/decimal-input-format.ts`, виджеты `group-list`, `category-list`, `operation-list`, `invitation-list`
