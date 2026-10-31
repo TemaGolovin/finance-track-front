@@ -22,6 +22,7 @@
 | **Протухшая сессия (BFF 401 JSON)** | При неудачном refresh BFF отдаёт `401` с `{ code: 'SESSION_EXPIRED' }`, сбрасывает auth-куки; `instanceFetch` перенаправляет на `/login`. |
 | **Куки при HTTPS** | `getAuthCookieOptions()` в бэкенде: `COOKIE_SECURE` или `NODE_ENV=production`. `clearCookie` с теми же опциями. |
 | **Парсинг Cookie для refresh** | `RefreshTokenStrategy` читает `req.cookies.refreshToken` вместо `split('=')`. |
+| **Сверка refresh с хешем в БД** | `AuthService.refresh`: cookie сверяется с bcrypt в `RefreshToken` через SHA-256 digest (обход лимита bcrypt 72 байта); в refresh JWT — `jti`; при reuse — отзыв сессии устройства и 401. Legacy-хеши (bcrypt от полного JWT) принимаются до следующей ротации. |
 | **Цвет и иконка категории при редактировании** | **Бэкенд:** `UpdateCategoryDto` — `color`, `icon`, `categoryType`; `CategoryRepository.updateCategory` сохраняет все поля, не только `name`. |
 | **Инвалидация кэша после create/update** | **Фронт:** `invalidateAndRefetchQueries` — `invalidateQueries` с `refetchType: 'all'` (не только активные запросы); `onSuccess` возвращает Promise, чтобы `mutateAsync` завершался после refetch до `router.push`. |
 
