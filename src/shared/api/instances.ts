@@ -1,4 +1,19 @@
+import { isSessionExpiredError } from '@/shared/model/auth-session';
+import { ROUTES } from '@/shared/model/routes';
 import { getClientLocale } from '../lib/i18n/client-locale';
+
+function redirectToLoginIfNeeded(): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const { pathname } = window.location;
+  if (pathname === ROUTES.LOGIN || pathname.startsWith(`${ROUTES.LOGIN}/`)) {
+    return;
+  }
+
+  window.location.assign(ROUTES.LOGIN);
+}
 
 export const instanceFetch = async <ResData>(url: string, init?: RequestInit) => {
   const locale = getClientLocale();
@@ -14,7 +29,12 @@ export const instanceFetch = async <ResData>(url: string, init?: RequestInit) =>
   });
 
   if (!data.ok) {
-    const err = await data.json();
+    const err: unknown = await data.json().catch(() => ({}));
+
+    if (isSessionExpiredError(err)) {
+      redirectToLoginIfNeeded();
+    }
+
     throw err;
   }
 

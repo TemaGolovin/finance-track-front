@@ -1,6 +1,5 @@
-import { ROUTES } from '@/shared/model/routes';
+import { SESSION_EXPIRED_CODE } from '@/shared/model/auth-session';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 const FORWARDED_REQUEST_HEADERS = ['content-type', 'accept-language'] as const;
@@ -59,6 +58,18 @@ function toClientResponse(upstream: Response, extraSetCookies: string[] = []): N
   });
 }
 
+function sessionExpiredResponse(): NextResponse {
+  const response = NextResponse.json(
+    { code: SESSION_EXPIRED_CODE, message: 'Session expired' },
+    { status: 401 },
+  );
+
+  response.cookies.delete({ name: 'accessToken', path: '/' });
+  response.cookies.delete({ name: 'refreshToken', path: '/' });
+
+  return response;
+}
+
 async function handler(req: Request, context: { params: Promise<{ path: string[] }> }) {
   const cookieStore = await cookies();
   const awaitedParams = await context.params;
@@ -94,20 +105,21 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
   });
 
   if (!refreshRes.ok) {
-    return redirect(ROUTES.LOGIN);
+    await refreshRes.body?.cancel();
+    return sessionExpiredResponse();
   }
 
   let refreshData: unknown;
   try {
     refreshData = await refreshRes.json();
   } catch {
-    return redirect(ROUTES.LOGIN);
+    return sessionExpiredResponse();
   }
 
   // cookies() still has the original request cookies; the new access is in the refresh JSON
   const newAccessToken = getAccessTokenFromRefreshBody(refreshData);
   if (!newAccessToken) {
-    return redirect(ROUTES.LOGIN);
+    return sessionExpiredResponse();
   }
 
   const retriedRes = await fetch(url, {

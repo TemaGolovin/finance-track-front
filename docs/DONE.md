@@ -19,6 +19,9 @@
 | **Редактирование группы — 404** | **Бэкенд:** `PATCH /user-group/:id` (`UpdateUserGroupDto`: `name`). Обновлять может только создатель группы (`FORBIDDEN_UPDATE`); чужая/несуществующая группа — 404. **Фронт:** кнопка редактирования только у создателя (`GroupInfoTab`). |
 | **Полное удаление аккаунта** | **Бэкенд:** `POST /auth/delete-account` под JWT, тело `{ password }`; транзакция Prisma (маппинги, операции, категории, приглашения, членство; группы создателя — смена `creatorId` или удаление пустой группы; затем refresh/email-токены и `user`). **Фронт:** `src/feature/account-delete/`, мутация `useDeleteAccount`. |
 | **BFF: refresh для PUT/POST/PATCH** | После 401 повтор идёт с тем же `Content-Type` / `Accept-Language`, что исходный запрос; новый access берётся из JSON refresh (`token`), а не из `cookies()` исходного запроса. Set-Cookie с refresh прокидывается клиенту через `getSetCookie()`. На бэкенд не форвардятся лишние клиентские заголовки. |
+| **Протухшая сессия (BFF 401 JSON)** | При неудачном refresh BFF отдаёт `401` с `{ code: 'SESSION_EXPIRED' }`, сбрасывает auth-куки; `instanceFetch` перенаправляет на `/login`. |
+| **Куки при HTTPS** | `getAuthCookieOptions()` в бэкенде: `COOKIE_SECURE` или `NODE_ENV=production`. `clearCookie` с теми же опциями. |
+| **Парсинг Cookie для refresh** | `RefreshTokenStrategy` читает `req.cookies.refreshToken` вместо `split('=')`. |
 | **Цвет и иконка категории при редактировании** | **Бэкенд:** `UpdateCategoryDto` — `color`, `icon`, `categoryType`; `CategoryRepository.updateCategory` сохраняет все поля, не только `name`. |
 | **Инвалидация кэша после create/update** | **Фронт:** `invalidateAndRefetchQueries` — `invalidateQueries` с `refetchType: 'all'` (не только активные запросы); `onSuccess` возвращает Promise, чтобы `mutateAsync` завершался после refetch до `router.push`. |
 
