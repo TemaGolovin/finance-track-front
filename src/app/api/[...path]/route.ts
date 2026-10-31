@@ -70,6 +70,14 @@ function sessionExpiredResponse(): NextResponse {
   return response;
 }
 
+async function discardResponseBody(response: Response): Promise<void> {
+  try {
+    await response.arrayBuffer();
+  } catch {
+    // upstream body already consumed or connection closed
+  }
+}
+
 async function handler(req: Request, context: { params: Promise<{ path: string[] }> }) {
   const cookieStore = await cookies();
   const awaitedParams = await context.params;
@@ -97,7 +105,7 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
     return toClientResponse(res);
   }
 
-  await res.body?.cancel();
+  await discardResponseBody(res);
 
   const refreshRes = await fetch(`${process.env.NEXT_API_BACKEND}/auth/refresh`, {
     method: 'POST',
@@ -105,7 +113,7 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
   });
 
   if (!refreshRes.ok) {
-    await refreshRes.body?.cancel();
+    await discardResponseBody(refreshRes);
     return sessionExpiredResponse();
   }
 
