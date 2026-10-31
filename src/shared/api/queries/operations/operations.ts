@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
+import { invalidateAndRefetchQueries } from '../../lib/invalidate-and-refetch-queries';
 import { instanceFetch } from '../../instances';
 import { CreateOperationReq, GetOperationsRes, Operation } from './types';
 import { categories, operations } from '../query-keys';
@@ -11,11 +12,12 @@ export const useOperationCreate = () => {
         method: 'POST',
         body: JSON.stringify(crateData),
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: operations.all });
-      queryClient.invalidateQueries({ queryKey: categories.all });
-      queryClient.invalidateQueries({ queryKey: categories.categoriesStat });
-    },
+    onSuccess: () =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, operations.all),
+        invalidateAndRefetchQueries(queryClient, categories.all),
+        invalidateAndRefetchQueries(queryClient, categories.categoriesStat),
+      ]).then(() => undefined),
   });
 };
 
@@ -71,7 +73,7 @@ export const useOperationDelete = () => {
         method: 'DELETE',
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: operations.all });
+      return invalidateAndRefetchQueries(queryClient, operations.all);
     },
   });
 };
@@ -84,9 +86,10 @@ export const useOperationEdit = () => {
         method: 'PUT',
         body: JSON.stringify(data),
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: operations.all });
-      queryClient.invalidateQueries({ queryKey: categories.all });
-    },
+    onSuccess: () =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, operations.all),
+        invalidateAndRefetchQueries(queryClient, categories.all),
+      ]).then(() => undefined),
   });
 };

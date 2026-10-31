@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { invalidateAndRefetchQueries } from '../../lib/invalidate-and-refetch-queries';
 import { instanceFetch } from '../../instances';
 import { groups } from '../query-keys';
 import {
@@ -34,7 +35,7 @@ export const useGroupCreate = () => {
         body: JSON.stringify({ name }),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: groups.all });
+      return invalidateAndRefetchQueries(queryClient, groups.all);
     },
   });
 };
@@ -48,10 +49,11 @@ export const useGroupUpdate = () => {
         method: 'PATCH',
         body: JSON.stringify({ name }),
       }),
-    onSuccess: ({ id }) => {
-      queryClient.invalidateQueries({ queryKey: groups.all });
-      queryClient.invalidateQueries({ queryKey: groups.detail(id) });
-    },
+    onSuccess: ({ id }) =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, groups.all),
+        invalidateAndRefetchQueries(queryClient, groups.detail(id)),
+      ]).then(() => undefined),
   });
 };
 
@@ -91,7 +93,7 @@ export const useGroupRemoveMember = () => {
     mutationFn: ({ groupId, memberId }: { groupId: string; memberId: string }) =>
       instanceFetch(`/user-group/${groupId}/members/${memberId}`, { method: 'DELETE' }),
     onSuccess: (_, { groupId }) => {
-      queryClient.invalidateQueries({ queryKey: groups.detail(groupId) });
+      return invalidateAndRefetchQueries(queryClient, groups.detail(groupId));
     },
   });
 };
@@ -177,7 +179,7 @@ export const useConnectGroupCategories = () => {
         body: JSON.stringify({ relatedCategories }),
       }),
     onSuccess: (_, { groupId }) => {
-      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+      return invalidateAndRefetchQueries(queryClient, groups.categories(groupId));
     },
   });
 };
@@ -192,7 +194,7 @@ export const useGroupCategoryCreate = () => {
         body: JSON.stringify(data),
       }),
     onSuccess: (_, { groupId }) => {
-      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+      return invalidateAndRefetchQueries(queryClient, groups.categories(groupId));
     },
   });
 };
@@ -215,7 +217,7 @@ export const useGroupCategoryUpdate = () => {
         body: JSON.stringify(data),
       }),
     onSuccess: (_, { groupId }) => {
-      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+      return invalidateAndRefetchQueries(queryClient, groups.categories(groupId));
     },
   });
 };
@@ -229,7 +231,7 @@ export const useGroupCategoryDelete = () => {
         method: 'DELETE',
       }),
     onSuccess: (_, { groupId }) => {
-      queryClient.invalidateQueries({ queryKey: groups.categories(groupId) });
+      return invalidateAndRefetchQueries(queryClient, groups.categories(groupId));
     },
   });
 };

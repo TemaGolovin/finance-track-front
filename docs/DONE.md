@@ -19,6 +19,8 @@
 | **Редактирование группы — 404** | **Бэкенд:** `PATCH /user-group/:id` (`UpdateUserGroupDto`: `name`). Обновлять может только создатель группы (`FORBIDDEN_UPDATE`); чужая/несуществующая группа — 404. **Фронт:** кнопка редактирования только у создателя (`GroupInfoTab`). |
 | **Полное удаление аккаунта** | **Бэкенд:** `POST /auth/delete-account` под JWT, тело `{ password }`; транзакция Prisma (маппинги, операции, категории, приглашения, членство; группы создателя — смена `creatorId` или удаление пустой группы; затем refresh/email-токены и `user`). **Фронт:** `src/feature/account-delete/`, мутация `useDeleteAccount`. |
 | **BFF: refresh для PUT/POST/PATCH** | После 401 повтор идёт с тем же `Content-Type` / `Accept-Language`, что исходный запрос; новый access берётся из JSON refresh (`token`), а не из `cookies()` исходного запроса. Set-Cookie с refresh прокидывается клиенту через `getSetCookie()`. На бэкенд не форвардятся лишние клиентские заголовки. |
+| **Цвет и иконка категории при редактировании** | **Бэкенд:** `UpdateCategoryDto` — `color`, `icon`, `categoryType`; `CategoryRepository.updateCategory` сохраняет все поля, не только `name`. |
+| **Инвалидация кэша после create/update** | **Фронт:** `invalidateAndRefetchQueries` — `invalidateQueries` с `refetchType: 'all'` (не только активные запросы); `onSuccess` возвращает Promise, чтобы `mutateAsync` завершался после refetch до `router.push`. |
 
 ---
 
@@ -29,3 +31,5 @@
 - Редактирование группы: `PATCH /user-group/:id` — `finance-track-back` → `src/user-group/`; фронт — `useGroupUpdate`
 - Бэкенд: `prisma/schema.prisma`; auth и удаление аккаунта — `src/auth/` (`POST delete-account`)
 - BFF proxy + refresh retry: `src/app/api/[...path]/route.ts`
+- Категории (update): `finance-track-back` → `src/category/dto/update-category.dto.ts`, `category.repository.ts`
+- Refetch кэша после мутаций: `src/shared/api/lib/invalidate-and-refetch-queries.ts`, хуки в `src/shared/api/queries/`

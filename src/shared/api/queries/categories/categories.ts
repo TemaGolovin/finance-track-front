@@ -1,4 +1,5 @@
 import { instanceFetch } from '@/shared/api/instances';
+import { invalidateAndRefetchQueries } from '@/shared/api/lib/invalidate-and-refetch-queries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { categories } from '@/shared/api/queries/query-keys';
 import { Category, CreateCategoryReq } from './types';
@@ -48,7 +49,7 @@ export const useCategoryCreate = () => {
         body: JSON.stringify(data),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: categories.all });
+      return invalidateAndRefetchQueries(queryClient, categories.all);
     },
   });
 };
@@ -61,10 +62,11 @@ export const useCategoryEdit = () => {
         method: 'PUT',
         body: JSON.stringify(data),
       }),
-    onSuccess: ({ id }) => {
-      queryClient.invalidateQueries({ queryKey: categories.all });
-      queryClient.invalidateQueries({ queryKey: categories.detail(id) });
-    },
+    onSuccess: ({ id }) =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, categories.all),
+        invalidateAndRefetchQueries(queryClient, categories.detail(id)),
+      ]).then(() => undefined),
   });
 };
 
@@ -77,7 +79,7 @@ export const useCategoryDelete = () => {
         method: 'DELETE',
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: categories.all });
+      return invalidateAndRefetchQueries(queryClient, categories.all);
     },
   });
 };

@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { invalidateAndRefetchQueries } from '../../lib/invalidate-and-refetch-queries';
 import { instanceFetch } from '../../instances';
 import {
   Invitation,
@@ -45,7 +46,7 @@ export const useUpdateInvitation = () => {
         body: JSON.stringify({ status }),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: invitations.all });
+      return invalidateAndRefetchQueries(queryClient, invitations.all);
     },
   });
 };
