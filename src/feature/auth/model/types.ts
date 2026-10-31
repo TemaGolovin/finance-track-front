@@ -5,7 +5,6 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  token: string;
   id: string;
   email: string;
   name: string;
@@ -23,7 +22,6 @@ export interface RegistrationResponse {
   id: string;
   email: string;
   name: string;
-  token: string;
   createAt: string;
   updateAt: string;
   userRelationGroupId: string;

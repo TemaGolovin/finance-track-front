@@ -23,12 +23,28 @@ function getBackendHeaders(req: Request, accessToken: string | undefined): Heade
   return headers;
 }
 
-function getAccessTokenFromRefreshBody(body: unknown): string | undefined {
-  if (typeof body !== 'object' || body === null || !('token' in body)) {
-    return undefined;
+function getAccessTokenFromSetCookies(setCookies: string[]): string | undefined {
+  for (const raw of setCookies) {
+    const [pair] = raw.split(';');
+    const separatorIndex = pair.indexOf('=');
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const name = pair.slice(0, separatorIndex).trim();
+    if (name !== 'accessToken') {
+      continue;
+    }
+
+    const value = pair.slice(separatorIndex + 1);
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
   }
 
-  return typeof body.token === 'string' ? body.token : undefined;
+  return undefined;
 }
 
 function getSetCookies(headers: Headers): string[] {
@@ -117,15 +133,10 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
     return sessionExpiredResponse();
   }
 
-  let refreshData: unknown;
-  try {
-    refreshData = await refreshRes.json();
-  } catch {
-    return sessionExpiredResponse();
-  }
+  await discardResponseBody(refreshRes);
 
-  // cookies() still has the original request cookies; the new access is in the refresh JSON
-  const newAccessToken = getAccessTokenFromRefreshBody(refreshData);
+  const refreshSetCookies = getSetCookies(refreshRes.headers);
+  const newAccessToken = getAccessTokenFromSetCookies(refreshSetCookies);
   if (!newAccessToken) {
     return sessionExpiredResponse();
   }
@@ -135,7 +146,7 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
     headers: getBackendHeaders(req, newAccessToken),
   });
 
-  return toClientResponse(retriedRes, getSetCookies(refreshRes.headers));
+  return toClientResponse(retriedRes, refreshSetCookies);
 }
 
 export const GET = handler;
