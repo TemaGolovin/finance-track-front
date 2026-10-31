@@ -47,7 +47,6 @@ IDOR по операциям/категориям и базовый auth — в 
 
 | Приоритет | Задача                       | Примечание                                                      |
 | --------- | ---------------------------- | --------------------------------------------------------------- |
-| Высокий   | **Тело запроса в 400 валидации** | `SafeI18nValidationExceptionFilter` кладёт в `message` сырой объект class-validator: `value` и `target`. Короткий пароль на `POST /auth/registration` возвращает пароль и весь DTO; то же уходит в логи, если фронт пишет тело ошибки. Отдавать имя поля и текст `constraints`, без введённых значений. `src/i18n/safe-i18n-validation-exception.filter.ts`. |
 | Средний   | **Rate limiting**            | Лимиты на `auth/login`, `auth/registration` (брутфорс).         |
 | Средний   | **Swagger / OpenAPI**        | В публичном доступе отключить или закрыть (VPN, Basic Auth).    |
 | Низкий    | **Access token в JSON**      | Дублируется с httpOnly cookie; можно не отдавать в теле ответа. |
