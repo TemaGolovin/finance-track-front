@@ -94,18 +94,72 @@ async function discardResponseBody(response: Response): Promise<void> {
   }
 }
 
+type RefreshSessionResult =
+  | { ok: true; accessToken: string; setCookies: string[] }
+  | { ok: false; status: number };
+
+let inflightRefresh: {
+  refreshTokenKey: string;
+  promise: Promise<RefreshSessionResult>;
+} | null = null;
+
+async function executeRefresh(refreshToken: string): Promise<RefreshSessionResult> {
+  const refreshRes = await fetch(`${process.env.NEXT_API_BACKEND}/auth/refresh`, {
+    method: 'POST',
+    headers: { cookie: `refreshToken=${refreshToken}` },
+  });
+
+  const setCookies = getSetCookies(refreshRes.headers);
+
+  if (!refreshRes.ok) {
+    await discardResponseBody(refreshRes);
+    return { ok: false, status: refreshRes.status };
+  }
+
+  await discardResponseBody(refreshRes);
+
+  const accessToken = getAccessTokenFromSetCookies(setCookies);
+  if (!accessToken) {
+    return { ok: false, status: 401 };
+  }
+
+  return { ok: true, accessToken, setCookies };
+}
+
+function refreshAccessToken(refreshToken: string | undefined): Promise<RefreshSessionResult> {
+  if (!refreshToken) {
+    return Promise.resolve({ ok: false, status: 401 });
+  }
+
+  if (inflightRefresh?.refreshTokenKey === refreshToken) {
+    return inflightRefresh.promise;
+  }
+
+  const promise = executeRefresh(refreshToken).finally(() => {
+    if (inflightRefresh?.promise === promise) {
+      inflightRefresh = null;
+    }
+  });
+
+  inflightRefresh = { refreshTokenKey: refreshToken, promise };
+  return promise;
+}
+
 async function handler(req: Request, context: { params: Promise<{ path: string[] }> }) {
   const cookieStore = await cookies();
   const awaitedParams = await context.params;
   const incomingUrl = new URL(req.url);
   const url = `${process.env.NEXT_API_BACKEND}/${awaitedParams.path.join('/')}${incomingUrl.search}`;
 
+  const accessCookie = cookieStore.get('accessToken')?.value;
+  const refreshCookie = cookieStore.get('refreshToken')?.value;
+
   const reqBody =
     req.method === 'GET' || req.method === 'HEAD' ? undefined : await req.arrayBuffer();
 
   const backendInit: RequestInit = {
     method: req.method,
-    headers: getBackendHeaders(req, cookieStore.get('accessToken')?.value),
+    headers: getBackendHeaders(req, accessCookie),
     body: reqBody,
   };
 
@@ -123,30 +177,18 @@ async function handler(req: Request, context: { params: Promise<{ path: string[]
 
   await discardResponseBody(res);
 
-  const refreshRes = await fetch(`${process.env.NEXT_API_BACKEND}/auth/refresh`, {
-    method: 'POST',
-    headers: { cookie: `refreshToken=${cookieStore.get('refreshToken')?.value}` },
-  });
+  const refreshResult = await refreshAccessToken(refreshCookie);
 
-  if (!refreshRes.ok) {
-    await discardResponseBody(refreshRes);
-    return sessionExpiredResponse();
-  }
-
-  await discardResponseBody(refreshRes);
-
-  const refreshSetCookies = getSetCookies(refreshRes.headers);
-  const newAccessToken = getAccessTokenFromSetCookies(refreshSetCookies);
-  if (!newAccessToken) {
+  if (!refreshResult.ok) {
     return sessionExpiredResponse();
   }
 
   const retriedRes = await fetch(url, {
     ...backendInit,
-    headers: getBackendHeaders(req, newAccessToken),
+    headers: getBackendHeaders(req, refreshResult.accessToken),
   });
 
-  return toClientResponse(retriedRes, refreshSetCookies);
+  return toClientResponse(retriedRes, refreshResult.setCookies);
 }
 
 export const GET = handler;
