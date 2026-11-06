@@ -16,6 +16,7 @@ import {
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { landingCategoryRows, landingFaq, landingFeatures, landingIndex } from '../model/content';
+import { LandingFaq } from './landing-faq';
 import './landing.css';
 
 const featureIcons = {
@@ -285,25 +286,14 @@ export async function Landing() {
         </div>
       </section>
 
-      <section
-        id="faq"
-        aria-labelledby="faq-title"
-        className="relative mx-auto max-w-6xl px-5 py-16"
-      >
-        <h2 id="faq-title" className="text-4xl font-semibold tracking-tight">
-          {t('faqTitle')}
-        </h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {landingFaq.map((item) => (
-            <details key={item.id} open className={tone.faq}>
-              <summary className="cursor-pointer text-lg font-semibold">
-                {t(item.questionKey)}
-              </summary>
-              <p className={cn('mt-2 leading-relaxed', tone.body)}>{t(item.answerKey)}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+      <LandingFaq
+        title={t('faqTitle')}
+        items={landingFaq.map((item) => ({
+          id: item.id,
+          question: t(item.questionKey),
+          answer: t(item.answerKey),
+        }))}
+      />
 
       <section
         aria-labelledby="stage-cta"
