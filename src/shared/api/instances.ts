@@ -8,7 +8,11 @@ function redirectToLoginIfNeeded(): void {
   }
 
   const { pathname } = window.location;
-  if (pathname === ROUTES.LOGIN || pathname.startsWith(`${ROUTES.LOGIN}/`)) {
+  if (
+    pathname === ROUTES.HOME ||
+    pathname === ROUTES.LOGIN ||
+    pathname.startsWith(`${ROUTES.LOGIN}/`)
+  ) {
     return;
   }
 

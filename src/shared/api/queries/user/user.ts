@@ -29,10 +29,11 @@ export const useInvitationUser = () => {
   });
 };
 
-export const useInvitations = () => {
+export const useInvitations = (enabled = true) => {
   return useQuery({
     queryKey: invitations.all,
     queryFn: () => instanceFetch<InvitationsResponse>('/user/invitation'),
+    enabled,
   });
 };
 

@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export const InvitationAction = () => {
   const { data: user } = useAboutMe();
-  const { data: invitations } = useInvitations();
+  const { data: invitations } = useInvitations(!!user);
 
   if (!user) {
     return null;
