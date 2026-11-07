@@ -69,51 +69,27 @@ export async function Landing() {
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div
           className={cn(
-            'landing-orb absolute -left-20 top-0 size-[36rem] rounded-full blur-3xl',
+            'landing-orb absolute -left-20 top-0 size-144 rounded-full blur-3xl',
             tone.orbA,
           )}
         />
         <div
           className={cn(
-            'landing-orb absolute right-0 top-24 size-[32rem] rounded-full blur-3xl [animation-delay:-7s]',
+            'landing-orb absolute right-0 top-24 size-128 rounded-full blur-3xl [animation-delay:-7s]',
             tone.orbB,
           )}
         />
         <div
           className={cn(
-            'landing-orb absolute bottom-0 left-1/3 size-[28rem] rounded-full blur-3xl [animation-delay:-12s]',
+            'landing-orb absolute bottom-0 left-1/3 size-112 rounded-full blur-3xl [animation-delay:-12s]',
             tone.orbC,
           )}
         />
       </div>
 
-      <nav
-        aria-label={t('navLabel')}
-        className={cn(
-          'relative mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-5 py-6 text-sm font-medium',
-          tone.nav,
-        )}
-      >
-        <a className={tone.navLink} href="#stage">
-          {t('navStage')}
-        </a>
-        <a className={tone.navLink} href="#index">
-          {t('navIndex')}
-        </a>
-        <a className={tone.navLink} href="#features">
-          {t('navFeatures')}
-        </a>
-        <a className={tone.navLink} href="#faq">
-          {t('navFaq')}
-        </a>
-        <Link className={cn('ml-auto', tone.navLink)} href={ROUTES.LOGIN}>
-          {tCommon('login')}
-        </Link>
-      </nav>
-
       <section
         aria-labelledby="stage-title"
-        className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 lg:grid-cols-[0.9fr_1.1fr]"
+        className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 lg:grid-cols-[0.9fr_1.1fr] sm:mt-20 mt-10"
       >
         <div className="landing-rise lg:sticky lg:top-6">
           <p className={cn('text-sm font-semibold uppercase tracking-[0.18em]', tone.kicker)}>
@@ -141,10 +117,8 @@ export async function Landing() {
         </div>
 
         <div id="stage" className="relative">
-          <div className="landing-ring absolute -inset-3 rounded-[2.2rem] bg-[conic-gradient(from_120deg,#f59e0b,#10b981,#a78bfa,#fb7185,#f59e0b)] opacity-80 blur-[1px]" />
-          <article
-            className={cn('relative rounded-[2rem] border p-5 shadow-2xl sm:p-7', tone.card)}
-          >
+          <div className="landing-glow absolute -inset-3 rounded-3xl bg-[conic-gradient(from_120deg,#f59e0b,#10b981,#a78bfa,#fb7185,#f59e0b)] opacity-80 blur-[1px]" />
+          <article className={cn('relative rounded-4xl border p-5 shadow-2xl sm:p-7', tone.card)}>
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className={cn('text-sm', tone.muted)}>{t('sample.groupLabel')}</p>

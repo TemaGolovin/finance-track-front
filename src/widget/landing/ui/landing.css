@@ -32,6 +32,16 @@
   }
 }
 
+@keyframes landing-glow {
+  0%,
+  100% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
 @keyframes landing-rise {
   from {
     opacity: 0;
@@ -61,6 +71,10 @@
   animation: landing-ring 22s linear infinite;
 }
 
+.landing-glow {
+  animation: landing-glow 8s ease-in-out infinite;
+}
+
 .landing-rise {
   animation: landing-rise 0.8s ease-out both;
 }
@@ -81,6 +95,7 @@ body:has(.landing-root) {
   .landing-pan,
   .landing-bar,
   .landing-ring,
+  .landing-glow,
   .landing-rise {
     animation: none;
   }
