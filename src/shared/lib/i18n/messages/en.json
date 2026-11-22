@@ -53,6 +53,7 @@
     "title": "Control your money. And shared money, if you are in a group.",
     "lead": "Record income and expenses even if you are tracking alone. If the budget is shared, start a group: you see the total and who added each entry. Your personal numbers stay separate from the group's.",
     "start": "Start tracking",
+    "goToApp": "Go to the service",
     "sample": {
       "groupLabel": "Group",
       "groupName": "Household",
@@ -200,6 +201,7 @@
     "categories": "Categories",
     "groups": "Groups",
     "invitations": "Invitations",
+    "about": "About the service",
     "profile": "Profile"
   },
 

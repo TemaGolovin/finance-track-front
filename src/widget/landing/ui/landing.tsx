@@ -58,7 +58,7 @@ const tone = {
   footer: 'text-[#6b584c] dark:text-white/60',
 };
 
-export async function Landing() {
+export async function Landing({ isAuthenticated }: { isAuthenticated: boolean }) {
   const t = await getTranslations('landing');
   const tCommon = await getTranslations('common');
   const tLegal = await getTranslations('legal');
@@ -103,16 +103,28 @@ export async function Landing() {
           </h1>
           <p className={cn('mt-5 text-lg leading-relaxed', tone.lead)}>{t('lead')}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button
-              asChild
-              size="xl"
-              className="rounded-full bg-amber-300 text-[#24140c] hover:bg-amber-200"
-            >
-              <Link href={ROUTES.REGISTER}>{t('start')}</Link>
-            </Button>
-            <Button asChild size="xl" variant="outline" className={tone.outline}>
-              <Link href={ROUTES.LOGIN}>{tCommon('login')}</Link>
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                asChild
+                size="xl"
+                className="rounded-full bg-amber-300 text-[#24140c] hover:bg-amber-200"
+              >
+                <Link href={ROUTES.MAIN}>{t('goToApp')}</Link>
+              </Button>
+            ) : (
+              <>
+                <Button
+                  asChild
+                  size="xl"
+                  className="rounded-full bg-amber-300 text-[#24140c] hover:bg-amber-200"
+                >
+                  <Link href={ROUTES.REGISTER}>{t('start')}</Link>
+                </Button>
+                <Button asChild size="xl" variant="outline" className={tone.outline}>
+                  <Link href={ROUTES.LOGIN}>{tCommon('login')}</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
 
@@ -282,7 +294,9 @@ export async function Landing() {
             {t('ctaTitle')}
           </h2>
           <Button asChild size="xl" className="rounded-full bg-[#1a1020] text-white hover:bg-black">
-            <Link href={ROUTES.REGISTER}>{tCommon('register')}</Link>
+            <Link href={isAuthenticated ? ROUTES.MAIN : ROUTES.REGISTER}>
+              {isAuthenticated ? t('goToApp') : tCommon('register')}
+            </Link>
           </Button>
         </div>
       </section>

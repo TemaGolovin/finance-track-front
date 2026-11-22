@@ -8,6 +8,8 @@
 
 | Задача | Примечания |
 |--------|------------|
+| **Старт приложения и страницы входа** | Сессия — куки `accessToken` / `refreshToken`. `/`, `/login` и `/register` при сессии редиректят на `/main`. Гость с `/about` уходит на `/`. |
+| **Лендинг для залогиненного** | На `/about` герой и нижний блок ведут в сервис («Перейти в сервис» / «Go to the service»). Маркетинговые блоки те же. В меню пункт «О сервисе». |
 | **Мультиязычность (i18n) на бэкенде** | `nestjs-i18n`, `AcceptLanguageResolver`, переводы по доменам (`errors`, `validation`, `userGroup`, `user`, `defaultCategories`); фронт передаёт `Accept-Language` из куки `NEXT_LOCALE` автоматически. Опционально позже: язык по умолчанию в профиле. |
 | **Профиль и настройки (минимум)** | Страница профиля (`app/profile`, виджет `profile-overview`): `auth/me`, смена имени (`PATCH auth/profile`), смена пароля (`POST auth/change-password`), список сессий и отзыв (`GET` / `DELETE auth/sessions`), refresh по `deviceId`. |
 | **Транзакционная email-рассылка** | `@nestjs-modules/mailer` + Nodemailer + Handlebars-шаблоны. Три флоу: подтверждение email при регистрации (+ повторная отправка / истёкшая ссылка), сброс пароля, подтверждение смены email в профиле. Бэкенд: поле `emailVerified` в `User`, модель `EmailToken` (`VERIFY_EMAIL` / `RESET_PASSWORD` / `CHANGE_EMAIL`), `EmailTokenService`, 6 эндпоинтов в `auth` и `user`. Фронт: `/verify-email`, `/verify-email/sent`, `/forgot-password`, `/reset-password`, `/confirm-email-change`, badge в профиле, форма смены email. Конфиг: `MAIL_HOST/PORT/USER/PASS/FROM` + `APP_URL`. |

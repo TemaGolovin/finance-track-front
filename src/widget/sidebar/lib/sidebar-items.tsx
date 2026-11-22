@@ -1,5 +1,5 @@
 import { ROUTES } from '@/shared/model/routes';
-import { ArrowLeftRightIcon, LayoutDashboard, MailOpen, Shapes, Users } from 'lucide-react';
+import { ArrowLeftRightIcon, Info, LayoutDashboard, MailOpen, Shapes, Users } from 'lucide-react';
 
 export const getSidebarItems = (sidebarT: (key: string) => string) => [
   {
@@ -31,5 +31,11 @@ export const getSidebarItems = (sidebarT: (key: string) => string) => [
     title: sidebarT('invitations'),
     link: ROUTES.INVITATION,
     icon: <MailOpen className="w-5" />,
+  },
+  {
+    id: 'about',
+    title: sidebarT('about'),
+    link: ROUTES.ABOUT,
+    icon: <Info className="w-5" />,
   },
 ];

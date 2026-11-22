@@ -1,6 +1,9 @@
+import { hasAuthSession } from '@/shared/lib/auth/has-auth-session';
+import { ROUTES } from '@/shared/model/routes';
 import { Landing, landingFaq } from '@/widget/landing';
 import type { Metadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('landing');
@@ -22,6 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
+  if (await hasAuthSession()) {
+    redirect(ROUTES.MAIN);
+  }
+
   const t = await getTranslations('landing');
   const locale = await getLocale();
 
@@ -57,7 +64,7 @@ export default async function Page() {
         // biome-ignore lint/security/noDangerouslySetInnerHtml: статичный JSON-LD, без данных пользователя
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
-      <Landing />
+      <Landing isAuthenticated={false} />
     </>
   );
 }
