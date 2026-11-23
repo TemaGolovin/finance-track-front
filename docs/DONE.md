@@ -43,6 +43,7 @@
 | **Swagger / OpenAPI** | В production выключен по умолчанию; `SWAGGER_ENABLED=true` + опционально Basic Auth (`SWAGGER_USER` / `SWAGGER_PASSWORD`). `src/config/swagger.config.ts`. |
 | **Access token только в cookie** | JSON login/registration/refresh/profile без `token`; BFF после refresh берёт access из `Set-Cookie`. |
 | **ValidationPipe whitelist** | `configureApp`: `whitelist`, `forbidNonWhitelisted`, `transform`. Лишние поля body не доходят до handler. |
+| **Сортировка групповых отчётов** | **Бэкенд:** `GET /user-group/:id/stat` отдаёт категории по убыванию суммы. Суммы считаются в SQL (`getUserGroupStat`), порядок задаёт `ORDER BY SUM(o.value) DESC`. Сервис только считает долю и сохраняет порядок строк. |
 
 ---
 
