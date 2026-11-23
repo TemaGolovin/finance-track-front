@@ -3,7 +3,7 @@
 import { useVerifyEmail } from '@/shared/api/queries/auth';
 import { ROUTES } from '@/shared/model/routes';
 import { Button } from '@/shared/ui';
-import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, Loader2, XCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

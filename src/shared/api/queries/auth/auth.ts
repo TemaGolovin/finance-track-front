@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { auth } from '../query-keys';
 import { instanceFetch } from '../../instances';
+import { auth } from '../query-keys';
 import {
   AuthSessionsResponse,
   ChangePasswordResponse,
@@ -79,12 +79,26 @@ export const useRevokeSession = () => {
 };
 
 export const useVerifyEmail = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (token: string) =>
       instanceFetch<SuccessResponse>('/auth/verify-email', {
         method: 'POST',
         body: JSON.stringify({ token }),
       }),
+    onSuccess: () => {
+      queryClient.setQueryData<Me>(auth.me, (current) => {
+        if (!current) {
+          return current;
+        }
+        return {
+          ...current,
+          data: { ...current.data, emailVerified: true },
+        };
+      });
+      void queryClient.invalidateQueries({ queryKey: auth.me });
+    },
   });
 };
 

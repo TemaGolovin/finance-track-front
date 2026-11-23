@@ -160,6 +160,10 @@
     "resendSuccess": "Email sent",
     "resendError": "Could not send email"
   },
+  "unverifiedEmailBanner": {
+    "message": "You can't change data until your email is confirmed. Open the link in the email.",
+    "resend": "Send the email again"
+  },
 
   "forgotPassword": {
     "title": "Forgot password?",

@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
+import type { Metadata } from 'next';
 import './globals.css';
-import { Providers } from './_providers/providers';
-import { getLocale } from 'next-intl/server';
-import { Header } from '@/widget/header';
 import { Toaster } from '@/shared/lib/shadcn/sonner';
+import { Header } from '@/widget/header';
+import { UnverifiedEmailBanner } from '@/widget/unverified-email-banner';
+import { getLocale } from 'next-intl/server';
+import { Providers } from './_providers/providers';
 
 export const metadata: Metadata = {
   title: 'Finance Tracker',
@@ -27,6 +28,7 @@ export default async function RootLayout({
       <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <Providers>
           <Header />
+          <UnverifiedEmailBanner />
           <main className="container mx-auto px-2 sm:px-0">{children}</main>
         </Providers>
         <Toaster richColors />
