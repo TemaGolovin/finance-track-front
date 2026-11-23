@@ -21,3 +21,5 @@ export { Skeleton } from '../lib/shadcn/skeleton';
 export { SecondaryCard } from './secondary-card/secondary-card';
 export { Hint } from './hint/hint';
 export { ListEmptyState } from './list-empty-state/list-empty-state';
+export { LongPressActions } from './long-press-actions/long-press-actions';
+export type { LongPressAction } from './long-press-actions/long-press-actions';

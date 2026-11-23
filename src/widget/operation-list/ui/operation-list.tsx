@@ -7,6 +7,7 @@ import {
   PeriodFilter,
   useTransactionsFilters,
 } from '@/feature/operation-filters';
+import { OperationRowActions } from '@/feature/operation-row-actions';
 import { useGroupOperations, useGroups } from '@/shared/api/queries/groups';
 import { useOperations } from '@/shared/api/queries/operations';
 import { formatNumberWithRound } from '@/shared/lib';
@@ -96,18 +97,19 @@ export const OperationList = () => {
             <div key={date}>
               <div className="text-sm font-bold text-foreground/80">{date}</div>
               {operations.map((operation) => (
-                <Link
-                  key={operation.id}
-                  href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}
-                >
-                  <div className="mb-1">
+                <OperationRowActions key={operation.id} operation={operation} className="mb-1">
+                  <Link
+                    href={ROUTES.OPERATION_DETAIL.replace(':id', operation.id)}
+                    className="block"
+                    draggable={false}
+                  >
                     <OperationSimpleCard
                       operation={operation}
                       showUser={!!selectedGroupId}
                       userName={selectedGroupId ? getUserName(operation.userId) : undefined}
                     />
-                  </div>
-                </Link>
+                  </Link>
+                </OperationRowActions>
               ))}
             </div>
           ))

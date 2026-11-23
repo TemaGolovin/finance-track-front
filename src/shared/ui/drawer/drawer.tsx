@@ -1,37 +1,53 @@
 'use client';
 import {
-  Drawer as DrawerShadcn,
   DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  Drawer as DrawerShadcn,
   DrawerTitle,
   DrawerTrigger,
 } from '@/shared/lib/shadcn/drawer';
-import { Button } from '../button/button';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { Button } from '../button/button';
 
 interface DrawerProps {
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
   title: string;
   description?: string;
   renderContent: (onClose: () => void) => React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export const Drawer: React.FC<DrawerProps> = ({ trigger, title, description, renderContent }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Drawer: React.FC<DrawerProps> = ({
+  trigger,
+  title,
+  description,
+  renderContent,
+  open,
+  onOpenChange,
+}) => {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const isControlled = open !== undefined;
+  const isOpen = isControlled ? open : uncontrolledOpen;
+
+  const setIsOpen = (next: boolean) => {
+    if (!isControlled) setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  };
 
   const commonT = useTranslations('common');
 
   return (
     <DrawerShadcn open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+      {trigger ? <DrawerTrigger asChild>{trigger}</DrawerTrigger> : null}
       <DrawerContent className="mt-0 max-h-dvh">
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
+          {description ? <DrawerDescription>{description}</DrawerDescription> : null}
         </DrawerHeader>
         <div className="px-4">{renderContent(() => setIsOpen(false))}</div>
         <DrawerFooter>

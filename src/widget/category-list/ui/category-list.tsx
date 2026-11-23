@@ -1,4 +1,5 @@
 'use client';
+import { CategoryRowActions } from '@/feature/category-row-actions';
 import { OperationTypeFilter } from '@/feature/operation-filters';
 import { useCategories } from '@/shared/api/queries/categories';
 import { Skeleton } from '@/shared/ui';
@@ -29,7 +30,11 @@ export const CategoryList = () => {
                 <Skeleton className="h-3 w-12" />
               </div>
             ))
-          : categories?.map((category) => <CategoryItem category={category} key={category.id} />)}
+          : categories?.map((category) => (
+              <CategoryRowActions key={category.id} category={category} className="min-w-0">
+                <CategoryItem category={category} />
+              </CategoryRowActions>
+            ))}
       </div>
 
       {isEmpty ? <CategoryListEmpty /> : null}

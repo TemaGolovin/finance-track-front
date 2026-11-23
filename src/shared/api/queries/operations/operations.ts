@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient, UseQueryOptions } from '@tanstac
 import { invalidateAndRefetchQueries } from '../../lib/invalidate-and-refetch-queries';
 import { instanceFetch } from '../../instances';
 import { CreateOperationReq, GetOperationsRes, Operation } from './types';
-import { categories, operations } from '../query-keys';
+import { categories, groups, operations } from '../query-keys';
 
 export const useOperationCreate = () => {
   const queryClient = useQueryClient();
@@ -72,9 +72,13 @@ export const useOperationDelete = () => {
       instanceFetch<Operation>(`/operation/${id}`, {
         method: 'DELETE',
       }),
-    onSuccess: () => {
-      return invalidateAndRefetchQueries(queryClient, operations.all);
-    },
+    onSuccess: () =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, operations.all),
+        invalidateAndRefetchQueries(queryClient, groups.all),
+        invalidateAndRefetchQueries(queryClient, categories.all),
+        invalidateAndRefetchQueries(queryClient, categories.categoriesStat),
+      ]).then(() => undefined),
   });
 };
 

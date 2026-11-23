@@ -12,7 +12,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
     <Link
       href={ROUTES.CATEGORY_EDIT.replace(':id', category?.id)}
       className={
-        'text-center h-auto flex flex-col items-center py-2 border border-transparent border-solid rounded-2xl'
+        'text-center h-auto w-full flex flex-col items-center py-2 border border-transparent border-solid rounded-2xl'
       }
     >
       <div

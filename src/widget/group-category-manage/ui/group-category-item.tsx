@@ -1,14 +1,14 @@
 'use client';
 
-import { FC } from 'react';
-import { useTranslations } from 'next-intl';
-import { toast } from 'sonner';
-import { Pencil, Trash2 } from 'lucide-react';
-import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
 import { useGroupCategoryDelete } from '@/shared/api/queries/groups';
 import { GroupCategory } from '@/shared/api/queries/groups/types';
-import { Button, Drawer } from '@/shared/ui';
-import { GroupCategoryFormDrawer } from './group-category-form-drawer';
+import { Button, Drawer, LongPressAction, LongPressActions } from '@/shared/ui';
+import { Pencil, Trash2 } from 'lucide-react';
+import { BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FC, useMemo } from 'react';
+import { toast } from 'sonner';
+import { GroupCategoryForm, GroupCategoryFormDrawer } from './group-category-form-drawer';
 
 interface GroupCategoryItemProps {
   groupId: string;
@@ -17,8 +17,13 @@ interface GroupCategoryItemProps {
 
 export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, category }) => {
   const t = useTranslations('group');
+  const commonT = useTranslations('common');
 
-  const { mutate: deleteCategory, isPending } = useGroupCategoryDelete();
+  const {
+    mutate: deleteCategory,
+    mutateAsync: deleteCategoryAsync,
+    isPending,
+  } = useGroupCategoryDelete();
 
   const handleDelete = (onClose: () => void) => {
     toast.promise(
@@ -37,8 +42,48 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
     onClose();
   };
 
+  const actions = useMemo<LongPressAction[]>(
+    () => [
+      {
+        id: 'edit',
+        label: commonT('edit'),
+        icon: <Pencil className="w-5 h-5" />,
+        sheet: {
+          title: t('groupCategoryEditTitle'),
+          render: (onClose) => (
+            <GroupCategoryForm groupId={groupId} editedCategory={category} onClose={onClose} />
+          ),
+        },
+      },
+      {
+        id: 'delete',
+        label: t('groupCategoryDeleteAction'),
+        icon: <Trash2 className="w-5 h-5" />,
+        destructive: true,
+        confirm: {
+          title: t('groupCategoryDeleteTitle'),
+          description: t('groupCategoryDeleteDescription', { name: category.name }),
+          confirmLabel: t('groupCategoryDeleteAction'),
+        },
+        onSelect: () =>
+          toast
+            .promise(deleteCategoryAsync({ groupId, categoryId: category.id }), {
+              loading: t('groupCategoryDeleteLoading'),
+              success: t('groupCategoryDeleteSuccess'),
+              error: (err) => err?.message || t('groupCategoryDeleteError'),
+            })
+            .unwrap(),
+      },
+    ],
+    [category, commonT, deleteCategoryAsync, groupId, t],
+  );
+
   return (
-    <div className="flex items-center justify-between gap-2 py-2 border-b border-muted last:border-0">
+    <LongPressActions
+      title={category.name}
+      actions={actions}
+      className="flex items-center justify-between gap-2 py-2 border-b border-muted last:border-0"
+    >
       <div className="flex items-center gap-2 text-sm">
         {category.categoryType === 'EXPENSE' ? (
           <BanknoteArrowDown className="w-4 h-4 text-destructive/80 shrink-0" />
@@ -81,6 +126,6 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
           )}
         />
       </div>
-    </div>
+    </LongPressActions>
   );
 };

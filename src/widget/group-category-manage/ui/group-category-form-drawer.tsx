@@ -1,13 +1,13 @@
 'use client';
 
-import { FC } from 'react';
-import { useTranslations } from 'next-intl';
-import { useForm, Controller } from 'react-hook-form';
-import { toast } from 'sonner';
+import { OperationTypeFilter } from '@/feature/operation-filters';
 import { useGroupCategoryCreate, useGroupCategoryUpdate } from '@/shared/api/queries/groups';
 import { GroupCategory } from '@/shared/api/queries/groups/types';
 import { Button, Drawer, Input } from '@/shared/ui';
-import { OperationTypeFilter } from '@/feature/operation-filters';
+import { useTranslations } from 'next-intl';
+import { FC } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 interface FormValues {
   name: string;
@@ -20,7 +20,11 @@ interface GroupCategoryFormProps {
   onClose: () => void;
 }
 
-const GroupCategoryForm: FC<GroupCategoryFormProps> = ({ groupId, editedCategory, onClose }) => {
+export const GroupCategoryForm: FC<GroupCategoryFormProps> = ({
+  groupId,
+  editedCategory,
+  onClose,
+}) => {
   const t = useTranslations('group');
   const errorsT = useTranslations('errors');
   const commonT = useTranslations('common');
@@ -43,20 +47,28 @@ const GroupCategoryForm: FC<GroupCategoryFormProps> = ({ groupId, editedCategory
   const isPending = isCreating || isUpdating;
 
   const onSubmit = async (data: FormValues) => {
-    if (editedCategory) {
-      await toast.promise(updateCategory({ groupId, categoryId: editedCategory.id, data }), {
-        loading: t('groupCategoryUpdateLoading'),
-        success: t('groupCategoryUpdateSuccess'),
-        error: (err) => err?.message || t('groupCategoryUpdateError'),
-      });
-    } else {
-      await toast.promise(createCategory({ groupId, data }), {
-        loading: t('groupCategoryCreateLoading'),
-        success: t('groupCategoryCreateSuccess'),
-        error: (err) => err?.message || t('groupCategoryCreateError'),
-      });
+    try {
+      if (editedCategory) {
+        await toast
+          .promise(updateCategory({ groupId, categoryId: editedCategory.id, data }), {
+            loading: t('groupCategoryUpdateLoading'),
+            success: t('groupCategoryUpdateSuccess'),
+            error: (err) => err?.message || t('groupCategoryUpdateError'),
+          })
+          .unwrap();
+      } else {
+        await toast
+          .promise(createCategory({ groupId, data }), {
+            loading: t('groupCategoryCreateLoading'),
+            success: t('groupCategoryCreateSuccess'),
+            error: (err) => err?.message || t('groupCategoryCreateError'),
+          })
+          .unwrap();
+      }
+      onClose();
+    } catch {
+      // ошибка уже показана тостом
     }
-    onClose();
   };
 
   return (
