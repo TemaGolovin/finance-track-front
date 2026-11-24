@@ -47,7 +47,12 @@ export const Dropdown = <IdType extends string | number>({
           {list.map((item) => (
             <Fragment key={item.id}>
               {!item?.subList && (
-                <DropdownMenuItem onClick={() => onSelect(item.id)}>{item.label}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onSelect(item.id)}>
+                  <span className="flex items-center gap-2">
+                    {item.icon}
+                    {item.label}
+                  </span>
+                </DropdownMenuItem>
               )}
               {item?.subList && (
                 <DropdownMenuSub>

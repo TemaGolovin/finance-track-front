@@ -25,6 +25,7 @@ export const OperationList = () => {
     selectedDatesAndPeriod,
     setSelectedDatesAndPeriod,
     categoryId,
+    weekStartsOn,
   } = useTransactionsFilters();
 
   const { selectedGroupId } = useGroupSelector();
@@ -76,6 +77,7 @@ export const OperationList = () => {
       <PeriodFilter
         selectedDatesAndPeriod={selectedDatesAndPeriod}
         setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
+        weekStartsOn={weekStartsOn}
       />
       <DateRangeNavigator
         selectedDatesAndPeriod={selectedDatesAndPeriod}

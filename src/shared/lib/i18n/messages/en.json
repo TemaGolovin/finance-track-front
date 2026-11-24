@@ -209,8 +209,22 @@
     "profile": "Profile"
   },
 
+  "settings": {
+    "title": "Settings",
+    "needLogin": "Sign in to open settings.",
+    "appearanceSection": "Theme & language",
+    "appearanceHint": "Stored on this device only; not synced to the server.",
+    "weekStartSection": "First day of the week",
+    "weekStartHint": "Affects the week filter in operations and statistics. Saved to your account.",
+    "weekStartMonday": "Monday",
+    "weekStartSunday": "Sunday",
+    "weekStartLoading": "Saving...",
+    "weekStartSuccess": "Week setting updated",
+    "weekStartError": "Could not save setting"
+  },
+
   "profile": {
-    "title": "Profile & settings",
+    "title": "Profile",
     "needLogin": "Sign in to view your profile.",
     "accountSection": "Account",
     "emailLabel": "Email",
@@ -237,8 +251,8 @@
     "passwordLoading": "Updating password...",
     "passwordSuccess": "Password updated",
     "passwordError": "Could not change password",
-    "appearanceSection": "Theme & language",
-    "appearanceHint": "These apply only on your devices. They are not synced to the server.",
+    "settingsLinkTitle": "Settings",
+    "settingsLinkHint": "Language, theme, and first day of the week.",
     "sessionsSection": "Devices & sessions",
     "sessionUnknownDevice": "Other device",
     "sessionCurrent": "This device",

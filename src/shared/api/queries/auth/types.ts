@@ -5,6 +5,7 @@ export interface Me {
     name: string;
     id: string;
     emailVerified: boolean;
+    weekStartsOn: 0 | 1;
   };
 }
 
@@ -31,6 +32,13 @@ export interface UpdateProfileResponse {
     id: string;
     email: string;
     name: string;
+  };
+}
+
+export interface UpdatePreferencesResponse {
+  success: boolean;
+  data: {
+    weekStartsOn: 0 | 1;
   };
 }
 

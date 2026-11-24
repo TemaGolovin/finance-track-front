@@ -1,16 +1,19 @@
 import { DatePickerDrawerRange, Tabs } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 import { DatesAndPeriod } from '../model/types';
-import { getIsoDatesFromPeriod } from '../lib/get-iso-dates-from-period';
+import { getIsoDatesFromPeriod } from '@/shared/lib/date/get-iso-dates-from-period';
+import type { WeekStartsOn } from '@/shared/lib/date/week-starts-on';
 
 interface PeriodFilterProps {
   selectedDatesAndPeriod: DatesAndPeriod;
   setSelectedDatesAndPeriod: (datesAndPeriod: DatesAndPeriod) => void;
+  weekStartsOn: WeekStartsOn;
 }
 
 export const PeriodFilter: React.FC<PeriodFilterProps> = ({
   selectedDatesAndPeriod,
   setSelectedDatesAndPeriod,
+  weekStartsOn,
 }) => {
   const commonT = useTranslations('common');
 
@@ -49,7 +52,7 @@ export const PeriodFilter: React.FC<PeriodFilterProps> = ({
         if (newPeriod === 'custom') return;
         setSelectedDatesAndPeriod({
           period: newPeriod,
-          dates: getIsoDatesFromPeriod(newPeriod),
+          dates: getIsoDatesFromPeriod(newPeriod, new Date(), { weekStartsOn }),
         });
       }}
     />

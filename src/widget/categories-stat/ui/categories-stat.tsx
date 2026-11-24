@@ -45,8 +45,13 @@ export const CategoriesStat = () => {
 
   const urlParams = new URLSearchParams(searchParams);
 
-  const { operationType, setOperationType, selectedDatesAndPeriod, setSelectedDatesAndPeriod } =
-    useTransactionsFilters();
+  const {
+    operationType,
+    setOperationType,
+    selectedDatesAndPeriod,
+    setSelectedDatesAndPeriod,
+    weekStartsOn,
+  } = useTransactionsFilters();
 
   const { selectedGroupId } = useGroupSelector();
 
@@ -96,6 +101,7 @@ export const CategoriesStat = () => {
       <PeriodFilter
         selectedDatesAndPeriod={selectedDatesAndPeriod}
         setSelectedDatesAndPeriod={setSelectedDatesAndPeriod}
+        weekStartsOn={weekStartsOn}
       />
 
       <BaseCard>

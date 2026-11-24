@@ -1,6 +1,5 @@
 'use client';
 
-import { I18nSwitcher, ThemeSwitcher } from '@/feature';
 import { AccountDeleteSection } from '@/feature/account-delete';
 import { LogoutAction } from '@/feature/auth';
 import { ProfileChangeEmailForm } from '@/feature/profile-change-email';
@@ -77,15 +76,6 @@ export const ProfileOverview = () => {
       <ProfileUpdateNameForm initialName={name} />
       <ProfileChangePasswordForm />
       <ProfileChangeEmailForm />
-
-      <div className="bg-card rounded-md p-3 flex flex-col gap-3">
-        <div className="text-foreground/60 text-sm">{t('appearanceSection')}</div>
-        <p className="text-xs text-muted-foreground">{t('appearanceHint')}</p>
-        <div className="flex flex-wrap gap-2">
-          <ThemeSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
-          <I18nSwitcher btnClassName="bg-linear-to-t from-secondary/60 to-background/70" />
-        </div>
-      </div>
 
       <ProfileSessionsSection />
 

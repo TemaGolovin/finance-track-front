@@ -209,8 +209,22 @@
     "profile": "Профиль"
   },
 
+  "settings": {
+    "title": "Настройки",
+    "needLogin": "Войдите, чтобы открыть настройки.",
+    "appearanceSection": "Тема и язык",
+    "appearanceHint": "Сохраняются на этом устройстве, на сервер не синхронизируются.",
+    "weekStartSection": "Первый день недели",
+    "weekStartHint": "Влияет на фильтр «неделя» в операциях и статистике. Сохраняется в аккаунте.",
+    "weekStartMonday": "Понедельник",
+    "weekStartSunday": "Воскресенье",
+    "weekStartLoading": "Сохраняем...",
+    "weekStartSuccess": "Настройка недели обновлена",
+    "weekStartError": "Не удалось сохранить настройку"
+  },
+
   "profile": {
-    "title": "Профиль и настройки",
+    "title": "Профиль",
     "needLogin": "Войдите, чтобы открыть профиль.",
     "accountSection": "Учётная запись",
     "emailLabel": "Почта",
@@ -237,8 +251,8 @@
     "passwordLoading": "Обновляем пароль...",
     "passwordSuccess": "Пароль обновлён",
     "passwordError": "Не удалось сменить пароль",
-    "appearanceSection": "Тема и язык",
-    "appearanceHint": "Настройки только на этом устройстве, на сервер не сохраняются.",
+    "settingsLinkTitle": "Настройки",
+    "settingsLinkHint": "Язык, тема и первый день недели.",
     "sessionsSection": "Устройства и сессии",
     "sessionUnknownDevice": "Другое устройство",
     "sessionCurrent": "Это устройство",

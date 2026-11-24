@@ -1,9 +1,20 @@
 import { startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import { DEFAULT_WEEK_STARTS_ON, type WeekStartsOn } from './week-starts-on.ts';
+
+export type PeriodType = 'day' | 'week' | 'month' | 'year' | 'custom';
+
+export type GetIsoDatesFromPeriodOptions = {
+  weekStartsOn?: WeekStartsOn;
+};
 
 export const getIsoDatesFromPeriod = (
-  period: 'day' | 'week' | 'month' | 'year' | 'custom',
+  period: PeriodType,
   dateFromCalcPeriod: Date = new Date(),
+  options?: GetIsoDatesFromPeriodOptions,
 ): { startDate: string; endDate: string } => {
+  const weekStartsOn = options?.weekStartsOn ?? DEFAULT_WEEK_STARTS_ON;
+  const weekOptions = { weekStartsOn };
+
   return {
     day: {
       startDate: new Date(
@@ -22,8 +33,8 @@ export const getIsoDatesFromPeriod = (
       ).toISOString(),
     },
     week: {
-      startDate: startOfWeek(dateFromCalcPeriod).toISOString(),
-      endDate: endOfWeek(dateFromCalcPeriod).toISOString(),
+      startDate: startOfWeek(dateFromCalcPeriod, weekOptions).toISOString(),
+      endDate: endOfWeek(dateFromCalcPeriod, weekOptions).toISOString(),
     },
     month: {
       startDate: startOfMonth(dateFromCalcPeriod).toISOString(),

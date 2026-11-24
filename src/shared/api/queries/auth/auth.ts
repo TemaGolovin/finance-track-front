@@ -7,6 +7,7 @@ import {
   Me,
   RevokeSessionResponse,
   SuccessResponse,
+  UpdatePreferencesResponse,
   UpdateProfileResponse,
 } from './types';
 
@@ -38,6 +39,30 @@ export const useAuthSessions = (isEnabled: boolean) => {
     queryFn: () => instanceFetch<AuthSessionsResponse>('/auth/sessions'),
     enabled: isEnabled,
     retry: false,
+  });
+};
+
+export const useUpdatePreferences = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (weekStartsOn: 0 | 1) =>
+      instanceFetch<UpdatePreferencesResponse>('/auth/preferences', {
+        method: 'PATCH',
+        body: JSON.stringify({ weekStartsOn }),
+      }),
+    onSuccess: (response) => {
+      queryClient.setQueryData<Me>(auth.me, (current) => {
+        if (!current) {
+          return current;
+        }
+        return {
+          ...current,
+          data: { ...current.data, weekStartsOn: response.data.weekStartsOn },
+        };
+      });
+      void queryClient.invalidateQueries({ queryKey: auth.me });
+    },
   });
 };
 

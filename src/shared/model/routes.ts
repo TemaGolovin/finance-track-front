@@ -7,6 +7,7 @@ export const ROUTES = {
   TERMS: '/terms',
   MAIN: '/main',
   PROFILE: '/profile',
+  SETTINGS: '/settings',
 
   VERIFY_EMAIL: '/verify-email',
   VERIFY_EMAIL_SENT: '/verify-email/sent',
