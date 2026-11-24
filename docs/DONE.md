@@ -46,6 +46,7 @@
 | **ValidationPipe whitelist** | `configureApp`: `whitelist`, `forbidNonWhitelisted`, `transform`. Лишние поля body не доходят до handler. |
 | **Сортировка групповых отчётов** | **Бэкенд:** `GET /user-group/:id/stat` отдаёт категории по убыванию суммы. Суммы считаются в SQL (`getUserGroupStat`), порядок задаёт `ORDER BY SUM(o.value) DESC`. Сервис только считает долю и сохраняет порядок строк. |
 | **Меню по долгому нажатию в списках** | Удержание (~500 ms) или правый клик открывает нижний drawer с редактированием и удалением там, где эти действия уже есть: свои операции (`operation-row-actions`), личные категории (`category-row-actions`), групповые категории создателя (`group-category-item`). Короткий тап — как раньше (деталка/форма). Чужие операции в группе без меню. Список групп — отдельно, см. «Удаление группы и выход из группы» в [ROADMAP.md](./ROADMAP.md). Жест: `src/shared/lib/long-press/` (unit `pnpm test`). UI: `LongPressActions`, `useOperationDelete` инвалидирует и `groups`. |
+| **Раздел настроек и первый день недели** | **Бэкенд:** `User.weekStartsOn` (по умолчанию понедельник), `GET /auth/me`, `PATCH /auth/preferences` (`0` / `1`). **Фронт:** `/settings` (тема, язык, пн/вс); вход из меню иконки профиля в шапке (Профиль / Настройки с иконками). Профиль — только учётная запись и безопасность. Единый расчёт недели: `shared/lib/date/get-iso-dates-from-period.ts` с `weekStartsOn` для списка операций и статистики; при смене предпочтения пересчёт URL при `period=week`. E2e: `test/auth.e2e-spec.ts`; unit: `get-iso-dates-from-period.test.ts`. |
 
 ---
 
@@ -61,3 +62,4 @@
 - UX (empty/skeleton/суммы): `src/shared/ui/list-empty-state/`, `src/shared/lib/utils/decimal-input-format.ts`, виджеты `group-list`, `category-list`, `operation-list`, `invitation-list`
 - Меню по удержанию в списках: `src/shared/lib/long-press/`, `src/shared/ui/long-press-actions/`, `src/feature/operation-row-actions/`, `src/feature/category-row-actions/`
 - Язык при первом заходе: `src/middleware.ts`, `src/shared/lib/i18n/resolve-locale-from-accept-language.ts`, `locale.ts`, `locale-cookie.ts`, `src/feature/i18n-switcher/ui/i18n-switcher.tsx`
+- Настройки и неделя: `app/settings/`, `widget/settings-overview/`, `feature/week-start-setting/`, `shared/lib/date/`, `widget/header/ui/profile-action.tsx`; бэкенд — `finance-track-back` → `src/auth/`, миграция `weekStartsOn`
