@@ -4,6 +4,7 @@ import { Locale } from '@/shared/lib/i18n/config';
 import { setUserLocale } from '@/shared/lib/i18n/locale';
 import { Button, DropdownRadio, Tooltip } from '@/shared/ui';
 import { Languages } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 
 interface I18nSwitcherProps {
@@ -12,6 +13,7 @@ interface I18nSwitcherProps {
 
 export const I18nSwitcher = ({ btnClassName }: I18nSwitcherProps) => {
   const locale = useLocale();
+  const router = useRouter();
   const t = useTranslations();
 
   return (
@@ -26,7 +28,10 @@ export const I18nSwitcher = ({ btnClassName }: I18nSwitcherProps) => {
           </Tooltip>
         </div>
       }
-      onSelect={(langId) => setUserLocale(langId as Locale)}
+      onSelect={async (langId) => {
+        await setUserLocale(langId as Locale);
+        router.refresh();
+      }}
       list={[
         {
           id: 'ru' as const,

@@ -1,14 +1,24 @@
 'use server';
 
-import { cookies } from 'next/headers';
-import { type Locale, defaultLocale } from './config';
-
-const COOKIE_NAME = 'NEXT_LOCALE';
+import { cookies, headers } from 'next/headers';
+import { type Locale } from './config';
+import { isLocale, LOCALE_COOKIE_NAME } from './locale-cookie';
+import { resolveLocaleFromAcceptLanguage } from './resolve-locale-from-accept-language';
 
 export async function getUserLocale(): Promise<Locale> {
-  return ((await cookies()).get(COOKIE_NAME)?.value || defaultLocale) as Locale;
+  const fromCookie = (await cookies()).get(LOCALE_COOKIE_NAME)?.value;
+
+  if (isLocale(fromCookie)) {
+    return fromCookie;
+  }
+
+  const acceptLanguage = (await headers()).get('accept-language');
+  return resolveLocaleFromAcceptLanguage(acceptLanguage);
 }
 
 export async function setUserLocale(locale: Locale) {
-  (await cookies()).set(COOKIE_NAME, locale);
+  (await cookies()).set(LOCALE_COOKIE_NAME, locale, {
+    path: '/',
+    sameSite: 'lax',
+  });
 }
