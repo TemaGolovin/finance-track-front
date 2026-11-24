@@ -44,6 +44,7 @@
 | **Access token только в cookie** | JSON login/registration/refresh/profile без `token`; BFF после refresh берёт access из `Set-Cookie`. |
 | **ValidationPipe whitelist** | `configureApp`: `whitelist`, `forbidNonWhitelisted`, `transform`. Лишние поля body не доходят до handler. |
 | **Сортировка групповых отчётов** | **Бэкенд:** `GET /user-group/:id/stat` отдаёт категории по убыванию суммы. Суммы считаются в SQL (`getUserGroupStat`), порядок задаёт `ORDER BY SUM(o.value) DESC`. Сервис только считает долю и сохраняет порядок строк. |
+| **Меню по долгому нажатию в списках** | Удержание (~500 ms) или правый клик открывает нижний drawer с редактированием и удалением там, где эти действия уже есть: свои операции (`operation-row-actions`), личные категории (`category-row-actions`), групповые категории создателя (`group-category-item`). Короткий тап — как раньше (деталка/форма). Чужие операции в группе без меню. Список групп — отдельно, см. «Удаление группы и выход из группы» в [ROADMAP.md](./ROADMAP.md). Жест: `src/shared/lib/long-press/` (unit `pnpm test`). UI: `LongPressActions`, `useOperationDelete` инвалидирует и `groups`. |
 
 ---
 
@@ -57,3 +58,4 @@
 - Категории (update): `finance-track-back` → `src/category/dto/update-category.dto.ts`, `category.repository.ts`
 - Refetch кэша после мутаций: `src/shared/api/lib/invalidate-and-refetch-queries.ts`, хуки в `src/shared/api/queries/`
 - UX (empty/skeleton/суммы): `src/shared/ui/list-empty-state/`, `src/shared/lib/utils/decimal-input-format.ts`, виджеты `group-list`, `category-list`, `operation-list`, `invitation-list`
+- Меню по удержанию в списках: `src/shared/lib/long-press/`, `src/shared/ui/long-press-actions/`, `src/feature/operation-row-actions/`, `src/feature/category-row-actions/`
