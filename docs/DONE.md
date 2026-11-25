@@ -26,6 +26,7 @@
 | **Проверка бэкапов (локально)** | `backup-db.sh` — `gzip -t` и мин. размер; `verify-backup-restore.sh` — restore во временную БД; `check-backup-freshness.sh` — возраст последнего дампа. Документация: `BACKUP_GUIDE.md`. |
 | **Откат релиза (документация)** | `finance-track-back/docs/DEPLOY.md` §5: откат кода, restore из дампа при несовместимых миграциях, локальный drill через `verify-backup-restore.sh`. |
 | **Юридические документы (страницы + UX)** | `/privacy`, `/terms`; тексты в `src/shared/lib/legal/`; плейсхолдеры в `legal-public-meta.ts`; чекбокс согласия при регистрации; ссылки на входе. Перед публичным продом: реальные домен и реквизиты, при необходимости юрист. |
+| **Юридические документы на английском** | EN-тексты `privacy-en-content`, `terms-en-content`; `/privacy` и `/terms` показывают версию по `getLocale()`; заголовки/мета и лейблы в `legal.*` i18n. |
 | **Редактирование группы — 404** | **Бэкенд:** `PATCH /user-group/:id` (`UpdateUserGroupDto`: `name`). Обновлять может только создатель группы (`FORBIDDEN_UPDATE`); чужая/несуществующая группа — 404. **Фронт:** кнопка редактирования только у создателя (`GroupInfoTab`). |
 | **Полное удаление аккаунта** | **Бэкенд:** `POST /auth/delete-account` под JWT, тело `{ password }`; транзакция Prisma (маппинги, операции, категории, приглашения, членство; группы создателя — смена `creatorId` или удаление пустой группы; затем refresh/email-токены и `user`). **Фронт:** `src/feature/account-delete/`, мутация `useDeleteAccount`. |
 | **BFF: refresh для PUT/POST/PATCH** | После 401 повтор идёт с тем же `Content-Type` / `Accept-Language`, что исходный запрос; новый access из `Set-Cookie` ответа refresh (httpOnly), не из JSON и не из устаревших `cookies()` исходного запроса. Set-Cookie прокидывается клиенту через `getSetCookie()`. На бэкенд не форвардятся лишние клиентские заголовки. |
@@ -52,7 +53,7 @@
 
 ## Ссылки на код
 
-- Юридические документы: `src/shared/lib/legal/`, страницы `app/privacy/page.tsx`, `app/terms/page.tsx`; согласие — `src/feature/auth/ui/registration-form.tsx`
+- Юридические документы: `src/shared/lib/legal/` (`privacy-*-content`, `terms-*-content`), страницы `app/privacy/page.tsx`, `app/terms/page.tsx` (локаль); согласие — `src/feature/auth/ui/registration-form.tsx`
 - Удаление аккаунта: `src/feature/account-delete/`, хук `src/shared/api/queries/auth/auth.ts` (`useDeleteAccount`)
 - Редактирование группы: `PATCH /user-group/:id` — `finance-track-back` → `src/user-group/`; фронт — `useGroupUpdate`
 - Бэкенд: `prisma/schema.prisma`; auth и удаление аккаунта — `src/auth/` (`POST delete-account`)
