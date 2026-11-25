@@ -1,5 +1,5 @@
 import { isSessionExpiredError } from '@/shared/model/auth-session';
-import { ROUTES } from '@/shared/model/routes';
+import { ROUTES, isPublicPath } from '@/shared/model/routes';
 import { getClientLocale } from '../lib/i18n/client-locale';
 
 function redirectToLoginIfNeeded(): void {
@@ -7,12 +7,7 @@ function redirectToLoginIfNeeded(): void {
     return;
   }
 
-  const { pathname } = window.location;
-  if (
-    pathname === ROUTES.HOME ||
-    pathname === ROUTES.LOGIN ||
-    pathname.startsWith(`${ROUTES.LOGIN}/`)
-  ) {
+  if (isPublicPath(window.location.pathname)) {
     return;
   }
 

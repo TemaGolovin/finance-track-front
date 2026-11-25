@@ -34,3 +34,21 @@ export const ROUTES = {
 } as const;
 
 export type RoutesType = (typeof ROUTES)[keyof typeof ROUTES];
+
+const PUBLIC_ROUTES: readonly RoutesType[] = [
+  ROUTES.LOGIN,
+  ROUTES.REGISTER,
+  ROUTES.PRIVACY,
+  ROUTES.TERMS,
+  ROUTES.VERIFY_EMAIL,
+  ROUTES.FORGOT_PASSWORD,
+  ROUTES.RESET_PASSWORD,
+  ROUTES.CONFIRM_EMAIL_CHANGE,
+];
+
+export function isPublicPath(pathname: string): boolean {
+  return (
+    pathname === ROUTES.HOME ||
+    PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))
+  );
+}
