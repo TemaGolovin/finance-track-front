@@ -307,7 +307,7 @@ export async function Landing({ isAuthenticated }: { isAuthenticated: boolean })
           tone.footer,
         )}
       >
-        <p>Finance Tracker</p>
+        <p>MoneyHive</p>
         <nav aria-label={t('docsLabel')} className="flex flex-wrap gap-4">
           <Link className="underline underline-offset-4" href={ROUTES.PRIVACY}>
             {tLegal('privacyPolicy')}

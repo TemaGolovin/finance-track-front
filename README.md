@@ -1,4 +1,4 @@
-# Finance Track — frontend
+# MoneyHive — frontend
 
 Web client for shared family or group income and expense tracking: transactions, categories, groups, and invitations.
 

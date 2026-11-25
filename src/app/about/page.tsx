@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: 'website',
       locale: locale === 'ru' ? 'ru_RU' : 'en_US',
-      siteName: 'Finance Tracker',
+      siteName: 'MoneyHive',
     },
   };
 }

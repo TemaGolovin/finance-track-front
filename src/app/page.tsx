@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: 'website',
       locale: locale === 'ru' ? 'ru_RU' : 'en_US',
-      siteName: 'Finance Tracker',
+      siteName: 'MoneyHive',
     },
   };
 }
@@ -37,7 +37,7 @@ export default async function Page() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'Finance Tracker',
+        name: 'MoneyHive',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'Web',
         description: t('metaDescription'),

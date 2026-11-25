@@ -41,7 +41,7 @@
     "user": "User"
   },
   "landing": {
-    "metaTitle": "Finance Tracker — income and expenses for yourself and for a group",
+    "metaTitle": "MoneyHive — income and expenses for yourself and for a group",
     "metaDescription": "Record your own income and expenses. Start a group, invite people by nickname, and see the shared totals plus who added each entry.",
     "navLabel": "Page sections",
     "navStage": "Start",
@@ -141,9 +141,9 @@
     "privacyPolicy": "Personal data processing policy",
     "userAgreement": "User agreement",
     "privacyTitle": "Personal data processing policy",
-    "privacyDescription": "How personal data of Finance Tracker web application users is processed.",
+    "privacyDescription": "How personal data of MoneyHive web application users is processed.",
     "termsTitle": "User agreement",
-    "termsDescription": "Terms of use of the Finance Tracker web application for tracking income and expenses."
+    "termsDescription": "Terms of use of the MoneyHive web application for tracking income and expenses."
   },
 
   "verifyEmail": {

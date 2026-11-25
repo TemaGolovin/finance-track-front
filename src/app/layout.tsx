@@ -9,7 +9,7 @@ import { getLocale } from 'next-intl/server';
 import { Providers } from './_providers/providers';
 
 export const metadata: Metadata = {
-  title: 'Finance Tracker',
+  title: 'MoneyHive',
   description: 'App for managing your finances',
   icons: {
     apple: '/icons/finance-track-icon-512x512.png',

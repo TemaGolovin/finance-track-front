@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next';
 // src/app/manifest.ts
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Трекер финансов',
-    short_name: 'finance-track',
+    name: 'MoneyHive',
+    short_name: 'MoneyHive',
     description: 'App for managing your finances',
     start_url: './',
     display: 'standalone',
