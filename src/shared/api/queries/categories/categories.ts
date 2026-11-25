@@ -1,7 +1,7 @@
 import { instanceFetch } from '@/shared/api/instances';
 import { invalidateAndRefetchQueries } from '@/shared/api/lib/invalidate-and-refetch-queries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { categories } from '@/shared/api/queries/query-keys';
+import { categories, groups } from '@/shared/api/queries/query-keys';
 import { Category, CreateCategoryReq } from './types';
 
 export const useCategories = (params?: {
@@ -66,6 +66,7 @@ export const useCategoryEdit = () => {
       Promise.all([
         invalidateAndRefetchQueries(queryClient, categories.all),
         invalidateAndRefetchQueries(queryClient, categories.detail(id)),
+        invalidateAndRefetchQueries(queryClient, groups.all),
       ]).then(() => undefined),
   });
 };
@@ -78,8 +79,10 @@ export const useCategoryDelete = () => {
       instanceFetch(`/category/${id}`, {
         method: 'DELETE',
       }),
-    onSuccess: () => {
-      return invalidateAndRefetchQueries(queryClient, categories.all);
-    },
+    onSuccess: () =>
+      Promise.all([
+        invalidateAndRefetchQueries(queryClient, categories.all),
+        invalidateAndRefetchQueries(queryClient, groups.all),
+      ]).then(() => undefined),
   });
 };

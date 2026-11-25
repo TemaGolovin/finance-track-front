@@ -9,9 +9,14 @@ import { toast } from 'sonner';
 interface CategoryDeleteProps {
   categoryId: string;
   triggerBtnClasses: string;
+  isDefault?: boolean;
 }
 
-export const CategoryDelete: FC<CategoryDeleteProps> = ({ categoryId, triggerBtnClasses }) => {
+export const CategoryDelete: FC<CategoryDeleteProps> = ({
+  categoryId,
+  triggerBtnClasses,
+  isDefault = false,
+}) => {
   const commonT = useTranslations('common');
   const categoryT = useTranslations('category');
 
@@ -36,7 +41,11 @@ export const CategoryDelete: FC<CategoryDeleteProps> = ({ categoryId, triggerBtn
           {commonT('delete')}
         </Button>
       }
-      description={categoryT('confirmDelete')}
+      description={
+        isDefault
+          ? `${categoryT('confirmDelete')} ${categoryT('defaultCategoryDeleteWarning')}`
+          : categoryT('confirmDelete')
+      }
       renderContent={() => (
         <Button variant={'destructive'} onClick={onDelete} className="w-full">
           {commonT('delete')}

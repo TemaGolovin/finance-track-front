@@ -2,7 +2,8 @@
 import { OperationTypeFilter } from '@/feature/operation-filters';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { CategoryFormType, CreateSchemaForCategoryForm } from '../model/schema';
-import { Button, ColorSelector, Input } from '@/shared/ui';
+import { Button, ColorSelector, Hint, Input } from '@/shared/ui';
+import { useGroups } from '@/shared/api/queries/groups';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { IconSelector } from '@/shared/ui/icon-selector/icon-selector';
@@ -19,6 +20,8 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/model/routes';
 import { useEffect } from 'react';
 import { CategoryDelete } from '@/feature/category-delete';
+
+const DEFAULT_CATEGORY_WARNING_CLASS = 'border-warning/50 bg-warning/10';
 
 interface CategoryFormProps {
   editedId?: string;
@@ -59,7 +62,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
     formState: { errors },
     handleSubmit,
     reset,
+    watch,
   } = categoryFormMethods;
+
+  const { data: groups } = useGroups();
+
+  const isDefaultCategory = !!editedCategory?.defaultKey;
+  const isTypeChanged = isDefaultCategory && watch('type') !== editedCategory?.categoryType;
+  const showGroupMappingHint = !editedId && !!groups?.length;
 
   const { mutateAsync: createCategory } = useCategoryCreate();
   const { mutateAsync: editCategory } = useCategoryEdit();
@@ -114,6 +124,15 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
           />
         </div>
 
+        {showGroupMappingHint && <Hint>{categoryT('groupMappingHint')}</Hint>}
+        {isDefaultCategory && (
+          <Hint className={DEFAULT_CATEGORY_WARNING_CLASS}>
+            {categoryT(
+              isTypeChanged ? 'defaultCategoryTypeChangeWarning' : 'defaultCategoryEditWarning',
+            )}
+          </Hint>
+        )}
+
         <div>
           <div className="text-sm">{categoryT('selectIconAndColor')}</div>
           <div
@@ -145,7 +164,11 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
         <CategoryResult />
 
         {editedId && (
-          <CategoryDelete categoryId={editedId} triggerBtnClasses="fixed bottom-16 inset-x-2" />
+          <CategoryDelete
+            categoryId={editedId}
+            isDefault={isDefaultCategory}
+            triggerBtnClasses="fixed bottom-16 inset-x-2"
+          />
         )}
         <Button className="fixed bottom-4 inset-x-2" variant={'primary'} type="submit">
           {commonT('save')}

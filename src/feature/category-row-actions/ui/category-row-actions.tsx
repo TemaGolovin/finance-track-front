@@ -43,7 +43,9 @@ export const CategoryRowActions: FC<CategoryRowActionsProps> = ({
         destructive: true,
         confirm: {
           title: categoryT('deletingCategory'),
-          description: categoryT('confirmDelete'),
+          description: category.defaultKey
+            ? `${categoryT('confirmDelete')} ${categoryT('defaultCategoryDeleteWarning')}`
+            : categoryT('confirmDelete'),
           confirmLabel: commonT('delete'),
         },
         onSelect: () =>
@@ -56,7 +58,7 @@ export const CategoryRowActions: FC<CategoryRowActionsProps> = ({
             .unwrap(),
       },
     ],
-    [category.id, categoryT, commonT, deleteCategory, router],
+    [category.id, category.defaultKey, categoryT, commonT, deleteCategory, router],
   );
 
   return (

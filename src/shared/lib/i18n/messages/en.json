@@ -326,7 +326,12 @@
 
     "categoriesTitle": "Your categories",
     "listEmpty": "No categories yet",
-    "createCategory": "Create category"
+    "createCategory": "Create category",
+
+    "groupMappingHint": "Expenses and income in this category will reach a group only after it is mapped to a group category. Only the group creator can create group categories.",
+    "defaultCategoryEditWarning": "This is a starter category. Changing its name or type affects mapping to group categories.",
+    "defaultCategoryTypeChangeWarning": "After the type changes, the category's link to group categories of the previous type will become invalid.",
+    "defaultCategoryDeleteWarning": "This is a starter category. Once deleted, its links to group categories will be lost."
   },
 
   "group": {
@@ -377,6 +382,9 @@
     "connectCategoriesError": "Error linking categories",
     "notConnected": "Not linked",
     "connectCategoryNoLink": "No link",
+
+    "unmappedCategoriesHint": "Some categories are not mapped. Expenses and income in them do not reach the group.",
+    "unmappedCategoriesGoToMapping": "Go to mapping",
 
     "tabInfo": "Info",
     "tabMapping": "Mapping",

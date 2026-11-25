@@ -8,6 +8,7 @@ import { FC, useState } from 'react';
 import { GroupInfoTab } from './group-info-tab';
 import { GroupCategoryConnectForm } from '@/widget/group-category-connect';
 import { GroupCategoryManage } from '@/widget/group-category-manage';
+import { UnmappedCategoriesHint } from './unmapped-categories-hint';
 
 type TabId = 'info' | 'mapping' | 'categories';
 
@@ -48,6 +49,9 @@ export const GroupDetail: FC<GroupDetailProps> = ({ group, isLoading }) => {
 
   return (
     <div className="mt-2">
+      {group && activeTab !== 'mapping' && (
+        <UnmappedCategoriesHint groupId={group.id} onGoToMapping={() => setActiveTab('mapping')} />
+      )}
       <Tabs<TabId> tabsInfo={tabsInfo} selectedId={activeTab} onSelect={setActiveTab} />
     </div>
   );
