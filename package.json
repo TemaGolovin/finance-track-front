@@ -2,6 +2,7 @@
   "name": "finance-track-front",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev --turbopack",
     "scan": "next dev --turbopack & npx react-scan@latest localhost:3000",

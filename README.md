@@ -58,3 +58,7 @@ By default Nest listens on port **3000**, same as `next dev`. To run both at onc
 **Single VPS with the backend repo:** Docker image `Dockerfile.prod`, orchestration via [finance-track-back/docs/DEPLOY.md](../finance-track-back/docs/DEPLOY.md) (`docker-compose.prod.yml`).
 
 Standalone: `pnpm build && pnpm start`; set `NEXT_PUBLIC_API_BFF` (public `/api` origin) and `NEXT_API_BACKEND` (Nest URL).
+
+## License
+
+Copyright (c) 2026 Artem Golovin. All rights reserved. See [LICENSE](./LICENSE).
