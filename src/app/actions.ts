@@ -35,7 +35,7 @@ export async function sendNotification(message: string) {
       JSON.stringify({
         title: 'Новое уведомление',
         body: message,
-        icon: '/icon.png',
+        icon: '/icons/finance-track-icon-192x192.png',
       }),
     );
     return { success: true };
