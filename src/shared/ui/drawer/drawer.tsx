@@ -44,13 +44,15 @@ export const Drawer: React.FC<DrawerProps> = ({
   return (
     <DrawerShadcn open={isOpen} onOpenChange={setIsOpen}>
       {trigger ? <DrawerTrigger asChild>{trigger}</DrawerTrigger> : null}
-      <DrawerContent className="mt-0 max-h-dvh">
-        <DrawerHeader>
+      <DrawerContent className="mt-0 max-h-[85dvh] overflow-hidden">
+        <DrawerHeader className="shrink-0">
           <DrawerTitle>{title}</DrawerTitle>
           {description ? <DrawerDescription>{description}</DrawerDescription> : null}
         </DrawerHeader>
-        <div className="px-4">{renderContent(() => setIsOpen(false))}</div>
-        <DrawerFooter>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4">
+          {renderContent(() => setIsOpen(false))}
+        </div>
+        <DrawerFooter className="shrink-0">
           <DrawerClose asChild>
             <Button variant="outline">{commonT('cancel')}</Button>
           </DrawerClose>

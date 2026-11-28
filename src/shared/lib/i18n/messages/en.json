@@ -40,6 +40,13 @@
     "personal": "Personal",
     "user": "User"
   },
+  "groupScope": {
+    "title": "Where we're looking",
+    "description": "Personal spending or one of your groups",
+    "personalSubtitle": "Only your operations",
+    "sharedBudget": "Shared budget",
+    "membersMore": "+{count}"
+  },
   "landing": {
     "metaTitle": "MoneyHive — income and expenses for yourself and for a group",
     "metaDescription": "Record your own income and expenses. Start a group, invite people by nickname, and see the shared totals plus who added each entry.",
