@@ -25,6 +25,7 @@ export interface GroupCategory {
   categoryType: 'EXPENSE' | 'INCOME';
   defaultKey: string | null;
   connectedPersonalCategoryId: string | null;
+  linkedMembersCount?: number;
 }
 
 export interface ConnectGroupCategoriesReq {

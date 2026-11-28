@@ -339,13 +339,17 @@
     "deleteCategoryLoading": "Удаление категории...",
     "deleteCategorySuccess": "Категория удалена",
     "deleteCategoryError": "Ошибка удаления категории",
+    "deleteBlockedTitle": "Нельзя удалить",
+    "deleteBlockedIntro": "Пока нельзя, потому что:",
+    "deleteBlockedHasOperations": "В категории есть операции",
+    "deleteBlockedHasGroupMapping": "Категория привязана к группе",
 
     "categoriesTitle": "Твои категории",
     "listEmpty": "Категорий пока нет",
     "createCategory": "Создать категорию",
 
     "groupMappingHint": "Траты и доходы по этой категории попадут в группу только после сопоставления с групповой категорией. Групповые категории создаёт только создатель группы.",
-    "defaultCategoryEditWarning": "Это категория из стартового набора. Изменение названия или типа влияет на сопоставление с групповыми категориями.",
+    "defaultCategoryEditWarning": "Это категория из стартового набора. При смене названия автосопоставление с групповыми может сработать непредсказуемо — маппинг всегда можно поправить вручную.",
     "defaultCategoryTypeChangeWarning": "После смены типа связь категории с групповыми категориями прежнего типа станет некорректной.",
     "defaultCategoryDeleteWarning": "Это категория из стартового набора. После удаления её связи с групповыми категориями пропадут."
   },
@@ -426,7 +430,8 @@
 
     "groupCategoryDeleteLoading": "Удаление...",
     "groupCategoryDeleteSuccess": "Категория удалена",
-    "groupCategoryDeleteError": "Ошибка удаления категории"
+    "groupCategoryDeleteError": "Ошибка удаления категории",
+    "groupCategoryDeleteBlocked": "Категория привязана у {count} участников, сначала отвяжите"
   },
 
   "invitation": {

@@ -12,6 +12,8 @@ export interface LongPressAction {
   onSelect?: () => unknown;
   icon?: ReactNode;
   destructive?: boolean;
+  /** Visual mute only — action stays pressable (e.g. to explain why it's blocked). */
+  disabled?: boolean;
   confirm?: {
     title: string;
     description?: string;
@@ -86,10 +88,7 @@ export const LongPressActions: FC<LongPressActionsProps> = ({
 
   return (
     <>
-      <div
-        className={cn('select-none [-webkit-touch-callout:none]', className)}
-        {...bind}
-      >
+      <div className={cn('select-none [-webkit-touch-callout:none]', className)} {...bind}>
         {children}
       </div>
       <Drawer
@@ -138,7 +137,7 @@ export const LongPressActions: FC<LongPressActionsProps> = ({
                 <Button
                   key={action.id}
                   variant={action.destructive ? 'destructive' : 'outline'}
-                  className="w-full"
+                  className={cn('w-full', action.disabled && 'opacity-60')}
                   onClick={() => {
                     if (action.confirm || action.sheet) {
                       setActiveAction(action);

@@ -1,25 +1,25 @@
 'use client';
+import { CategoryDelete } from '@/feature/category-delete';
 import { OperationTypeFilter } from '@/feature/operation-filters';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { CategoryFormType, CreateSchemaForCategoryForm } from '../model/schema';
-import { Button, ColorSelector, Hint, Input } from '@/shared/ui';
-import { useGroups } from '@/shared/api/queries/groups';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { IconSelector } from '@/shared/ui/icon-selector/icon-selector';
-import { CategoryResult } from './category-result';
-import { cn } from '@/shared/lib/shadcn/utils/utils';
 import {
   useCategoryCreate,
   useCategoryDetail,
   useCategoryEdit,
 } from '@/shared/api/queries/categories';
+import { useGroups } from '@/shared/api/queries/groups';
+import { cn } from '@/shared/lib/shadcn/utils/utils';
+import { ROUTES } from '@/shared/model/routes';
+import { Button, ColorSelector, Hint, Input } from '@/shared/ui';
+import { IconSelector } from '@/shared/ui/icon-selector/icon-selector';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { mapCategoryFormToDto } from '../model/mapCategoryFormToDto';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/shared/model/routes';
-import { useEffect } from 'react';
-import { CategoryDelete } from '@/feature/category-delete';
+import { CategoryFormType, CreateSchemaForCategoryForm } from '../model/schema';
+import { CategoryResult } from './category-result';
 
 const DEFAULT_CATEGORY_WARNING_CLASS = 'border-warning/50 bg-warning/10';
 
@@ -107,7 +107,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
 
   return (
     <FormProvider {...categoryFormMethods}>
-      <form className="py-3 flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+      <form className="pt-3 pb-20 flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name="type"
@@ -163,20 +163,20 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
         </div>
         <CategoryResult />
 
-        {editedId && (
-          <CategoryDelete
-            categoryId={editedId}
-            isDefault={isDefaultCategory}
-            triggerBtnClasses="fixed inset-x-2 bottom-[calc(8rem+env(safe-area-inset-bottom))]"
-          />
-        )}
-        <Button
-          className="fixed inset-x-2 bottom-[calc(5rem+env(safe-area-inset-bottom))]"
-          variant={'primary'}
-          type="submit"
-        >
-          {commonT('save')}
-        </Button>
+        <div className="fixed inset-x-2 bottom-[calc(5rem+env(safe-area-inset-bottom))] flex gap-2">
+          {editedId && (
+            <CategoryDelete
+              categoryId={editedId}
+              isDefault={isDefaultCategory}
+              hasOperations={editedCategory?.hasOperations}
+              hasGroupMapping={editedCategory?.hasGroupMapping}
+              triggerBtnClasses="flex-1"
+            />
+          )}
+          <Button className={editedId ? 'flex-[1.4]' : 'w-full'} variant={'primary'} type="submit">
+            {commonT('save')}
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );

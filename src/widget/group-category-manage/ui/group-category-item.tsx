@@ -25,6 +25,12 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
     isPending,
   } = useGroupCategoryDelete();
 
+  const linkedMembersCount = category.linkedMembersCount ?? 0;
+  const canDelete = linkedMembersCount === 0;
+  const deleteBlockedHint = t('groupCategoryDeleteBlocked', {
+    count: linkedMembersCount,
+  });
+
   const handleDelete = (onClose: () => void) => {
     toast.promise(
       new Promise<void>((resolve, reject) => {
@@ -42,8 +48,8 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
     onClose();
   };
 
-  const actions = useMemo<LongPressAction[]>(
-    () => [
+  const actions = useMemo<LongPressAction[]>(() => {
+    const items: LongPressAction[] = [
       {
         id: 'edit',
         label: commonT('edit'),
@@ -55,7 +61,10 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
           ),
         },
       },
-      {
+    ];
+
+    if (canDelete) {
+      items.push({
         id: 'delete',
         label: t('groupCategoryDeleteAction'),
         icon: <Trash2 className="w-5 h-5" />,
@@ -73,10 +82,11 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
               error: (err) => err?.message || t('groupCategoryDeleteError'),
             })
             .unwrap(),
-      },
-    ],
-    [category, commonT, deleteCategoryAsync, groupId, t],
-  );
+      });
+    }
+
+    return items;
+  }, [canDelete, category, commonT, deleteCategoryAsync, groupId, t]);
 
   return (
     <LongPressActions
@@ -102,29 +112,42 @@ export const GroupCategoryItem: FC<GroupCategoryItemProps> = ({ groupId, categor
             </Button>
           }
         />
-        <Drawer
-          trigger={
-            <Button
-              variant="ghost"
-              size="icon-lg"
-              className="text-destructive hover:text-destructive"
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          }
-          title={t('groupCategoryDeleteTitle')}
-          description={t('groupCategoryDeleteDescription', { name: category.name })}
-          renderContent={(onClose) => (
-            <Button
-              variant="destructive"
-              className="w-full"
-              disabled={isPending}
-              onClick={() => handleDelete(onClose)}
-            >
-              {t('groupCategoryDeleteAction')}
-            </Button>
-          )}
-        />
+        {canDelete ? (
+          <Drawer
+            trigger={
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="text-destructive hover:text-destructive"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            }
+            title={t('groupCategoryDeleteTitle')}
+            description={t('groupCategoryDeleteDescription', { name: category.name })}
+            renderContent={(onClose) => (
+              <Button
+                variant="destructive"
+                className="w-full"
+                disabled={isPending}
+                onClick={() => handleDelete(onClose)}
+              >
+                {t('groupCategoryDeleteAction')}
+              </Button>
+            )}
+          />
+        ) : (
+          <Button
+            variant="ghost"
+            size="icon-lg"
+            className="text-destructive/40"
+            disabled
+            title={deleteBlockedHint}
+            aria-label={deleteBlockedHint}
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        )}
       </div>
     </LongPressActions>
   );

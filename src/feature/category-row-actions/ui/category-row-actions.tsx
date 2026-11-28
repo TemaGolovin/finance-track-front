@@ -1,5 +1,10 @@
 'use client';
 
+import {
+  CategoryDeletePanel,
+  canDeleteCategory,
+  useCategoryDeleteCopy,
+} from '@/feature/category-delete/@x/category-row-actions';
 import { useCategoryDelete } from '@/shared/api/queries/categories';
 import { Category } from '@/shared/api/queries/categories/types';
 import { ROUTES } from '@/shared/model/routes';
@@ -26,6 +31,13 @@ export const CategoryRowActions: FC<CategoryRowActionsProps> = ({
   const router = useRouter();
   const { mutateAsync: deleteCategory } = useCategoryDelete();
 
+  const canDelete = canDeleteCategory(category);
+  const { blockReasons, title, description } = useCategoryDeleteCopy({
+    isDefault: !!category.defaultKey,
+    hasOperations: category.hasOperations,
+    hasGroupMapping: category.hasGroupMapping,
+  });
+
   const actions = useMemo<LongPressAction[]>(
     () => [
       {
@@ -41,24 +53,41 @@ export const CategoryRowActions: FC<CategoryRowActionsProps> = ({
         label: commonT('delete'),
         icon: <Trash className="w-5 h-5" />,
         destructive: true,
-        confirm: {
-          title: categoryT('deletingCategory'),
-          description: category.defaultKey
-            ? `${categoryT('confirmDelete')} ${categoryT('defaultCategoryDeleteWarning')}`
-            : categoryT('confirmDelete'),
-          confirmLabel: commonT('delete'),
+        disabled: !canDelete,
+        sheet: {
+          title,
+          description,
+          render: (onClose) => (
+            <CategoryDeletePanel
+              canDelete={canDelete}
+              blockReasons={blockReasons}
+              onConfirm={() => {
+                void toast
+                  .promise(deleteCategory({ id: category.id }), {
+                    loading: categoryT('deleteCategoryLoading'),
+                    success: categoryT('deleteCategorySuccess'),
+                    error: (data) => data?.message || categoryT('deleteCategoryError'),
+                  })
+                  .unwrap()
+                  .then(() => onClose())
+                  .catch(() => undefined);
+              }}
+            />
+          ),
         },
-        onSelect: () =>
-          toast
-            .promise(deleteCategory({ id: category.id }), {
-              loading: categoryT('deleteCategoryLoading'),
-              success: categoryT('deleteCategorySuccess'),
-              error: (data) => data?.message || categoryT('deleteCategoryError'),
-            })
-            .unwrap(),
       },
     ],
-    [category.id, category.defaultKey, categoryT, commonT, deleteCategory, router],
+    [
+      blockReasons,
+      canDelete,
+      category.id,
+      categoryT,
+      commonT,
+      deleteCategory,
+      description,
+      router,
+      title,
+    ],
   );
 
   return (

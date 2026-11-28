@@ -10,6 +10,8 @@ export interface Category {
   icon: IconCategory;
   categoryType: 'INCOME' | 'EXPENSE';
   defaultKey?: string;
+  hasOperations?: boolean;
+  hasGroupMapping?: boolean;
 }
 
 export interface CreateCategoryReq

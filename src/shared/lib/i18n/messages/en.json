@@ -339,13 +339,17 @@
     "deleteCategoryLoading": "Deleting a category...",
     "deleteCategorySuccess": "Category deleted successfully",
     "deleteCategoryError": "Error deleting category",
+    "deleteBlockedTitle": "Cannot delete",
+    "deleteBlockedIntro": "Not allowed yet because:",
+    "deleteBlockedHasOperations": "The category has operations",
+    "deleteBlockedHasGroupMapping": "The category is linked to a group",
 
     "categoriesTitle": "Your categories",
     "listEmpty": "No categories yet",
     "createCategory": "Create category",
 
     "groupMappingHint": "Expenses and income in this category will reach a group only after it is mapped to a group category. Only the group creator can create group categories.",
-    "defaultCategoryEditWarning": "This is a starter category. Changing its name or type affects mapping to group categories.",
+    "defaultCategoryEditWarning": "This is a starter category. Renaming may rematch it to group categories unpredictably — you can always adjust the mapping manually.",
     "defaultCategoryTypeChangeWarning": "After the type changes, the category's link to group categories of the previous type will become invalid.",
     "defaultCategoryDeleteWarning": "This is a starter category. Once deleted, its links to group categories will be lost."
   },
@@ -425,7 +429,8 @@
 
     "groupCategoryDeleteLoading": "Deleting...",
     "groupCategoryDeleteSuccess": "Category deleted",
-    "groupCategoryDeleteError": "Error deleting category"
+    "groupCategoryDeleteError": "Error deleting category",
+    "groupCategoryDeleteBlocked": "Category is linked by {count} members; unlink them first"
   },
 
   "invitation": {
