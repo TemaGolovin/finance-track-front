@@ -1,12 +1,14 @@
 'use client';
-import { LogoutAction } from '@/feature/auth';
+import { useAboutMe } from '@/shared/api/queries/auth';
 import { Button, Sheet } from '@/shared/ui';
-import { LogOut, Menu } from 'lucide-react';
-import { getSidebarItems } from '../lib/sidebar-items';
+import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAboutMe } from '@/shared/api/queries/auth';
+import { getSidebarGroups } from '../lib/sidebar-items';
+
+const linkClassName =
+  'flex gap-2 justify-start text-lg font-normal bg-card w-full rounded-md px-3 pt-2 pb-1.5';
 
 export const Sidebar = () => {
   const sidebarT = useTranslations('sidebar');
@@ -18,19 +20,31 @@ export const Sidebar = () => {
     return null;
   }
 
+  const groups = getSidebarGroups(sidebarT);
+  const workspaceGroup = groups.find((group) => group.id === 'workspace');
+  const serviceGroup = groups.find((group) => group.id === 'service');
+
   return (
     <Sheet
       title="Menu"
       isOpen={isOpenSidebar}
       onOpenChange={setIsOpenSidebar}
       footer={
-        <LogoutAction
-          btnClassName="w-full bg-destructive text-destructive-foreground"
-          onSuccessAdditional={() => setIsOpenSidebar(false)}
-        >
-          <LogOut className="w-6 h-6" />
-          {sidebarT('logout')}
-        </LogoutAction>
+        serviceGroup ? (
+          <div className="flex flex-col gap-1 w-full">
+            {serviceGroup.items.map((item) => (
+              <Link
+                key={item.id}
+                className={linkClassName}
+                href={item.link}
+                onClick={() => setIsOpenSidebar(false)}
+              >
+                {item.icon}
+                {item.title}
+              </Link>
+            ))}
+          </div>
+        ) : null
       }
       trigger={
         <Button
@@ -43,19 +57,21 @@ export const Sidebar = () => {
         </Button>
       }
     >
-      <div className="flex flex-col gap-1">
-        {getSidebarItems(sidebarT).map((item) => (
-          <Link
-            key={item.id}
-            className="flex gap-2 justify-start text-lg font-normal bg-card w-full rounded-md px-3 pt-2 pb-1.5"
-            href={item.link}
-            onClick={() => setIsOpenSidebar(false)}
-          >
-            {item.icon}
-            {item.title}
-          </Link>
-        ))}
-      </div>
+      {workspaceGroup ? (
+        <div className="flex flex-col gap-1">
+          {workspaceGroup.items.map((item) => (
+            <Link
+              key={item.id}
+              className={linkClassName}
+              href={item.link}
+              onClick={() => setIsOpenSidebar(false)}
+            >
+              {item.icon}
+              {item.title}
+            </Link>
+          ))}
+        </div>
+      ) : null}
     </Sheet>
   );
 };

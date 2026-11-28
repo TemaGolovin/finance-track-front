@@ -202,15 +202,30 @@
   },
 
   "sidebar": {
-    "logout": "Logout",
     "menu": "Menu",
     "main": "Main",
     "operations": "Operations",
     "categories": "Categories",
     "groups": "Groups",
     "invitations": "Invitations",
+    "feedback": "Feedback",
     "about": "About the service",
     "profile": "Profile"
+  },
+
+  "feedback": {
+    "title": "Feedback",
+    "needLogin": "Sign in to send feedback.",
+    "hint": "Describe a problem or a product suggestion. Provide an email we can reply to.",
+    "typeLabel": "Type",
+    "typeProblem": "Problem",
+    "typeSuggestion": "Suggestion",
+    "replyEmailLabel": "Reply email",
+    "messageLabel": "Message",
+    "submit": "Send",
+    "loading": "Sending...",
+    "success": "Message sent",
+    "error": "Could not send message"
   },
 
   "settings": {
@@ -446,6 +461,8 @@
     "requiredForSelect": "Required for selection",
     "email": "Incorrect email",
     "minLength6": "Minimum length 6 characters",
+    "minLength10": "Minimum length 10 characters",
+    "maxLength2000": "Maximum 2000 characters",
     "greaterThanZero": "The value must be greater than 0"
   }
 }
