@@ -218,7 +218,8 @@
     "feedback": "Обратная связь",
     "about": "О сервисе",
     "profile": "Профиль",
-    "more": "Ещё"
+    "more": "Ещё",
+    "logout": "Выйти"
   },
 
   "feedback": {
@@ -369,7 +370,6 @@
 
     "groupCreateTitle": "Создание группы",
     "groupCreate": "Создать группу",
-    "groupSave": "Сохранить",
     "groupCreateAndInviteMembers": "Создать группу и пригласить участников",
     "groupName": "Название группы",
 
@@ -395,6 +395,7 @@
 
     "inactiveMembers": "Неактивные участники",
     "invitationAcceptPending": "Ожидание принятия приглашения",
+    "invitationAccepted": "Приглашение принято",
     "invitationDeclined": "Приглашение отклонено",
     "invitationCancelled": "Приглашение отменено",
 

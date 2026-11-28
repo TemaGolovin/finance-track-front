@@ -218,7 +218,8 @@
     "feedback": "Feedback",
     "about": "About the service",
     "profile": "Profile",
-    "more": "More"
+    "more": "More",
+    "logout": "Logout"
   },
 
   "feedback": {
@@ -394,6 +395,7 @@
 
     "inactiveMembers": "Inactive members",
     "invitationAcceptPending": "Waiting for invitation acceptance",
+    "invitationAccepted": "Invitation accepted",
     "invitationDeclined": "Invitation declined",
     "invitationCancelled": "Invitation cancelled",
 
