@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/shared/lib/shadcn/sonner';
 import { Header } from '@/widget/header';
+import { Sidebar } from '@/widget/sidebar';
 import { UnverifiedEmailBanner } from '@/widget/unverified-email-banner';
 import { getLocale } from 'next-intl/server';
 import { Providers } from './_providers/providers';
@@ -29,7 +30,10 @@ export default async function RootLayout({
         <Providers>
           <Header />
           <UnverifiedEmailBanner />
-          <main className="container mx-auto px-2 sm:px-0">{children}</main>
+          <main className="container mx-auto px-2 pb-[calc(5rem+env(safe-area-inset-bottom))] sm:px-0">
+            {children}
+          </main>
+          <Sidebar />
         </Providers>
         <Toaster richColors />
       </body>

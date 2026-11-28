@@ -10,7 +10,12 @@ interface FixedEditLinkIconProps {
 
 export const FixedEditLinkIcon: React.FC<FixedEditLinkIconProps> = ({ link, wrapperClassName }) => {
   return (
-    <div className={cn('fixed bottom-4 right-4', wrapperClassName)}>
+    <div
+      className={cn(
+        'fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))]',
+        wrapperClassName,
+      )}
+    >
       <Link href={link}>
         <Button size={'icon'} variant={'primary'}>
           <Pencil />

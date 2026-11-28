@@ -74,7 +74,7 @@ export const GroupForm: React.FC<GroupFormProps> = ({ mode = 'create', group }) 
         )}
       />
 
-      <div className="fixed inset-x-3 bottom-4">
+      <div className="fixed inset-x-3 bottom-[calc(5rem+env(safe-area-inset-bottom))]">
         <Button type="submit" className="w-full" variant={'primary'}>
           {getBtnText()}
         </Button>

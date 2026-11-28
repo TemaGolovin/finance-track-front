@@ -55,7 +55,11 @@ export const GroupCategoryManage: FC<GroupCategoryManageProps> = ({ groupId }) =
       <GroupCategoryFormDrawer
         groupId={groupId}
         trigger={
-          <Button variant="primary" size="icon" className="fixed bottom-4 right-4 shadow-lg z-10">
+          <Button
+            variant="primary"
+            size="icon"
+            className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-50 shadow-lg"
+          >
             <Plus className="w-5 h-5" />
           </Button>
         }

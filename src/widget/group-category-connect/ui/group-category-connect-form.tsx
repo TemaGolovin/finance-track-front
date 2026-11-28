@@ -108,7 +108,7 @@ export const GroupCategoryConnectForm: FC<GroupCategoryConnectFormProps> = ({
         className={
           mode === 'tab'
             ? 'flex gap-2 mt-2'
-            : 'flex gap-2 mt-2 fixed bottom-4 inset-x-2'
+            : 'mt-2 fixed inset-x-2 bottom-[calc(5rem+env(safe-area-inset-bottom))] flex gap-2'
         }
       >
         {mode === 'page' && (

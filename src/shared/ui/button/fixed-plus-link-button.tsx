@@ -8,7 +8,7 @@ interface FixedPlusLinkButtonProps {
 
 export const FixedPlusLinkButton: React.FC<FixedPlusLinkButtonProps> = ({ link }) => {
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))]">
       <Link href={link}>
         <Button size={'icon'} variant={'primary'}>
           <PlusIcon />

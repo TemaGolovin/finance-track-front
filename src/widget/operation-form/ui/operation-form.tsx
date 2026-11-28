@@ -168,7 +168,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({ editedId }) => {
 
       <Input placeholder={commonT('comment')} inputSize="lg" {...register('comment')} />
 
-      <div className="fixed bottom-4 left-4 right-4">
+      <div className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4">
         <Button variant={'primary'} className="w-full" size={'lg'} type="submit">
           {commonT('save')}
         </Button>

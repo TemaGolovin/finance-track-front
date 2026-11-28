@@ -167,10 +167,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ editedId }) => {
           <CategoryDelete
             categoryId={editedId}
             isDefault={isDefaultCategory}
-            triggerBtnClasses="fixed bottom-16 inset-x-2"
+            triggerBtnClasses="fixed inset-x-2 bottom-[calc(8rem+env(safe-area-inset-bottom))]"
           />
         )}
-        <Button className="fixed bottom-4 inset-x-2" variant={'primary'} type="submit">
+        <Button
+          className="fixed inset-x-2 bottom-[calc(5rem+env(safe-area-inset-bottom))]"
+          variant={'primary'}
+          type="submit"
+        >
           {commonT('save')}
         </Button>
       </form>
